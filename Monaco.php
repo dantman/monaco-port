@@ -30,6 +30,69 @@ class MonacoSidebar {
 
 	public $editUrl = false;
 
+	/**
+	 * Parse one line from MediaWiki message to array with indexes 'text' and 'href'
+	 *
+	 * @return array
+	 * @author Inez Korczynski <inez@wikia.com>
+	 */
+	public static function parseItem($line) {
+
+		$href = $specialCanonicalName = false;
+
+		$line_temp = explode('|', trim($line, '* '), 3);
+		$line_temp[0] = trim($line_temp[0], '[]');
+		if(count($line_temp) >= 2 && $line_temp[1] != '') {
+			$line = trim($line_temp[1]);
+			$link = trim(wfMsgForContent($line_temp[0]));
+		} else {
+			$line = trim($line_temp[0]);
+			$link = trim($line_temp[0]);
+		}
+
+
+		$descText = null;
+
+		if(count($line_temp) > 2 && $line_temp[2] != '') {
+			$desc = $line_temp[2];
+			if (wfEmptyMsg($desc, $descText = wfMsg($desc))) {
+				$descText = $desc;
+			}
+		}
+
+		if (wfEmptyMsg($line, $text = wfMsg($line))) {
+			$text = $line;
+		}
+
+		if($link != null) {
+			if (wfEmptyMsg($line_temp[0], $link)) {
+				$link = $line_temp[0];
+			}
+			if (preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link )) {
+				$href = $link;
+			} else {
+				$title = Title::newFromText( $link );
+				if($title) {
+					if ($title->getNamespace() == NS_SPECIAL) {
+						$dbkey = $title->getDBkey();
+						$specialCanonicalName = SpecialPage::resolveAlias($dbkey);
+						if (!$specialCanonicalName) $specialCanonicalName = $dbkey;
+					}
+					$title = $title->fixSpecialName();
+					$href = $title->getLocalURL();
+				} else {
+					$href = '#';
+				}
+			}
+		}
+
+		return array('text' => $text, 'href' => $href, 'org' => $line_temp[0], 'desc' => $descText, 'specialCanonicalName' => $specialCanonicalName);
+	}
+
+	/**
+	 * @author Inez Korczynski <inez@wikia.com>
+	 * @return array
+	 */
 	public static function getMessageAsArray($messageKey) {
         $message = trim(wfMsgForContent($messageKey));
         if(!wfEmptyMsg($messageKey, $message)) {
@@ -86,19 +149,12 @@ class MonacoSidebar {
 	public function getMenuLines() {
 		global $wgCat;
 
-		# if a local copy exists, try to use that first
+/*		# if a local copy exists, try to use that first
 		$revision = Revision::newFromTitle(Title::newFromText('Monaco-sidebar', NS_MEDIAWIKI));
 		if(is_object($revision) && trim($revision->getText()) != '') {
 			$lines = MonacoSidebar::getMessageAsArray('Monaco-sidebar');
 		}
-
-		# if we have no lines from the local, try to find an use a global per-hub default (wut? did this ever work?)
-		if(empty($lines)) {
-			if(isset($wgCat['id'])) {
-				$lines = MonacoSidebar::getMessageAsArray('shared-Monaco-sidebar-' . $wgCat['id']);
-			}
-		}
-
+*/
 		# if we STILL have no menu lines, fall back to just loading the default from the message system
 		if(empty($lines)) {
 			$lines = MonacoSidebar::getMessageAsArray('Monaco-sidebar');
@@ -416,7 +472,9 @@ class SkinMonaco extends SkinTemplate {
 	}
 
 	/**
-	 * @author Daniel Friesen <http://daniel.friesen.name/>
+	 * @author Inez Korczynski <inez@wikia.com>
+	 * @author Christian Williams
+ 	 * @author Daniel Friesen <http://daniel.friesen.name/>
 	 * Added this functionality to MediaWiki, may need to add a patch to MW 1.16 and older
 	 * This allows the skin to add body attributes while still integrating with
 	 * MediaWiki's new headelement code. I modified the original Monaco code to
@@ -734,7 +792,7 @@ EOF;
 
 		$i = $j = 0;
 		foreach($lines as $line) {
-			$node = parseItem($line);
+			$node = MonacoSidebar::parseItem($line);
 			$depth = strrpos($line, '*');
 			if($depth === 0) {
 				if($j != $i) {
@@ -771,7 +829,7 @@ EOF;
 		foreach($lines as $line) {
 			$depth = strrpos($line, '*');
 			if($depth === 0) {
-				$nodes[] = parseItem($line);
+				$nodes[] = MonacoSidebar::parseItem($line);
 			}
 		}
 		wfProfileOut( __METHOD__ );
@@ -789,7 +847,7 @@ EOF;
 				if (strlen($trimmed) == 0) { # ignore empty lines
 					continue;
 				}
-				$item = parseItem($trimmed);
+				$item = MonacoSidebar::parseItem($trimmed);
 
 				$tracker = $item['org'];
 				$tracker = preg_replace('/-url$/', '', $tracker);
@@ -969,7 +1027,7 @@ EOF;
 				if (strlen($line) == 0) { # ignore empty lines
 					continue;
 				}
-				$node = parseItem($line);
+				$node = MonacoSidebar::parseItem($line);
 				$node['depth'] = strrpos($line, '*') + 1;
 				if($node['depth'] == $lastDepth) {
 					$node['parentIndex'] = $nodes[$i]['parentIndex'];
@@ -1443,32 +1501,14 @@ echo WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allinone);
 echo WikiaAssets::GetUserCSS($this->data['csslinks-urls']);
 */
 
-	$this->printAdditionalHead();
+	$this->printAdditionalHead(); // @fixme not valid
 ?>
-	</head>
 <?php		wfProfileOut( __METHOD__ . '-head');  ?>
 
 <?php
 wfProfileIn( __METHOD__ . '-body'); ?>
 <?php
-	/*@kill if (ArticleAdLogic::isMainPage()){
-		$isMainpage = ' mainpage';
-	} else {
-		$isMainpage = null;
-	}*/
 
-
-	if(!isset($this->extraBodyClasses)){
-		// For extra classes to put on the body tag.  This allows overriding sub-skins to create selectors specific to their sub-skin (such as custom answers).
-		$this->extraBodyClasses = array();
-	}
-?>
-	<body<?php if($this->data['body_onload']) { ?> onload="<?php $this->text('body_onload') ?>"<?php } ?>
- class="mediawiki <?php $this->text('dir') ?> <?php $this->text('pageclass') ?><?php if(!empty($this->data['printable']) ) { ?> printable<?php } ?><?php if (!$wgUser->isLoggedIn()) { ?> loggedout<?php } ?> color2 mainpage <?php echo $body_css_action ?><?php print " ".implode($this->extraBodyClasses, " "); ?>" id="body">
-	<?php
-
-?>
-<?php
 	// this hook allows adding extra HTML just after <body> opening tag
 	// append your content to $html variable instead of echoing
 	$html = '';
@@ -1725,15 +1765,15 @@ if ($custom_article_footer !== '') {
 		}
 ?>
 							</ul>
-							<?php echo $namespaceType == 'content' || $namespaceType == 'blog' ? $actions : '' ?>
+							<?php // echo $namespaceType == 'content' ? $actions : '' ?>
 						</td>
 						<td class="col2">
 <?php
-		if ($namespaceType != 'content' && $namespaceType != 'blog') {
+		//if ($namespaceType != 'content' ) {
 ?>
 							<?php echo $actions ?>
 <?php
-		} else {
+		//} else {
 ?>
 							<ul class="actions" id="articleFooterActions2">
 								<li><a rel="nofollow" id="fe_random_icon" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_random_img" class="sprite random" alt="<?php echo wfMsg('randompage') ?>" /></a> <div><a rel="nofollow" id="fe_random_link" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><?php echo wfMsg('footer_6') ?></a></div></li>
@@ -1751,7 +1791,7 @@ if ($custom_article_footer !== '') {
 <?php } ?>
 							</ul>
 <?php
-		}
+		//}
 ?>
 						</td>
 					</tr>
@@ -1781,13 +1821,6 @@ if ($custom_article_footer !== '') {
 <?php		wfProfileIn( __METHOD__ . '-monacofooter'); ?>
 		<div id="monaco_footer" class="reset">
 
-
-<?php
-if ( $wgRequest->getVal('action') != 'edit' ) {
-	$this->printFooterSpotlights();
-}
-
-?>
 		<?php $this->printFooter() ?>
 		<?php wfRunHooks('SpecialFooterAfterWikia'); ?>
 		</div>
@@ -1964,8 +1997,6 @@ if ( $wgRequest->getVal('action') != 'edit' ) {
 <?php		wfProfileOut( __METHOD__ . '-navigation'); ?>
 <?php		wfProfileIn( __METHOD__ . '-widgets'); ?>
 
-			<div id="sidebar_1" class="sidebar">
-			</div>
 		</div>
 		<!-- /WIDGETS -->
 	<!--/div-->
@@ -2168,12 +2199,6 @@ EOF;
 	<?php
 	} //\ printFooter
 
-
-	function printFooterSpotlights(){
-	}
-
-
-
 	// Made a separate method so recipes, answers, etc can override.
 	function printContent(){
 		$this->html('bodytext');
@@ -2185,51 +2210,6 @@ EOF;
 		if($this->data['catlinks']) {
 			$this->html('catlinks');
 		}
-	}
-
-
-	function printStarRating(){
-		?>
-		<div class="clearfix" id="star-rating-row">
-		  <strong><?php echo wfMsgHtml('rate_it') ?></strong>
-		  <?php
-			$FauxRequest = new FauxRequest(array( "action" => "query", "list" => "wkvoteart", "wkpage" => $this->data['articleid'], "wkuservote" => true ));
-			$oApi = new ApiMain($FauxRequest);
-			try { $oApi->execute(); } catch (Exception $e) {};
-			$aResult =& $oApi->GetResultData();
-
-			if( !empty( $aResult['query']['wkvoteart'] ) ) {
-				if(!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['uservote'])) {
-					$voted = true;
-				} else {
-					$voted = false;
-				}
-				if (!empty($aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'])) {
-					$rating = $aResult['query']['wkvoteart'][$this->data['articleid']]['votesavg'];
-				} else {
-					$rating = 0;
-				}
-			} else {
-				$voted = false;
-				$rating = 0;
-			}
-
-			$hidden_star = $voted ? ' style="display: none;"' : '';
-			$ratingPx = round($rating * STAR_RATINGS_WIDTH_MULTIPLIER);
-		  ?>
-		  <div id="star-rating-wrapper">
-		    <ul id="star-rating" class="star-rating" rel="<?php echo STAR_RATINGS_WIDTH_MULTIPLIER;?>">
-			<li style="width: <?php echo $ratingPx ?>px;" id="current-rating" class="current-rating"><span><?php echo $rating ?>/5</span></li>
-			<li><a rel="nofollow" class="one-star" id="star1" title="1/5"<?php echo $hidden_star?>><span>1</span></a></li>
-			<li><a rel="nofollow" class="two-stars" id="star2" title="2/5"<?php echo $hidden_star?>><span>2</span></a></li>
-			<li><a rel="nofollow" class="three-stars" id="star3" title="3/5"<?php echo $hidden_star?>><span>3</span></a></li>
-			<li><a rel="nofollow" class="four-stars" id="star4" title="4/5"<?php echo $hidden_star?>><span>4</span></a></li>
-			<li><a rel="nofollow" class="five-stars" id="star5" title="5/5"<?php echo $hidden_star?>><span>5</span></a></li>
-		    </ul>
-		    <span style="<?php echo ($voted ? '' : 'display: none;') ?>" id="unrateLink"><a rel="nofollow" id="unrate" href="#"><?php echo wfMsg( 'unrate_it' ) ?></a></span>
-		  </div>
-		</div>
-		<?php
 	}
 
 }
