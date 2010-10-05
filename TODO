@@ -1,0 +1,11 @@
+* Reintroduce Masthead on userpages as a pure-skin feature (disableable)
+* Make createpage/upload links hookable and disableable
+* Search suggestions
+* Fix js
+* Make js menus properly fallback to css
+* Consider creating a optional replacement component for the "Latest activity" chunk in the sidebar
+* Add hookable areas to make my subskin ideas possible
+* Check out language box
+* Check the normal toolbox and see if Monaco is missing anything not shown elsewhere
+* Feed icons
+* Consider optional floating sitenotice island above page area (config flag)
