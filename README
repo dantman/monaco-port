@@ -1,0 +1,9 @@
+
+To install include Monaco.php and monaco/ inside of your skins/ folder.
+
+Hint: If you want to check this project out for live use while still keping it versioned in git, you can clone this to a folder of it's own and symlink monaco/ and Monaco.php into your skins/ folder.
+
+MediaWiki 1.17 includes the hook OutputPageBodyAttributes and the modifications to OutputPage.php and Skin.php necessary for this skin to add body classes into skins. If you are running an earlier verson you may apply the included OutputPageBodyAttributes.patch patch to your MediaWiki code to include the changes introduced into MediaWiki 1.17. This is a forward-compatible patch, you do not have to worry about re-applying it after you upgrade. Note that this patch was designed for MediaWiki 1.16, it has not been tested on earlier versions -- then again this skin probably won't even run on MediaWiki 1.15 since it uses MediaWiki 1.16 features.
+
+You can also include the ExtendedBodyAttributes.php code if you wish to re-introduce the mainpage and loggedout classes that were in Wikia's version of Monaco, doing this will actually make these css classes available globally to all skins that are programmed using the MediaWiki 1.16 headElement code.
+
