@@ -401,7 +401,7 @@ class SkinMonaco extends SkinTemplate {
 	function diggsLink() {}
 	function deliciousLink() {}
 
-	/** Using monobook. */
+	/** Using monaco. */
 	var $skinname = 'monaco', $stylename = 'monaco',
 		$template = 'MonacoTemplate', $useHeadElement = true;
 
@@ -517,12 +517,9 @@ class SkinMonaco extends SkinTemplate {
 		if(empty($data_array)) {
 			wfDebugLog('monaco', 'There is no cached $data_array, let\'s populate');
 			wfProfileIn(__METHOD__ . ' - DATA ARRAY');
-			$data_array['footerlinks'] = $this->getFooterLinks();
-			$data_array['wikiafooterlinks'] = $this->getWikiaFooterLinks();
 			// @kill $data_array['categorylist'] = DataProvider::getCategoryList();
 			$data_array['toolboxlinks'] = $this->getToolboxLinks();
 			//$data_array['sidebarmenu'] = $this->getSidebarLinks();
-			// @kill $data_array['magicfooterlinks'] = $this->getMagicFooterLinks();
 			wfProfileOut(__METHOD__ . ' - DATA ARRAY');
 			if($cache) {
 				$parserMemc->set($key, $data_array, 4 * 60 * 60 /* 4 hours */);
@@ -774,71 +771,6 @@ EOF;
 	/**
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
-	private function getFooterLinks() {
-		wfProfileIn( __METHOD__ );
-		global $wgCat;
-
-		$message_key = 'shared-Monaco-footer-links';
-		$nodes = array();
-
-		if(!isset($wgCat['id']) || null == ($lines = MonacoSidebar::getMessageAsArray($message_key.'-'.$wgCat['id']))) {
-			wfDebugLog('monaco', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
-			if(null == ($lines = MonacoSidebar::getMessageAsArray($message_key))) {
-				wfDebugLog('monaco', $message_key . ' - seems to be empty');
-				wfProfileOut( __METHOD__ );
-				return $nodes;
-			}
-		}
-
-		$i = $j = 0;
-		foreach($lines as $line) {
-			$node = MonacoSidebar::parseItem($line);
-			$depth = strrpos($line, '*');
-			if($depth === 0) {
-				if($j != $i) {
-					$i++;
-				}
-				$nodes[$i] = $node;
-			} else if($depth === 1) {
-				$nodes[$i]['childs'][] = $node;
-			}
-			$j++;
-		}
-		wfProfileOut( __METHOD__ );
-		return $nodes;
-	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
-	 private function getWikiaFooterLinks() {
-		wfProfileIn( __METHOD__ );
-		global $wgCat;
-
-		$message_key = 'shared-Monaco-footer-wikia-links';
-		$nodes = array();
-
-		if(!isset($wgCat['id']) || null == ($lines = MonacoSidebar::getMessageAsArray($message_key.'-'.$wgCat['id']))) {
-			wfDebugLog('monaco', $message_key.'-'.$wgCat['id'] . ' - seems to be empty');
-			if(null == ($lines = MonacoSidebar::getMessageAsArray($message_key))) {
-				wfDebugLog('monaco', $message_key . ' - seems to be empty');
-				wfProfileOut( __METHOD__ );
-				return $nodes;
-			}
-		}
-		foreach($lines as $line) {
-			$depth = strrpos($line, '*');
-			if($depth === 0) {
-				$nodes[] = MonacoSidebar::parseItem($line);
-			}
-		}
-		wfProfileOut( __METHOD__ );
-		return $nodes;
-	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 */
 	private function parseToolboxLinks($lines) {
 		$nodes = array();
 		if(is_array($lines)) {
@@ -902,37 +834,6 @@ EOF;
 	private function getToolboxLinks() {
 		return $this->parseToolboxLinks($this->getLines('Monaco-toolbox'));
 	}
-
-	/**
-	 * @author Inez Korczynski <inez@wikia.com>
-	 *//*
-	private function getMagicFooterLinks() {
-		global $wgDBname, $wgTitle, $wgExternalSharedDB;
-		$results = array();
-
-		$dbr = wfGetDB( DB_SLAVE, array(), $wgExternalSharedDB );
-		$res = $dbr->select('magic_footer_links', 'page, links', array('dbname' => $wgDBname));
-		while($row = $dbr->fetchObject($res)) {
-			$results[$row->page] = $row->links;
-		}
-		$dbr->freeResult($res);
-
-		wfRunHooks("getMagicFooterLinks", array(&$results));
-
-		if (!empty($results)) {
-			$tmpParser = new Parser();
-			$tmpParser->setOutputType(OT_HTML);
-			$tmpParserOptions = new ParserOptions();
-
-			$results2 = array();
-			foreach ($results as $page => $links) {
-				$results2[$page] = $tmpParser->parse($links, $wgTitle, $tmpParserOptions, false)->getText();
-			}
-			$results = $results2;
-		}
-
-		return $results;
-	}*/
 
 	var $lastExtraIndex = 1000;
 
@@ -1619,10 +1520,9 @@ if( $custom_user_data ) {
 <?php		wfProfileIn( __METHOD__ . '-page'); ?>
 
 	<div class="monaco_shrinkwrap" id="monaco_shrinkwrap_main">
-<?php
-wfRunHooks('MonacoBeforeWikiaPage', array($this));
-?>
-		<div id="wikia_page">
+<?php wfRunHooks('MonacoBeforePage', array($this)); ?>
+<?php $this->printBeforePage(); ?>
+		<div id="wikia_page" class="page">
 <?php
 wfRunHooks('MonacoBeforePageBar', array($this));
 if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
@@ -1818,13 +1718,6 @@ if ($custom_article_footer !== '') {
 	echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
 
 ?>
-<?php		wfProfileIn( __METHOD__ . '-monacofooter'); ?>
-		<div id="monaco_footer" class="reset">
-
-		<?php $this->printFooter() ?>
-		<?php wfRunHooks('SpecialFooterAfterWikia'); ?>
-		</div>
-<?php		wfProfileOut( __METHOD__ . '-monacofooter'); ?>
 		<!-- WIDGETS -->
 <?php		wfProfileIn( __METHOD__ . '-navigation'); ?>
 		<div id="widget_sidebar" class="reset widget_sidebar">
@@ -1994,6 +1887,8 @@ if ($custom_article_footer !== '') {
 	</table>
 			</div>
 			<!-- /SEARCH/NAVIGATION -->
+<?php		$this->printExtraSidebar(); ?>
+<?php		wfRunHooks( 'MonacoSidebarEnd', array( $this ) ); ?>
 <?php		wfProfileOut( __METHOD__ . '-navigation'); ?>
 <?php		wfProfileIn( __METHOD__ . '-widgets'); ?>
 
@@ -2075,6 +1970,12 @@ EOF;
 		}
 	}
 
+	// allow subskins to add extra sidebar extras
+	function printExtraSidebar() {}
+	
+	// allow subskins to add pre-page islands
+	function printBeforePage() {}
+
 	// curse like cobranding
 	function printCustomHeader() {}
 	function printCustomFooter() {}
@@ -2132,72 +2033,6 @@ EOF;
 		wfRunHooks( 'MonacoPrintFirstHeading' );
 		?></h1><?php
 	}
-
-
-	// Made a separate method so recipes, answers, etc can override.
-	function printFooter(){
-		global $wgTitle;
-	?>
-	  <table id="wikia_footer">
-	  <?php
-		$footerlinks = $this->data['data']['footerlinks'];
-		if((is_array($footerlinks)) && (!empty($footerlinks))) {
-		    foreach($footerlinks as $key => $val) {
-			$links = array();
-			if(isset($val['childs'])) {
-			    foreach($val['childs'] as $childKey => $childVal){
-				$links[] = '<a href="'.htmlspecialchars($childVal['href']).'">'.$childVal['text'].'</a>';
-			    }
-	  ?>
-			<tr>
-			    <th><?php echo $val['text'] ?></th>
-			    <td><?php echo implode(' | ', $links) ?></td>
-			</tr>
-	  <?php
-			}
-		    }
-		}
-		if(!empty($this->data['data']['magicfooterlinks']) && (isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()])
-																						|| isset($this->data['data']['magicfooterlinks']['*']))) {
-				$magicfooterlinks = isset($this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()]) ?
-											$this->data['data']['magicfooterlinks'][$wgTitle->getPrefixedText()] : $this->data['data']['magicfooterlinks']['*'];
-	  ?>
-			<tr>
-			    <th><?php echo wfMsg('magicfooterlinks') ?></th>
-			    <td><?php echo $magicfooterlinks ?></td>
-			</tr>
-  	  <?php
-		}
-
-
-	  $wikiafooterlinks = $this->data['data']['wikiafooterlinks'];
-	  if(count($wikiafooterlinks) > 0) {
-		$wikiafooterlinksA = array();
-	  ?>
-			<tr>
-				<td colspan="2" id="wikia_corporate_footer">
-	  <?php
-			foreach($wikiafooterlinks as $key => $val) {
-				// Very primitive way to actually have copyright WF variable, not MediaWiki:msg constant.
-				// This is only shown when there is copyright data available. It is not shown on special pages for example.
-				if ( 'GFDL' == $val['text'] || '_LICENSE_' == $val['text']) {
-					if (!empty($this->data['copyright'])) {
-						$wikiafooterlinksA[] = str_replace("<a href", "<a rel=\"nofollow\" href", $this->data['copyright']);
-					}
-				} else {
-					$wikiafooterlinksA[] = '<a rel="nofollow" href="'.htmlspecialchars($val['href']).'">'.$val['text'].'</a>';
-				}
-			}
-			echo implode(' | ', $wikiafooterlinksA);
-	  ?>
-				</td>
-			</tr>
-	  <?php
-	  }
-	  ?>
-	  </table>
-	<?php
-	} //\ printFooter
 
 	// Made a separate method so recipes, answers, etc can override.
 	function printContent(){
