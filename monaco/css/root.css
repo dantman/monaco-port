@@ -3,6 +3,7 @@ body {
 	font-size: 10pt;
 	margin: 0;
 }
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary { display: block; }
 .color1, .yui-panel .hd {
 	background-color: #36C;
 	color: white;
@@ -12,6 +13,19 @@ body {
 }
 .color2 {
 	background-color: #F5F5F5;
+}
+
+#skiplinks a.skiplink {
+	display: block;
+	position: absolute;
+	top: -500px;
+	left: 0;
+	width: 206px;
+	text-align: center;
+}
+#skiplinks a.skiplink:active,
+#skiplinks a.skiplink:focus {
+	top: 190px;
 }
 
 

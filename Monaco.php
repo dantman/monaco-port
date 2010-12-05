@@ -20,7 +20,7 @@ $wgHooks['MessageCacheReplace'][] = 'MonacoSidebar::invalidateCache';
 
 class MonacoSidebar {
 
-	const version = '0.07';
+	const version = '0.08';
 
 	static function invalidateCache() {
 		global $wgMemc;
@@ -172,7 +172,7 @@ class MonacoSidebar {
 			
 			wfRunHooks('MonacoSidebarGetMenu', array(&$nodes));
 			
-			$menu = '<div id="navigation"'.($userMenu ? ' class="userMenu"' : '').'>';
+			$menu = '<nav id="navigation"'.($userMenu ? ' class="userMenu"' : '').'>';
 			$mainMenu = array();
 			foreach($nodes[0]['children'] as $key => $val) {
 				if(isset($nodes[$val]['children'])) {
@@ -183,11 +183,14 @@ class MonacoSidebar {
 				}
 				if(isset($nodes[$val]['href']) && $nodes[$val]['href'] == 'editthispage') $menu .= '<!--b-->';
 				$menu .= '<div id="menu-item_'.$val.'" class="menu-item">';
-				$menu .= '<a id="a-menu-item_'.$val.'" href="'.(!empty($nodes[$val]['href']) ? htmlspecialchars($nodes[$val]['href']) : '#').'" rel="nofollow">'.htmlspecialchars($nodes[$val]['text']).((!empty($nodes[$val]['children']) || !empty($nodes[$val]['magic'])) ? '<em>&rsaquo;</em>' : '').'</a>';
+				$menu .= '<a id="a-menu-item_'.$val.'" href="'.(!empty($nodes[$val]['href']) ? htmlspecialchars($nodes[$val]['href']) : '#').'"';
+				if ( !isset($nodes[$val]['internal']) || !$nodes[$val]['internal'] )
+					$menu .= ' rel="nofollow"';
+				$menu .= ' tabIndex=3>'.htmlspecialchars($nodes[$val]['text']).((!empty($nodes[$val]['children']) || !empty($nodes[$val]['magic'])) ? '<em>&rsaquo;</em>' : '').'</a>';
 				$menu .= '</div>';
 				if(isset($nodes[$val]['href']) && $nodes[$val]['href'] == 'editthispage') $menu .= '<!--e-->';
 			}
-			$menu .= '</div>';
+			$menu .= '</nav>';
 
 			if($this->editUrl) {
 				$menu = str_replace('href="editthispage"', 'href="'.$this->editUrl.'"', $menu);
@@ -284,7 +287,9 @@ class MonacoSidebar {
 
 	public function parseLine($line) {
 		$lineTmp = explode('|', trim($line, '* '), 2);
-		$lineTmp[0] = trim($lineTmp[0], '[]'); // for external links defined as [http://www.wikia.com] instead of just http://www.wikia.com
+		$lineTmp[0] = trim($lineTmp[0], '[]'); // for external links defined as [http://example.com] instead of just http://example.com
+
+		$internal = false;
 
 		if(count($lineTmp) == 2 && $lineTmp[1] != '') {
 			$link = trim(wfMsgForContent($lineTmp[0]));
@@ -313,6 +318,7 @@ class MonacoSidebar {
 				$title = Title::newFromText($link);
 				if(is_object($title)) {
 					$href = $title->fixSpecialName()->getLocalURL();
+					$internal = true;
 				} else {
 					$href = '#';
 				}
@@ -321,6 +327,7 @@ class MonacoSidebar {
 
 		$ret = array('original' => $lineTmp[0], 'text' => $text);
 		$ret['href'] = $href;
+		$ret['internal'] = $internal;
 		return $ret;
 	}
 
@@ -1378,6 +1385,34 @@ class MonacoTemplate extends QuickTemplate {
 		return $output;
 	}
 
+	/*
+	 * Build returnto parameter with new returntoquery from MW 1.16
+	 *
+	 * @author Marooned
+	 * @return string
+	 */
+	static function getReturntoParam($customReturnto = null) {
+		global $wgTitle, $wgRequest;
+		
+		if ($customReturnto) {
+			$returnto = "returnto=$customReturnto";
+		} else {
+			$thisurl = $wgTitle->getPrefixedURL();
+			$returnto = "returnto=$thisurl";
+		}
+		
+		if (!$wgRequest->wasPosted()) {
+			$query = $wgRequest->getValues();
+			unset($query['title']);
+			unset($query['returnto']);
+			unset($query['returntoquery']);
+			$thisquery = wfUrlencode(wfArrayToCGI($query));
+			if($thisquery != '')
+				$returnto .= "&returntoquery=$thisquery";
+		}
+		return $returnto;
+	}
+
 	function execute() {
 		wfProfileIn( __METHOD__ );
 		global $wgContLang, $wgArticle, $wgUser, $wgLogo, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgExtensionsPath, $wgContentNamespaces;
@@ -1392,6 +1427,8 @@ class MonacoTemplate extends QuickTemplate {
 
 		// Suppress warnings to prevent notices about missing indexes in $this->data
 		wfSuppressWarnings();
+		
+		$this->setupRightSidebar();
 		
 		$this->html( 'headelement' );
 
@@ -1420,6 +1457,11 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	wfRunHooks('GetHTMLAfterBody', array ($this, &$html));
 	echo $html;
 ?>
+<div id="skiplinks"> 
+	<a class="skiplink" rel="nofollow" href="#article" tabIndex=1>Skip to Content</a> 
+	<a class="skiplink wikinav" rel="nofollow" href="#widget_sidebar" tabIndex=1>Skip to Navigation</a> 
+</div>
+
 	<!-- HEADER -->
 <?php
 
@@ -1505,7 +1547,7 @@ if( $custom_user_data ) {
 
 			<div id="accent_graphic1"></div>
 			<div id="accent_graphic2"></div>
-			<div id="wiki_logo" style="background-image: url(<?php $this->html( 'logopath' ) ?>);"><a href="<?php echo htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>" accesskey="z"><?php echo $wgSitename ?></a></div>
+			<div id="wiki_logo" style="background-image: url(<?php $this->html( 'logopath' ) ?>);"><a href="<?php echo htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>" accesskey="z" rel="home"><?php echo $wgSitename ?></a></div>
 			<!--[if lt IE 7]>
 			<style type="text/css">
 				#wiki_logo {
@@ -1535,7 +1577,7 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 					<!-- ARTICLE -->
 
 <?php }		wfProfileIn( __METHOD__ . '-article'); ?>
-			<div id="article" <?php if($this->data['body_ondblclick']) { ?>ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?>>
+			<article id="article"<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?> aria-role=main aria-labeledby="firstHeading">
 				<a name="top" id="top"></a>
 				<?php
 				wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed?
@@ -1552,7 +1594,7 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 				}
 				?>
 				<div id="bodyContent">
-					<h3 id="siteSub"><?php $this->msg('tagline') ?></h3>
+					<h2 id="siteSub"><?php $this->msg('tagline') ?></h2>
 					<div id="contentSub"><?php $this->html('subtitle') ?></div>
 					<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
 					<?php if($this->data['newtalk'] ) { ?><div class="usermessage noprint"><?php $this->html('newtalk')  ?></div><?php } ?>
@@ -1566,11 +1608,11 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 					$this->printCategories();
 					?>
 					<!-- end content -->
-					<?php if($this->data['dataAfterContent']) { $this->html ('dataAfterContent'); } ?>
+					<?php if($this->data['dataAfterContent']) { $this->html('dataAfterContent'); } ?>
 					<div class="visualClear"></div>
 				</div>
 
-			</div>
+			</article>
 			<!-- /ARTICLE -->
 			<?php
 
@@ -1663,7 +1705,7 @@ if ($custom_article_footer !== '') {
 				$userPageLink = $userPageTitle->getLocalUrl();
 				$userPageExists = $userPageTitle->exists();
 ?>
-								<li><?php echo $userPageExists ? '<a id="fe_user_icon" rel="nofollow" href="'.$userPageLink.'">' : '' ?><img src="<?php $this->text('blankimg') ?>" id="fe_user_img" class="sprite user" alt="<?php echo wfMsg('userpage') ?>" /><?php echo $userPageExists ? '</a>' : '' ?> <div><?php echo wfMsg('footer_5', '<a id="fe_user_link" rel="nofollow" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
+								<li><?php echo $userPageExists ? '<a id="fe_user_icon" href="'.$userPageLink.'">' : '' ?><img src="<?php $this->text('blankimg') ?>" id="fe_user_img" class="sprite user" alt="<?php echo wfMsg('userpage') ?>" /><?php echo $userPageExists ? '</a>' : '' ?> <div><?php echo wfMsg('footer_5', '<a id="fe_user_link" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
 <?php
 			}
 		}
@@ -1722,23 +1764,25 @@ if ($custom_article_footer !== '') {
 	echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
 
 ?>
+<?php $this->printRightSidebar() ?>
 		<!-- WIDGETS -->
 <?php		wfProfileIn( __METHOD__ . '-navigation'); ?>
 		<div id="widget_sidebar" class="reset widget_sidebar">
 
 			<!-- SEARCH/NAVIGATION -->
-			<div class="widget" id="navigation_widget">
+			<div class="widget" id="navigation_widget" aria-role=navigation>
 <?php
 	global $wgSitename;
 	$msgSearchLabel = wfMsg('Tooltip-search');
 	$searchLabel = wfEmptyMsg('Tooltip-search', $msgSearchLabel) ? (wfMsg('ilsubmit').' '.$wgSitename.'...') : $msgSearchLabel;
 ?>
-			<div id="search_box" class="color1">
+			<div id="search_box" class="color1" aria-role="search">
 				<form action="<?php $this->text('searchaction') ?>" id="searchform">
-					<input id="search_field" name="search" type="text" maxlength="200" onfocus="sf_focus(event);" alt="<?php echo htmlspecialchars($searchLabel) ?>" placeholder="<?php echo htmlspecialchars($searchLabel) ?>" autocomplete="off"<?php echo $skin->tooltipAndAccesskey('search'); ?> />
-					<? global $wgSearchDefaultFulltext; ?>
+					<label style="display: none;" for="search_field"><?php echo htmlspecialchars($searchLabel) ?></label>
+					<input id="search_field" name="search" type="text" maxlength="200" onfocus="sf_focus(event);" alt="<?php echo htmlspecialchars($searchLabel) ?>" aria-label="<?php echo htmlspecialchars($searchLabel) ?>" placeholder="<?php echo htmlspecialchars($searchLabel) ?>" autocomplete="off"<?php echo $skin->tooltipAndAccesskey('search'); ?> tabIndex=2 aria-required=true aria-flowto="search-button" />
+					<?php global $wgSearchDefaultFulltext; ?>
 					<input type="hidden" name="<?php echo ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
-					<input type="image" src="<?php $this->text('blankimg') ?>" id="search-button" class="sprite search" />
+					<input type="image" alt="<?php echo htmlspecialchars(wfMsg('search')) ?>" src="<?php $this->text('blankimg') ?>" id="search-button" class="sprite search" tabIndex=2 />
 				</form>
 			</div>
 <?php
@@ -1755,7 +1799,7 @@ if ($custom_article_footer !== '') {
 	$userIsAnon = $wgUser->isAnon();
 	if ($userIsAnon) {
 		//prepare object for further usage
-		$signupTitle = Title::makeTitle(NS_SPECIAL, 'Signup');
+		$signupTitle = Title::makeTitle(NS_SPECIAL, 'UserLogin');
 	}
 
 	global $wgRequest, $wgEnableAnswers;
@@ -1769,10 +1813,10 @@ if ($custom_article_footer !== '') {
 		if( !empty($wgMonacoDynamicCreateOverride) ) {
 			$sp = Title::newFromText($wgMonacoDynamicCreateOverride);
 		} else {
-			$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage');
+			$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage'); // @fixme CreatePage doesn't exist on most wiki
 		}
 		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'Signup')->getLocalURL(wfGetReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
+		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'UserLogin')->getLocalURL(self::getReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
 			'text' => wfMsg('dynamic-links-write-article'),
@@ -1782,7 +1826,7 @@ if ($custom_article_footer !== '') {
 		);
 		$sp = Title::makeTitle(NS_SPECIAL, 'Upload');
 		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = $userIsAnon ? $signupTitle->getLocalURL(wfGetReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
+		$url = $userIsAnon ? $signupTitle->getLocalURL(self::getReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
 			'text' => wfMsg('dynamic-links-add-image'),
@@ -1802,7 +1846,7 @@ if ($custom_article_footer !== '') {
 			foreach ($dynamicLinksArray as $link) {
 				//print_r($link);
 				$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
-				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '><img src="'.htmlspecialchars($this->data['blankimg']).'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . '>'. $link['text'] .'</a></li>';
+				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . ' tabIndex=-1><img src="'.htmlspecialchars($this->data['blankimg']).'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . ' tabIndex=3>'. $link['text'] .'</a></li>';
 			}
 ?>
 					</ul>
@@ -1835,7 +1879,7 @@ if ($custom_article_footer !== '') {
 			//Redirect to login page instead of showing error, see Login friction project
 			if ($item !== false && $userIsAnon && isset($item['specialCanonicalName']) && in_array($item['specialCanonicalName'], $wgSpecialPagesRequiredLogin)) {
 				$returnto = Title::newFromText($item['specialCanonicalName'], NS_SPECIAL)->getPrefixedDBkey();
-				$item['href'] = Title::makeTitle(NS_SPECIAL, 'Signup')->getLocalURL(wfGetReturntoParam($returnto));
+				$item['href'] = Title::makeTitle(NS_SPECIAL, 'UserLogin')->getLocalURL(self::getReturntoParam($returnto));
 			}
 			$i & 1 ? $linksArrayR[] = $item : $linksArrayL[] = $item;
 		}
@@ -1855,7 +1899,7 @@ if ($custom_article_footer !== '') {
 				} else {
 					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
-						<li><a rel="nofollow" href="<?php echo htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?php echo $tracker ?>')"><?php echo htmlspecialchars($val['text']) ?></a></li>
+						<li><a<?php if ( !isset($val['internal']) || !$val['internal'] ) { ?> rel="nofollow"<?php } ?> href="<?php echo htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?php echo $tracker ?>')" tabIndex=3><?php echo htmlspecialchars($val['text']) ?></a></li>
 <?php
 				}
 			}
@@ -1873,13 +1917,13 @@ if ($custom_article_footer !== '') {
 				} else {
 					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
-						<li><a rel="nofollow" href="<?php echo htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?php echo $tracker ?>')"><?php echo htmlspecialchars($val['text']) ?></a></li>
+						<li><a<?php if ( !isset($val['internal']) || !$val['internal'] ) { ?> rel="nofollow"<?php } ?> href="<?php echo htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?php echo $tracker ?>')" tabIndex=3><?php echo htmlspecialchars($val['text']) ?></a></li>
 <?php
 				}
 			}
 		}
 ?>
-						<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?php echo Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r" rel="nofollow">Recent changes</a><a href="<?php echo Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x" rel="nofollow">Random page</a></li>
+						<li style="font-size: 1px; position: absolute; top: -10000px"><a href="<?php echo Title::newFromText('Special:Recentchanges')->getLocalURL() ?>" accesskey="r">Recent changes</a><a href="<?php echo Title::newFromText('Special:Random')->getLocalURL() ?>" accesskey="x">Random page</a></li>
 					</ul>
 				</td>
 			</tr>
@@ -1977,6 +2021,25 @@ EOF;
 	// allow subskins to add extra sidebar extras
 	function printExtraSidebar() {}
 	
+	// hook for subskins
+	function setupRightSidebar() {}
+	
+	function addToRightSidebar($html) {
+		$this->mRightSidebar .= $html;
+	}
+	
+	function printRightSidebar() {
+		if ( $this->mRightSidebar ) {
+?>
+		<!-- RIGHT SIDEBAR -->
+		<div id="right_sidebar">
+			<?php echo $this->mRightSidebar ?>
+		</div>
+		<!-- /RIGHT SIDEBAR -->
+<?php
+		}
+	}
+	
 	// allow subskins to add pre-page islands
 	function printBeforePage() {}
 
@@ -1998,7 +2061,7 @@ EOF;
                 $skin = $wgUser->getSkin();
 	 	?>
 		<div id="page_bar" class="reset color1 clearfix">
-				<ul id="page_controls">
+				<ul id="page_controls" role="toolbar">
 		  <?php
 			if(isset($this->data['articlelinks']['left'])) {
 				foreach($this->data['articlelinks']['left'] as $key => $val) {
@@ -2010,7 +2073,7 @@ EOF;
 			}
 		  ?>
 						  </ul>
-						  <ul id="page_tabs">
+						  <ul id="page_tabs" role="navigation">
 		  <?php
 		  $showright = true;
 		  $namespace = $wgTitle->getNamespace();
@@ -2033,7 +2096,7 @@ EOF;
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
 	function printFirstHeading(){
-		?><h1 class="firstHeading"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title');
+		?><h1 id="firstHeading" class="firstHeading" aria-level="1"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title');
 		wfRunHooks( 'MonacoPrintFirstHeading' );
 		?></h1><?php
 	}

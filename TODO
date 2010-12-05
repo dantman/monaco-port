@@ -9,3 +9,4 @@
 * Check the normal toolbox and see if Monaco is missing anything not shown elsewhere
 * Feed icons
 * Consider optional floating sitenotice island above page area (config flag)
+* When we add scripts add /*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/ into the code
