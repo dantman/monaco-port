@@ -845,7 +845,7 @@ EOF;
 				$node['magic'] = true;
 			}
 			$results = DataProvider::$extraWords[strtolower($node['org'])][1]();
-			$results[] = array('url' => Title::makeTitle(NS_SPECIAL, 'Top/'.$extraWords[strtolower($node['org'])][0])->getLocalURL(), 'text' => strtolower(wfMsg('moredotdotdot')), 'class' => 'Monaco-sidebar_more');
+			$results[] = array('url' => SpecialPage::getTitleFor('Top/'.$extraWords[strtolower($node['org'])][0])->getLocalURL(), 'text' => strtolower(wfMsg('moredotdotdot')), 'class' => 'Monaco-sidebar_more');
 			global $wgUser;
 			if( $wgUser->isAllowed( 'editinterface' ) ) {
 				if(strtolower($node['org']) == '#popular#') {
@@ -1760,7 +1760,7 @@ if ($custom_article_footer !== '') {
 	$userIsAnon = $wgUser->isAnon();
 	if ($userIsAnon) {
 		//prepare object for further usage
-		$signupTitle = Title::makeTitle(NS_SPECIAL, 'UserLogin');
+		$signupTitle = SpecialPage::getTitleFor('UserLogin');
 	}
 
 	global $wgRequest, $wgEnableAnswers;
@@ -1774,23 +1774,23 @@ if ($custom_article_footer !== '') {
 		if( !empty($wgMonacoDynamicCreateOverride) ) {
 			$sp = Title::newFromText($wgMonacoDynamicCreateOverride);
 		} else {
-			$sp = Title::makeTitle(NS_SPECIAL, 'CreatePage'); // @fixme CreatePage doesn't exist on most wiki
+			$sp = SpecialPage::getTitleFor('CreatePage'); // @fixme CreatePage doesn't exist on most wiki
 		}
 		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'UserLogin')->getLocalURL(self::getReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
+		$url = !$wgUser->isAllowed('edit') ? SpecialPage::getTitleFor('UserLogin')->getLocalURL(self::getReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
-			'text' => wfMsgHtml('dynamic-links-write-article'),
+			'text' => wfMsg('dynamic-links-write-article'),
 			'id' => 'dynamic-links-write-article',
 			'icon' => 'edit',
 			'tracker' => 'CreatePage',
 		);
-		$sp = Title::makeTitle(NS_SPECIAL, 'Upload');
+		$sp = SpecialPage::getTitleFor('Upload');
 		/* Redirect to login page instead of showing error, see Login friction project */
 		$url = $userIsAnon ? $signupTitle->getLocalURL(self::getReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
-			'text' => wfMsgHtml('dynamic-links-add-image'),
+			'text' => wfMsg('dynamic-links-add-image'),
 			'id' => 'dynamic-links-add-image',
 			'icon' => 'photo',
 			'tracker' => 'Upload'
@@ -1807,7 +1807,7 @@ if ($custom_article_footer !== '') {
 			foreach ($dynamicLinksArray as $link) {
 				//print_r($link);
 				$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
-				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . ' tabIndex=-1><img src="'.htmlspecialchars($this->data['blankimg']).'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . $link['text'] . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . ' tabIndex=3>'. $link['text'] .'</a></li>';
+				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . ' tabIndex=-1><img src="'.htmlspecialchars($this->data['blankimg']).'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . htmlspecialchars($link['text']) . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . ' tabIndex=3>'. htmlspecialchars($link['text']) .'</a></li>';
 			}
 ?>
 					</ul>
@@ -1839,8 +1839,8 @@ if ($custom_article_footer !== '') {
 			$item = isset($linksArray[$i]) ? $linksArray[$i] : false;
 			//Redirect to login page instead of showing error, see Login friction project
 			if ($item !== false && $userIsAnon && isset($item['specialCanonicalName']) && in_array($item['specialCanonicalName'], $wgSpecialPagesRequiredLogin)) {
-				$returnto = Title::newFromText($item['specialCanonicalName'], NS_SPECIAL)->getPrefixedDBkey();
-				$item['href'] = Title::makeTitle(NS_SPECIAL, 'UserLogin')->getLocalURL(self::getReturntoParam($returnto));
+				$returnto = SpecialPage::getTitleFor($item['specialCanonicalName'])->getPrefixedDBkey();
+				$item['href'] = SpecialPage::getTitleFor('UserLogin')->getLocalURL(self::getReturntoParam($returnto));
 			}
 			$i & 1 ? $linksArrayR[] = $item : $linksArrayL[] = $item;
 		}
