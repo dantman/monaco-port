@@ -1428,8 +1428,8 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	echo $html;
 ?>
 <div id="skiplinks"> 
-	<a class="skiplink" rel="nofollow" href="#article" tabIndex=1>Skip to Content</a> 
-	<a class="skiplink wikinav" rel="nofollow" href="#widget_sidebar" tabIndex=1>Skip to Navigation</a> 
+	<a class="skiplink" href="#article" tabIndex=1>Skip to Content</a> 
+	<a class="skiplink wikinav" href="#widget_sidebar" tabIndex=1>Skip to Navigation</a> 
 </div>
 
 	<!-- HEADER -->
@@ -1485,16 +1485,16 @@ if( $custom_user_data ) {
 					<button id="headerButtonUser" class="header-button color1"><?php echo trim(wfMsgHtml('moredotdotdot'), ' .') ?><img src="<?php $this->text('blankimg') ?>" /></button>
 				</span>
 				<span>
-					<a rel="nofollow" href="<?php echo htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-logout') ?>><?php echo htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a>
+					<a href="<?php echo htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-logout') ?>><?php echo htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a>
 				</span>
 	<?php
 	} else {
 ?>
 				<span id="userLogin">
-					<a rel="nofollow" class="ajaxLogin" id="login" href="<?php echo htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
+					<a class="ajaxLogin" id="login" href="<?php echo htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
 				</span>
 
-					<a rel="nofollow" class="wikia-button ajaxRegister" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
+					<a class="wikia-button ajaxRegister" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
 
 <?php
 	}
@@ -1608,10 +1608,10 @@ if ($custom_article_footer !== '') {
 			$actions =
 								'<ul id="articleFooterActions3" class="actions clearfix">' .
 								(!empty($this->data['content_actions']['history']) ? ('
-								<li id="fe_history"><a rel="nofollow" id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_history_img" class="sprite history" alt="' . wfMsgHtml('history_short') . '" /></a> <div><a id="fe_history_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
+								<li id="fe_history"><a id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_history_img" class="sprite history" alt="' . wfMsgHtml('history_short') . '" /></a> <div><a id="fe_history_link" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
 
 								(!empty($nav_urls['recentchangeslinked']) ? ('
-								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" alt="' . wfMsgHtml('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsgHtml('recentchangeslinked') . '</a></div></li>') : '');
+								<li id="fe_recent"><a id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" alt="' . wfMsgHtml('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsgHtml('recentchangeslinked') . '</a></div></li>') : '');
 
 		}
 		if (!empty($nav_urls['permalink']) || !empty($nav_urls['whatlinkshere'])) {
@@ -1619,10 +1619,10 @@ if ($custom_article_footer !== '') {
 								'<ul id="articleFooterActions4" class="actions clearfix">' .
 
 								(!empty($nav_urls['permalink']) ? ('
-								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_permalink_img" class="sprite move" alt="' . wfMsgHtml('permalink') . '" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
+								<li id="fe_permalink"><a id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_permalink_img" class="sprite move" alt="' . wfMsgHtml('permalink') . '" /></a> <div><a id="fe_permalink_link" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
 
 								((!empty($nav_urls['whatlinkshere'])) ? ('
-								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_whatlinkshere_img" class="sprite pagelink" alt="' . wfMsgHtml('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsgHtml('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
+								<li id="fe_whatlinkshere"><a id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_whatlinkshere_img" class="sprite pagelink" alt="' . wfMsgHtml('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsgHtml('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
 
 
 
@@ -1643,7 +1643,7 @@ if ($custom_article_footer !== '') {
 				echo $custom_article_footer;
 		} else {
 ?>
-								<li><a rel="nofollow" id="fe_edit_icon" href="<?php echo htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_edit_img" class="sprite edit" alt="<?php echo wfMsgHtml('edit') ?>" /></a> <div><?php echo wfMsgHtml('monaco-footer-improve', '<a rel="nofollow" id="fe_edit_link" href="'.htmlspecialchars($wgTitle->getEditURL()).'">'.wfMsgHtml('monaco-footer-improve-linktext').'</a>'); ?></div></li>
+								<li><a id="fe_edit_icon" href="<?php echo htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_edit_img" class="sprite edit" alt="<?php echo wfMsgHtml('edit') ?>" /></a> <div><?php echo wfMsgHtml('monaco-footer-improve', '<a id="fe_edit_link" href="'.htmlspecialchars($wgTitle->getEditURL()).'">'.wfMsgHtml('monaco-footer-improve-linktext').'</a>'); ?></div></li>
 <?php
 		}
 
@@ -1677,7 +1677,7 @@ if ($custom_article_footer !== '') {
 		//} else {
 ?>
 							<ul class="actions" id="articleFooterActions2">
-								<li><a rel="nofollow" id="fe_random_icon" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_random_img" class="sprite random" alt="<?php echo wfMsgHtml('randompage') ?>" /></a> <div><a rel="nofollow" id="fe_random_link" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><?php echo wfMsgHtml('viewrandompage') ?></a></div></li>
+								<li><a id="fe_random_icon" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_random_img" class="sprite random" alt="<?php echo wfMsgHtml('randompage') ?>" /></a> <div><a id="fe_random_link" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><?php echo wfMsgHtml('viewrandompage') ?></a></div></li>
 
 						</td>
 					</tr>
@@ -1790,7 +1790,7 @@ if ($custom_article_footer !== '') {
 <?php
 			foreach ($dynamicLinksArray as $link) {
 				//print_r($link);
-				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '" tabIndex=-1><img src="'.htmlspecialchars($this->data['blankimg']).'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . htmlspecialchars($link['text']) . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '" tabIndex=3>'. htmlspecialchars($link['text']) .'</a></li>';
+				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '" tabIndex=-1><img src="'.htmlspecialchars($this->data['blankimg']).'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . htmlspecialchars($link['text']) . '" /></a> <a id="' . $link['id'] . '-link" href="' . htmlspecialchars($link['url']) . '" tabIndex=3>'. htmlspecialchars($link['text']) .'</a></li>';
 			}
 ?>
 					</ul>
@@ -1991,7 +1991,7 @@ EOF;
 			if(isset($this->data['articlelinks']['left'])) {
 				foreach($this->data['articlelinks']['left'] as $key => $val) {
 		  ?>
-							  <li id="control_<?php echo $key ?>" class="<?php echo $val['class'] ?>"><img src="<?php $this->text('blankimg') ?>" class="sprite <?php echo (isset($val['icon'])) ? $val['icon'] : $key ?>" alt="" /><a rel="nofollow" id="ca-<?php echo $key ?>" href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?>><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
+							  <li id="control_<?php echo $key ?>" class="<?php echo $val['class'] ?>"><img src="<?php $this->text('blankimg') ?>" class="sprite <?php echo (isset($val['icon'])) ? $val['icon'] : $key ?>" alt="" /><a id="ca-<?php echo $key ?>" href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?>><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
 		  <?php
 				}
 				wfRunHooks( 'MonacoAfterArticleLinks' );
