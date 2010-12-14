@@ -10,3 +10,4 @@
 * Feed icons
 * Consider optional floating sitenotice island above page area (config flag)
 * When we add scripts add /*@cc_on'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})@*/ into the code
+* Add support for 1.17's resource loader. Since 1.17 has this feature we won't be combining css files ourselves and making them ugly.

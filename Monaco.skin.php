@@ -458,27 +458,27 @@ class SkinMonaco extends SkinTemplate {
 		parent::setupSkinUserCss( $out );
 		
 		//$out->addStyle( 'common/shared.css' );
-		$out->addStyle( 'monaco/css/monobook_modified.css', 'screen' );
-		$out->addStyle( 'monaco/css/reset_modified.css', 'screen' );
+		$out->addStyle( 'monaco/style/css/monobook_modified.css', 'screen' );
+		$out->addStyle( 'monaco/style/css/reset_modified.css', 'screen' );
 		// @note Original monaco included extra wikia_ui/buttons.css here which Wikia dropped into skins/common
-		$out->addStyle( 'monaco/css/sprite.css', 'screen' );
-		$out->addStyle( 'monaco/css/root.css', 'screen' );
-		$out->addStyle( 'monaco/css/header.css', 'screen' );
-		$out->addStyle( 'monaco/css/article.css', 'screen' );
-		$out->addStyle( 'monaco/css/widgets.css', 'screen' ); // ?
-		$out->addStyle( 'monaco/css/modal.css', 'screen' ); // ?
-		$out->addStyle( 'monaco/css/footer.css', 'screen' );
-		$out->addStyle( 'monaco/css/star_rating.css', 'screen' );
-		$out->addStyle( 'monaco/css/ny.css', 'screen' );
+		$out->addStyle( 'monaco/style/css/sprite.css', 'screen' );
+		$out->addStyle( 'monaco/style/css/root.css', 'screen' );
+		$out->addStyle( 'monaco/style/css/header.css', 'screen' );
+		$out->addStyle( 'monaco/style/css/article.css', 'screen' );
+		$out->addStyle( 'monaco/style/css/widgets.css', 'screen' ); // ?
+		$out->addStyle( 'monaco/style/css/modal.css', 'screen' ); // ?
+		$out->addStyle( 'monaco/style/css/footer.css', 'screen' );
+		$out->addStyle( 'monaco/style/css/star_rating.css', 'screen' );
+		$out->addStyle( 'monaco/style/css/ny.css', 'screen' );
 		
-		$out->addStyle( 'monaco/css/monaco_ltie7.css', 'screen', 'lt IE 7' );
-		$out->addStyle( 'monaco/css/monaco_ie7.css', 'screen', 'IE 7' );
-		$out->addStyle( 'monaco/css/monaco_ie8.css', 'screen', 'IE 8' );
+		$out->addStyle( 'monaco/style/css/monaco_ltie7.css', 'screen', 'lt IE 7' );
+		$out->addStyle( 'monaco/style/css/monaco_ie7.css', 'screen', 'IE 7' );
+		$out->addStyle( 'monaco/style/css/monaco_ie8.css', 'screen', 'IE 8' );
 		
 		if ( isset($wgMonacoTheme) && is_string($wgMonacoTheme) && $wgMonacoTheme != "sapphire" )
-			$out->addStyle( "monaco/{$wgMonacoTheme}/css/main.css", 'screen' );
+			$out->addStyle( "monaco/style/{$wgMonacoTheme}/css/main.css", 'screen' );
 		
-		$out->addStyle( 'monaco/rtl.css', 'screen', '', 'rtl' );
+		$out->addStyle( 'monaco/style/rtl.css', 'screen', '', 'rtl' );
 		
 	}
 
@@ -658,7 +658,7 @@ class SkinMonaco extends SkinTemplate {
 			else {
 				// view mode (package without YUI)
 				$package = 'monaco_anon_article_js';
-			}$this->data['stylepath'].'/monaco/images/blank.gif'
+			}$this->data['stylepath'].'/monaco/style/images/blank.gif'
 		}
 
 		global $wgStylePath, $wgStyleVersion;
@@ -1423,7 +1423,7 @@ class MonacoTemplate extends QuickTemplate {
 		$action = $wgRequest->getText('action');
 		$namespace = $wgTitle->getNamespace();
 
-		$this->set( 'blankimg', $this->data['stylepath'].'/monaco/images/blank.gif' );
+		$this->set( 'blankimg', $this->data['stylepath'].'/monaco/style/images/blank.gif' );
 
 		// Suppress warnings to prevent notices about missing indexes in $this->data
 		wfSuppressWarnings();
@@ -1512,7 +1512,7 @@ if( $custom_user_data ) {
 				<span id="header_mytalk"><a href="<?php echo htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-mytalk') ?>><?php echo htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></span>
 				<span id="header_watchlist"><a href="<?php echo htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-watchlist') ?>><?php echo htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></span>
 				<span>
-					<button id="headerButtonUser" class="header-button color1"><?php echo trim(wfMsg('moredotdotdot'), ' .') ?><img src="<?php $this->text('blankimg') ?>" /></button>
+					<button id="headerButtonUser" class="header-button color1"><?php echo trim(wfMsgHtml('moredotdotdot'), ' .') ?><img src="<?php $this->text('blankimg') ?>" /></button>
 				</span>
 				<span>
 					<a rel="nofollow" href="<?php echo htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-logout') ?>><?php echo htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a>
@@ -1651,13 +1651,13 @@ if ($custom_article_footer !== '') {
 			$actions =
 								'<ul id="articleFooterActions3" class="actions clearfix">' .
 								(!empty($this->data['content_actions']['history']) ? ('
-								<li id="fe_history"><a rel="nofollow" id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_history_img" class="sprite history" alt="' . wfMsg('history_short') . '" /></a> <div><a id="fe_history_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
+								<li id="fe_history"><a rel="nofollow" id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_history_img" class="sprite history" alt="' . wfMsgHtml('history_short') . '" /></a> <div><a id="fe_history_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
 
 								(!empty($nav_urls['recentchangeslinked']) ? ('
-								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" alt="' . wfMsg('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsg('recentchangeslinked') . '</a></div></li>') : '') .
+								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" alt="' . wfMsgHtml('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsgHtml('recentchangeslinked') . '</a></div></li>') : '') .
 
 								((!empty($wgEnableShareFeatureExt) && !empty($wgEnableRecipesTweaksExt)) ?
-								('<li><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_sharefeature_img" class="sprite share" alt="'.wfMsg('sf-link').'" /> <div><a style="cursor:pointer" id="fe_sharefeature_link">'.wfMsg('sf-link').'</a></div></li>') : '').
+								('<li><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_sharefeature_img" class="sprite share" alt="'.wfMsgHtml('sf-link').'" /> <div><a style="cursor:pointer" id="fe_sharefeature_link">'.wfMsgHtml('sf-link').'</a></div></li>') : '').
 
 								'</ul>';
 
@@ -1667,10 +1667,10 @@ if ($custom_article_footer !== '') {
 								'<ul id="articleFooterActions4" class="actions clearfix">' .
 
 								(!empty($nav_urls['permalink']) ? ('
-								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_permalink_img" class="sprite move" alt="' . wfMsg('permalink') . '" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
+								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_permalink_img" class="sprite move" alt="' . wfMsgHtml('permalink') . '" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
 
 								((!empty($nav_urls['whatlinkshere']) && empty($wgEnableRecipesTweaksExt)) ? ('
-								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_whatlinkshere_img" class="sprite pagelink" alt="' . wfMsg('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsg('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
+								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_whatlinkshere_img" class="sprite pagelink" alt="' . wfMsgHtml('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsgHtml('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
 
 
 
@@ -1691,7 +1691,7 @@ if ($custom_article_footer !== '') {
 				echo $custom_article_footer;
 		} else if(empty($wgEnableRecipesTweaksExt)) {
 ?>
-								<li><a rel="nofollow" id="fe_edit_icon" href="<?php echo htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_edit_img" class="sprite edit" alt="<?php echo wfMsg('edit') ?>" /></a> <div><?php echo wfMsg('footer_1', $wgSitename) ?> <a id="fe_edit_link" rel="nofollow" href="<?php echo htmlspecialchars($wgTitle->getEditURL()) ?>"><?php echo wfMsg('footer_1.5') ?></a></div></li>
+								<li><a id="fe_edit_icon" href="<?php echo htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_edit_img" class="sprite edit" alt="<?php echo wfMsgHtml('edit') ?>" /></a> <div><?php echo wfMsgHtml('monaco-footer-improve', '<a id="fe_edit_link" href="'.htmlspecialchars($wgTitle->getEditURL()).'">'.wfMsgHtml('monaco-footer-improve-linktext').'</a>'); ?></div></li>
 <?php
 		}
 
@@ -1705,7 +1705,7 @@ if ($custom_article_footer !== '') {
 				$userPageLink = $userPageTitle->getLocalUrl();
 				$userPageExists = $userPageTitle->exists();
 ?>
-								<li><?php echo $userPageExists ? '<a id="fe_user_icon" href="'.$userPageLink.'">' : '' ?><img src="<?php $this->text('blankimg') ?>" id="fe_user_img" class="sprite user" alt="<?php echo wfMsg('userpage') ?>" /><?php echo $userPageExists ? '</a>' : '' ?> <div><?php echo wfMsg('footer_5', '<a id="fe_user_link" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
+								<li><?php echo $userPageExists ? '<a id="fe_user_icon" href="'.$userPageLink.'">' : '' ?><img src="<?php $this->text('blankimg') ?>" id="fe_user_img" class="sprite user" alt="<?php echo wfMsgHtml('userpage') ?>" /><?php echo $userPageExists ? '</a>' : '' ?> <div><?php echo wfMsgHtml('monaco-footer-lastedit', '<a id="fe_user_link" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
 <?php
 			}
 		}
@@ -1722,23 +1722,8 @@ if ($custom_article_footer !== '') {
 		//} else {
 ?>
 							<ul class="actions" id="articleFooterActions2">
-								<li><a rel="nofollow" id="fe_random_icon" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_random_img" class="sprite random" alt="<?php echo wfMsg('randompage') ?>" /></a> <div><a rel="nofollow" id="fe_random_link" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><?php echo wfMsg('footer_6') ?></a></div></li>
-<?php
-			if(!empty($wgNotificationEnableSend)) {
-			/* TODO: Is this used? */
-?>
-								<li><img src="<?php $this->text('blankimg') ?>" id="fe_email_img" class="sprite" alt="email" /> <div><a href="#" id="shareEmail_a"><?php echo wfMsg('footer_7') ?></a></div></li>
-<?php
-			}
-?>
+								<li><a rel="nofollow" id="fe_random_icon" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_random_img" class="sprite random" alt="<?php echo wfMsgHtml('randompage') ?>" /></a> <div><a rel="nofollow" id="fe_random_link" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><?php echo wfMsgHtml('viewrandompage') ?></a></div></li>
 
-<?php if( !empty( $wgEnableShareFeatureExt ) && empty($wgEnableRecipesTweaksExt) ) { ?>
-								<li><img src="<?php $this->text('blankimg') ?>" id="fe_sharefeature_img" class="sprite share" alt="<?php echo wfMsg('sf-link') ?>" /> <div><a style="cursor:pointer" id="fe_sharefeature_link"><?php echo wfMsg('sf-link'); ?></a></div></li>
-<?php } ?>
-							</ul>
-<?php
-		//}
-?>
 						</td>
 					</tr>
 				</table>
@@ -1754,7 +1739,7 @@ if ($custom_article_footer !== '') {
 		<!-- /PAGE -->
 <?php		wfProfileOut( __METHOD__ . '-page'); ?>
 
-		<noscript><link rel="stylesheet" type="text/css" href="<?php $this->text( 'stylepath' ) ?>/monaco/css/noscript.css?<?php echo $wgStyleVersion ?>" /></noscript>
+		<noscript><link rel="stylesheet" type="text/css" href="<?php $this->text( 'stylepath' ) ?>/monaco/style/css/noscript.css?<?php echo $wgStyleVersion ?>" /></noscript>
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
 		$this->html('WikiaScriptLoader');
@@ -1773,8 +1758,8 @@ if ($custom_article_footer !== '') {
 			<div class="widget" id="navigation_widget" aria-role=navigation>
 <?php
 	global $wgSitename;
-	$msgSearchLabel = wfMsg('Tooltip-search');
-	$searchLabel = wfEmptyMsg('Tooltip-search', $msgSearchLabel) ? (wfMsg('ilsubmit').' '.$wgSitename.'...') : $msgSearchLabel;
+	$msgSearchLabel = wfMsgHtml('Tooltip-search');
+	$searchLabel = wfEmptyMsg('Tooltip-search', $msgSearchLabel) ? (wfMsgHtml('ilsubmit').' '.$wgSitename.'...') : $msgSearchLabel;
 ?>
 			<div id="search_box" class="color1" aria-role="search">
 				<form action="<?php $this->text('searchaction') ?>" id="searchform">
@@ -1782,7 +1767,7 @@ if ($custom_article_footer !== '') {
 					<input id="search_field" name="search" type="text" maxlength="200" onfocus="sf_focus(event);" alt="<?php echo htmlspecialchars($searchLabel) ?>" aria-label="<?php echo htmlspecialchars($searchLabel) ?>" placeholder="<?php echo htmlspecialchars($searchLabel) ?>" autocomplete="off"<?php echo $skin->tooltipAndAccesskey('search'); ?> tabIndex=2 aria-required=true aria-flowto="search-button" />
 					<?php global $wgSearchDefaultFulltext; ?>
 					<input type="hidden" name="<?php echo ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
-					<input type="image" alt="<?php echo htmlspecialchars(wfMsg('search')) ?>" src="<?php $this->text('blankimg') ?>" id="search-button" class="sprite search" tabIndex=2 />
+					<input type="image" alt="<?php echo htmlspecialchars(wfMsgHtml('search')) ?>" src="<?php $this->text('blankimg') ?>" id="search-button" class="sprite search" tabIndex=2 />
 				</form>
 			</div>
 <?php
@@ -1819,7 +1804,7 @@ if ($custom_article_footer !== '') {
 		$url = !$wgUser->isAllowed('edit') ? Title::makeTitle(NS_SPECIAL, 'UserLogin')->getLocalURL(self::getReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
-			'text' => wfMsg('dynamic-links-write-article'),
+			'text' => wfMsgHtml('dynamic-links-write-article'),
 			'id' => 'dynamic-links-write-article',
 			'icon' => 'edit',
 			'tracker' => 'CreatePage',
@@ -1829,7 +1814,7 @@ if ($custom_article_footer !== '') {
 		$url = $userIsAnon ? $signupTitle->getLocalURL(self::getReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
 		$dynamicLinksArray[] = array(
 			'url' => $url,
-			'text' => wfMsg('dynamic-links-add-image'),
+			'text' => wfMsgHtml('dynamic-links-add-image'),
 			'id' => 'dynamic-links-add-image',
 			'icon' => 'photo',
 			'tracker' => 'Upload'
