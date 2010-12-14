@@ -147,8 +147,6 @@ class MonacoSidebar {
 	}
 
 	public function getMenuLines() {
-		global $wgCat;
-
 /*		# if a local copy exists, try to use that first
 		$revision = Revision::newFromTitle(Title::newFromText('Monaco-sidebar', NS_MEDIAWIKI));
 		if(is_object($revision) && trim($revision->getText()) != '') {
@@ -420,7 +418,7 @@ class SkinMonaco extends SkinTemplate {
 		wfDebugLog('monaco', '##### SkinMonaco initPage #####');
 
 		wfProfileIn(__METHOD__);
-		global $wgHooks, $wgCityId, $wgCat;
+		global $wgHooks;
 
 		SkinTemplate::initPage($out);
 /*
@@ -428,16 +426,6 @@ class SkinMonaco extends SkinTemplate {
 		$this->stylename = 'monaco';
 		$this->template  = 'MonacoTemplate';
 */
-		// Get category information (id, name, url)
-		/*$cats = wfGetBreadCrumb();
-		$idx = count($cats)-2;
-		if(isset($cats[$idx])) {
-			$wgCat = $cats[$idx];
-			wfDebugLog('monaco', 'There is category info');
-		} else {
-			$wgCat = array('id' => -1);
-			wfDebugLog('monaco', 'No category info');
-		}*/
 
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
@@ -513,7 +501,7 @@ class SkinMonaco extends SkinTemplate {
 	 */
 	public function addVariables(&$obj, &$tpl) {
 		wfProfileIn(__METHOD__);
-		global $wgDBname, $wgLang, $wgContLang, $wgMemc, $wgUser, $wgRequest, $wgTitle, $parserMemc;
+		global $wgLang, $wgContLang, $wgUser, $wgRequest, $wgTitle, $parserMemc;
 
 		// We want to cache populated data only if user language is same with wiki language
 		$cache = $wgLang->getCode() == $wgContLang->getCode();
@@ -747,7 +735,7 @@ EOF;
 		wfProfileOut(__METHOD__ . '::JSloader');
 */
 		// macbre: move media="print" CSS to bottom (RT #25638)
-		global $wgOut;
+		//global $wgOut;
 /*
 		wfProfileIn(__METHOD__ . '::printCSS');
 
@@ -808,24 +796,12 @@ EOF;
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
 	private function getLines($message_key) {
-		global $wgCat;
-
 		$revision = Revision::newFromTitle(Title::newFromText($message_key, NS_MEDIAWIKI));
 		if(is_object($revision)) {
 			if(trim($revision->getText()) != '') {
 				$temp = MonacoSidebar::getMessageAsArray($message_key);
 				if(count($temp) > 0) {
 					wfDebugLog('monaco', sprintf('Get LOCAL %s, which contains %s lines', $message_key, count($temp)));
-					$lines = $temp;
-				}
-			}
-		}
-
-		if(empty($lines)) {
-			if(isset($wgCat['id'])) {
-				$temp = MonacoSidebar::getMessageAsArray('shared-' . $message_key . '-' . $wgCat['id']);
-				if(count($temp) > 0) {
-					wfDebugLog('monaco', sprintf('Get %s, which contains %s lines', 'shared-' . $message_key . '-' . $wgCat['id'], count($temp)));
 					$lines = $temp;
 				}
 			}
@@ -1310,7 +1286,7 @@ EOF;
 class MonacoTemplate extends QuickTemplate {
 
 	private function printMenu($id, $last_count='', $level=0) {
-		global $wgUploadPath, $wgArticlePath, $wgCityId;
+		global /*$wgUploadPath, */$wgArticlePath;
 		$menu_output = "";
 		$script_output = "";
 		$count = 1;
@@ -1415,7 +1391,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgContLang, $wgArticle, $wgUser, $wgLogo, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename, $wgExtensionsPath, $wgContentNamespaces;
+		global $wgContLang, $wgArticle, $wgUser, $wgLogo, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename;
 
 		/*$skin = $wgUser->getSkin();
 		$namespace = $wgTitle->getNamespace();*/
@@ -1676,7 +1652,7 @@ if ($custom_article_footer !== '') {
 
 		}
 
-		global $wgArticle, $wgLang, $wgSitename;
+		global $wgArticle, $wgLang;
 ?>
 			<div id="articleFooter" class="reset">
 				<table cellspacing="0">
