@@ -1757,11 +1757,6 @@ if ($custom_article_footer !== '') {
 	//BEGIN: create dynamic box
 	$showDynamicLinks = true;
 	$dynamicLinksArray = array();
-	$userIsAnon = $wgUser->isAnon();
-	if ($userIsAnon) {
-		//prepare object for further usage
-		$signupTitle = SpecialPage::getTitleFor('UserLogin');
-	}
 
 	global $wgRequest, $wgEnableAnswers;
 	if ( $wgRequest->getText( 'action' ) == 'edit' || $wgRequest->getText( 'action' ) == 'submit' ) {
@@ -1771,30 +1766,42 @@ if ($custom_article_footer !== '') {
 	if ( $showDynamicLinks && empty( $wgEnableAnswers ) ) {
 
 		global $wgMonacoDynamicCreateOverride;
+		$createPage = null;
 		if( !empty($wgMonacoDynamicCreateOverride) ) {
-			$sp = Title::newFromText($wgMonacoDynamicCreateOverride);
-		} else {
-			$sp = SpecialPage::getTitleFor('CreatePage'); // @fixme CreatePage doesn't exist on most wiki
+			$createPage = Title::newFromText($wgMonacoDynamicCreateOverride);
 		}
-		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = !$wgUser->isAllowed('edit') ? SpecialPage::getTitleFor('UserLogin')->getLocalURL(self::getReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
-		$dynamicLinksArray[] = array(
-			'url' => $url,
-			'text' => wfMsg('dynamic-links-write-article'),
-			'id' => 'dynamic-links-write-article',
-			'icon' => 'edit',
-			'tracker' => 'CreatePage',
-		);
-		$sp = SpecialPage::getTitleFor('Upload');
-		/* Redirect to login page instead of showing error, see Login friction project */
-		$url = $userIsAnon ? $signupTitle->getLocalURL(self::getReturntoParam($sp->getPrefixedDBkey())) : $sp->getLocalURL();
-		$dynamicLinksArray[] = array(
-			'url' => $url,
-			'text' => wfMsg('dynamic-links-add-image'),
-			'id' => 'dynamic-links-add-image',
-			'icon' => 'photo',
-			'tracker' => 'Upload'
-		);
+		if ( !isset($createPage) ) {
+			if ( SpecialPage::exists('CreatePage') ) {
+				$createPage = SpecialPage::getTitleFor('CreatePage');
+			}
+		}
+		if ( isset($createPage) && ( $wgUser->isAllowed('edit') || $wgUser->isAnon() ) ) {
+			/* Redirect to login page instead of showing error, see Login friction project */
+			$dynamicLinksArray[] = array(
+				'url' => $wgUser->isAnon() ? SpecialPage::getTitleFor('UserLogin')->getLocalURL(array("returnto"=>$createPage->getPrefixedDBkey())) : $createPage->getLocalURL(),
+				'text' => wfMsg('dynamic-links-write-article'),
+				'id' => 'dynamic-links-write-article',
+				'icon' => 'edit',
+				'tracker' => 'CreatePage',
+			);
+		}
+		global $wgEnableUploads, $wgUploadNavigationUrl;
+		if ( ( $wgEnableUploads || $wgUploadNavigationUrl ) && ( $wgUser->isAllowed('upload') || $wgUser->isAnon() || $wgUploadNavigationUrl ) ) {
+			$uploadPage = SpecialPage::getTitleFor('Upload');
+			/* Redirect to login page instead of showing error, see Login friction project */
+			if ( $wgUploadNavigationUrl ) {
+				$url = $wgUploadNavigationUrl;
+			} else {
+				$url = $wgUser->isAnon() ? SpecialPage::getTitleFor('UserLogin')->getLocalURL(array("returnto"=>$uploadPage->getPrefixedDBkey())) : $uploadPage->getLocalURL();
+			}
+			$dynamicLinksArray[] = array(
+				'url' => $url,
+				'text' => wfMsg('dynamic-links-add-image'),
+				'id' => 'dynamic-links-add-image',
+				'icon' => 'photo',
+				'tracker' => 'Upload'
+			);
+		}
 	}
 
 	if (count($dynamicLinksArray) > 0) {
@@ -1838,9 +1845,9 @@ if ($custom_article_footer !== '') {
 		for ($i = 0, $max = max(array_keys($linksArray)); $i <= $max; $i++) {
 			$item = isset($linksArray[$i]) ? $linksArray[$i] : false;
 			//Redirect to login page instead of showing error, see Login friction project
-			if ($item !== false && $userIsAnon && isset($item['specialCanonicalName']) && in_array($item['specialCanonicalName'], $wgSpecialPagesRequiredLogin)) {
+			if ($item !== false && $wgUser->isAnon() && isset($item['specialCanonicalName']) && in_array($item['specialCanonicalName'], $wgSpecialPagesRequiredLogin)) {
 				$returnto = SpecialPage::getTitleFor($item['specialCanonicalName'])->getPrefixedDBkey();
-				$item['href'] = SpecialPage::getTitleFor('UserLogin')->getLocalURL(self::getReturntoParam($returnto));
+				$item['href'] = SpecialPage::getTitleFor('UserLogin')->getLocalURL(array("returnto"=>$returnto));
 			}
 			$i & 1 ? $linksArrayR[] = $item : $linksArrayL[] = $item;
 		}
