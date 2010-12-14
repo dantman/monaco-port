@@ -723,8 +723,7 @@ div.prefsectiontip {
 }
 
 div#userlogin form#userlogin2 label,
-div #userlogin form#userlogin2 .pseudolabel,
-form#userajaxloginform2 label {
+div #userlogin form#userlogin2 .pseudolabel {
 	font-size: 115%;
 	font-weight: bold;
 }

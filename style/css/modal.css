@@ -57,51 +57,10 @@ h1.modalTitle img {
 	margin: 0 0 0 4px;
 }
 
-/*** Switch button for combo ajax login ***/
-
-.ajaxregister_button {
-	color: black;
-
-}
-
-.ajaxregister_button span {
-	color: black;
-	width: 120px;
-}
-
-.ajaxregister_button_enable {
-	color: black;
-}
-
-.ajaxregister_button_enable span {
-	color: black;
-}
-
 
 #userloginErrorBox,#userloginErrorBox2,#userloginErrorBox3 {
 	color: #000;
 }
-
-#AjaxLoginButtons input{
-	background-color:#EEEEEE;
-	border:1px solid #AAAAAA;
-	-moz-box-shadow:none;
-	color: black;
-	background-image: none;
-	-webkit-box-shadow: none;
-}
-#AjaxLoginButtons input:hover {
-	text-shadow: none;
-}
-
-#AjaxLoginButtons .ajaxregister-enable{
-	background-color:#D6E0F5;
-	border:1px solid #3366CC;
-}
-
-#fbConnectPushEventToggles .toggle label {
-	margin-left:5px;
-}	
 
 .yui-overlay,
 .yui-panel-container {

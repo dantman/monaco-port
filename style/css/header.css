@@ -240,46 +240,6 @@ a.greyButton big {
 	right: 0;
 }
 
-/*** AJAX LOGIN ***/
-#userloginRound_c {z-index: 2000 !important}
-#userloginRound_mask {z-index: 1000 !important}
-
-#userloginRound .r_boxContent {
-	background-color: #fff;
-    color: #000000;
-    border: solid 1px #aaaaaa;
-}
-
-#userloginRound .boxHeader {
-	padding: 3px 5px;
-}
-
-#userloginRound form {
-	padding: 3px;
-	font-size: 0.9em;
-}
-#request_wiki {
-	/*text-decoration: underline;*/
-}
-#request_wiki.loggedin {
-	font-size: 9pt;
-	left: 221px;
-	line-height: 32px;
-}
-
-#request_wiki_ad {
-	margin-left: 10px;
-}
-
-#requestWikiData {
-	font-size: 9pt;
-	left: 221px;
-	line-height: 32px;
-	position: absolute;
-	top: 0;
-	white-space: nowrap;
-}
-
 /*** WIDGET COCKPIT ***//*
 #widget_cockpit_list {
 	margin: 5px 0;
