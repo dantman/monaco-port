@@ -780,12 +780,6 @@ EOF;
 				}
 				$item = MonacoSidebar::parseItem($trimmed);
 
-				$tracker = $item['org'];
-				$tracker = preg_replace('/-url$/', '', $tracker);
-				if (empty($tracker)) $tracker = $item['href'];
-				$tracker = preg_replace('/[^a-z0-9.]/i', '_', $tracker);
-				$item['tracker'] = $tracker;
-
 				$nodes[] = $item;
 			}
 		}
@@ -1782,7 +1776,6 @@ if ($custom_article_footer !== '') {
 				'text' => wfMsg('dynamic-links-write-article'),
 				'id' => 'dynamic-links-write-article',
 				'icon' => 'edit',
-				'tracker' => 'CreatePage',
 			);
 		}
 		global $wgEnableUploads, $wgUploadNavigationUrl;
@@ -1799,7 +1792,6 @@ if ($custom_article_footer !== '') {
 				'text' => wfMsg('dynamic-links-add-image'),
 				'id' => 'dynamic-links-add-image',
 				'icon' => 'photo',
-				'tracker' => 'Upload'
 			);
 		}
 	}
@@ -1813,8 +1805,7 @@ if ($custom_article_footer !== '') {
 <?php
 			foreach ($dynamicLinksArray as $link) {
 				//print_r($link);
-				$tracker = " onclick=\"WET.byStr('toolbox/dynamic/{$link['tracker']}')\"";
-				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '"' . $tracker . ' tabIndex=-1><img src="'.htmlspecialchars($this->data['blankimg']).'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . htmlspecialchars($link['text']) . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '"' . $tracker . ' tabIndex=3>'. htmlspecialchars($link['text']) .'</a></li>';
+				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a rel="nofollow" id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '" tabIndex=-1><img src="'.htmlspecialchars($this->data['blankimg']).'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . htmlspecialchars($link['text']) . '" /></a> <a id="' . $link['id'] . '-link" rel="nofollow" href="' . htmlspecialchars($link['url']) . '" tabIndex=3>'. htmlspecialchars($link['text']) .'</a></li>';
 			}
 ?>
 					</ul>
@@ -1831,13 +1822,13 @@ if ($custom_article_footer !== '') {
 
 	//add user specific links
 	if(!empty($nav_urls['contributions'])) {
-		$linksArray[] = array('href' => $nav_urls['contributions']['href'], 'text' => wfMsg('contributions'), 'tracker' => 'contributions');
+		$linksArray[] = array('href' => $nav_urls['contributions']['href'], 'text' => wfMsg('contributions'));
 	}
 	if(!empty($nav_urls['blockip'])) {
-		$linksArray[] = array('href' => $nav_urls['blockip']['href'], 'text' => wfMsg('blockip'), 'tracker' => 'blockip');
+		$linksArray[] = array('href' => $nav_urls['blockip']['href'], 'text' => wfMsg('blockip'));
 	}
 	if(!empty($nav_urls['emailuser'])) {
-		$linksArray[] = array('href' => $nav_urls['emailuser']['href'], 'text' => wfMsg('emailuser'), 'tracker' => 'emailuser');
+		$linksArray[] = array('href' => $nav_urls['emailuser']['href'], 'text' => wfMsg('emailuser'));
 	}
 
 	if(is_array($linksArray) && count($linksArray) > 0) {
@@ -1865,9 +1856,8 @@ if ($custom_article_footer !== '') {
 				if ($val === false) {
 					echo '<li>&nbsp;</li>';
 				} else {
-					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
-						<li><a<?php if ( !isset($val['internal']) || !$val['internal'] ) { ?> rel="nofollow"<?php } ?> href="<?php echo htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?php echo $tracker ?>')" tabIndex=3><?php echo htmlspecialchars($val['text']) ?></a></li>
+						<li><a<?php if ( !isset($val['internal']) || !$val['internal'] ) { ?> rel="nofollow"<?php } ?> href="<?php echo htmlspecialchars($val['href']) ?>" tabIndex=3><?php echo htmlspecialchars($val['text']) ?></a></li>
 <?php
 				}
 			}
@@ -1883,9 +1873,8 @@ if ($custom_article_footer !== '') {
 				if ($val === false) {
 					echo '<li>&nbsp;</li>';
 				} else {
-					$tracker = !empty($val['tracker']) ? $val['tracker'] : 'unknown';
 ?>
-						<li><a<?php if ( !isset($val['internal']) || !$val['internal'] ) { ?> rel="nofollow"<?php } ?> href="<?php echo htmlspecialchars($val['href']) ?>" onclick="WET.byStr('toolbox/<?php echo $tracker ?>')" tabIndex=3><?php echo htmlspecialchars($val['text']) ?></a></li>
+						<li><a<?php if ( !isset($val['internal']) || !$val['internal'] ) { ?> rel="nofollow"<?php } ?> href="<?php echo htmlspecialchars($val['href']) ?>" tabIndex=3><?php echo htmlspecialchars($val['text']) ?></a></li>
 <?php
 				}
 			}
