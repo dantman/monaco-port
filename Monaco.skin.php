@@ -1541,7 +1541,7 @@ if( $custom_user_data ) {
 		<div id="wikia_page" class="page">
 <?php
 wfRunHooks('MonacoBeforePageBar', array($this));
-			<?php $this->printPageBar(); ?>
+			$this->printPageBar(); ?>
 					<!-- ARTICLE -->
 
 <?php		wfProfileIn( __METHOD__ . '-article'); ?>
@@ -1611,7 +1611,7 @@ if ($custom_article_footer !== '') {
 								<li id="fe_history"><a rel="nofollow" id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_history_img" class="sprite history" alt="' . wfMsgHtml('history_short') . '" /></a> <div><a id="fe_history_link" rel="nofollow" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
 
 								(!empty($nav_urls['recentchangeslinked']) ? ('
-								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" alt="' . wfMsgHtml('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsgHtml('recentchangeslinked') . '</a></div></li>') : '') .
+								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" alt="' . wfMsgHtml('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsgHtml('recentchangeslinked') . '</a></div></li>') : '');
 
 		}
 		if (!empty($nav_urls['permalink']) || !empty($nav_urls['whatlinkshere'])) {
@@ -1652,12 +1652,15 @@ if ($custom_article_footer !== '') {
 			$lastUpdate = $wgLang->date($timestamp);
 			$userId = $wgArticle->getUser();
 			if($userId > 0) {
-				$userText = $wgArticle->getUserText();
-				$userPageTitle = Title::makeTitle(NS_USER, $userText);
+				$user = User::newFromName($wgArticle->getUserText());
+				$userPageTitle = $user->getUserPage();
 				$userPageLink = $userPageTitle->getLocalUrl();
 				$userPageExists = $userPageTitle->exists();
+				$feUserIcon = Html::element( 'img', array( "src" => $this->data['blankimg'], "id" => "fe_user_img", "class" => "sprite user", "alt" => wfMsg('userpage') ) );
+				if ( $userPageExists )
+					$feUserIcon = Html::rawElement( 'a', array( "id" => "fe_user_icon", "href" => $userPageLink ), $feUserIcon );
 ?>
-								<li><?php echo $userPageExists ? '<a id="fe_user_icon" href="'.$userPageLink.'">' : '' ?><img src="<?php $this->text('blankimg') ?>" id="fe_user_img" class="sprite user" alt="<?php echo wfMsgHtml('userpage') ?>" /><?php echo $userPageExists ? '</a>' : '' ?> <div><?php echo wfMsgHtml('monaco-footer-lastedit', '<a id="fe_user_link" '.($userPageExists ? '' : ' class="new" ').'href="'.$userPageLink.'">'.$userText.'</a>', $lastUpdate) ?></div></li>
+								<li><?php echo $feUserIcon ?> <div><?php echo wfMsgHtml('monaco-footer-lastedit', $skin->link( $userPageTitle, htmlspecialchars($user->getName()), array( "id" => "fe_user_link" ) ), $lastUpdate) ?></div></li>
 <?php
 			}
 		}
