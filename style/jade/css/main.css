@@ -25,18 +25,15 @@
 	border-color: #135013;
 }
 #search_button {
-	background-image: url(http://images.wikia.com/common/skins/monaco/jade/images/search.png);
+	background-image: url(../images/search.png);
 }
 
 /*** HEADER AND FOOTER ***/
 #header_username a {
 	color: #228b22;
 }
-#wikia_logo {
-	background-image: url(../images/wikia_logo.png);
-}
 .headerMenuButton dt, .headerMenuButton dd {
-	background-image: url(http://images.wikia.com/common/skins/monaco/jade/images/header_button.png);
+	background-image: url(../images/header_button.png);
 }
 
 .editsectionbutton {

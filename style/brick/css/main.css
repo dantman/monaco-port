@@ -51,7 +51,7 @@
 	background-color: #F5F5F5;
 }
 #search_button {
-	background-image: url(http://images.wikia.com/common/skins/monaco/brick/images/search.png);
+	background-image: url(../images/search.png);
 }
 #search_box {
 	background-image: none;
@@ -72,9 +72,6 @@
 }
 #wikia_footer a {
 	color: #EEE;
-}
-#wikia_logo {
-	background-image: url(../images/wikia_logo.png);
 }
 .editsectionbutton {
 	background-color: #FFC;

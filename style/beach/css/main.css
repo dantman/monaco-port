@@ -43,7 +43,7 @@
 	background-color: #FFF;
 }
 #search_button {
-	background-image: url(http://images.wikia.com/common/skins/monaco/beach/images/search.png);
+	background-image: url(../images/search.png);
 }
 #link_box {
 	background-color: #b0d9f3;
@@ -72,9 +72,6 @@
 }
 #wikia_footer a {
 	color: #EEE;
-}
-#wikia_logo {
-	background-image: url(../images/wikia_logo.png);
 }
 .editsectionbutton {
 	background-color: #FFC;

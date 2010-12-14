@@ -27,7 +27,7 @@
 
 /*** WIDGETS ***/
 #search_button {
-	background-image: url(http://images.wikia.com/common/skins/monaco/smoke/images/search.png);
+	background-image: url(../images/search.png);
 }
 #search_box {
 	background-image: none;
@@ -39,9 +39,6 @@
 /*** HEADER AND FOOTER ***/
 #header_username a {
 	color: #fec423;
-}
-#wikia_logo {
-	background-image: url(../images/wikia_logo.png);
 }
 .editsectionbutton {
 	background-color: #FFC;

@@ -76,7 +76,7 @@ body.widgetsAddingBlocked .add {
 .widget_loading
 {
     height: 30px;
-    background-image: url('http://images.wikia.com/common/skins/common/images/ajax.gif');
+    background-image: url('../images/ajax.gif');
     background-position: 50% 50%;
     background-repeat: no-repeat;
 }

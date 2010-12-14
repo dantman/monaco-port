@@ -2,7 +2,7 @@
 .star-rating a:hover,
 .star-rating .current-rating
 {
-	background:transparent url(/skins/monaco/images/monaco-sprite.png) repeat-x 0 -40px; /* $wgCdnStylePath */
+	background:transparent url(../images/monaco-sprite.png) repeat-x 0 -40px;
 }
 
 .star-rating
@@ -86,7 +86,7 @@
 
 /* macbre: progress wheel stuff */
 .star-rating-progress {
-	background-image:  url('http://images.wikia.com/common/skins/common/images/ajax.gif') !important;
+	background-image:  url('../images/ajax.gif') !important;
 	background-repeat: no-repeat;
 }
 

@@ -31,7 +31,7 @@
 
 
 #background_strip {
-	background: #09101d url(http://images.wikia.com/common/skins/quartz/gaming/images/background.jpg);
+	background: #09101d url(../images/background.jpg);
 	border-color: #71d1ef;
 }
 #page_bar {
@@ -64,7 +64,7 @@
 	border-color: #AAA;
 }
 #search_button {
-	background-image: url(http://images.wikia.com/common/skins/monaco/gaming/images/search.png);
+	background-image: url(../images/search.png);
 }
 #search_box {
 	background-image: none;
@@ -86,9 +86,6 @@
 }
 #wikia_footer a {
 	color: #EEE;
-}
-#wikia_logo {
-	background-image: url(../images/wikia_logo.png);
 }
 .header-button img {
 	background-position: -72px -78px;
