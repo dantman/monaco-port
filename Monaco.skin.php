@@ -1541,28 +1541,15 @@ if( $custom_user_data ) {
 		<div id="wikia_page" class="page">
 <?php
 wfRunHooks('MonacoBeforePageBar', array($this));
-if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
-?>
 			<?php $this->printPageBar(); ?>
 					<!-- ARTICLE -->
 
-<?php }		wfProfileIn( __METHOD__ . '-article'); ?>
-			<article id="article"<?php if($this->data['body_ondblclick']) { ?> ondblclick="<?php $this->text('body_ondblclick') ?>"<?php } ?> aria-role=main aria-labeledby="firstHeading">
+<?php		wfProfileIn( __METHOD__ . '-article'); ?>
+			<article id="article" aria-role=main aria-labeledby="firstHeading">
 				<a name="top" id="top"></a>
-				<?php
-				wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed?
-				global $wgSupressSiteNotice, $wgEnableCommunityMessagesExt;
-				if ( empty( $wgEnableCommunityMessagesExt ) && empty( $wgSupressSiteNotice ) && $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
-				<?php
-				global $wgSupressPageTitle;
-				if( empty( $wgSupressPageTitle ) ){
-					$this->printFirstHeading();
-				}
-
-				if ($wgRequest->getVal('action') == 'edit') {
-					//echo '<br /><a href="#" id="editTipsLink" onclick="editTips(); return false;">Show Editing Tips</a>';
-				}
-				?>
+				<?php wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed? ?>
+				<?php if ( $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
+				<?php $this->printFirstHeading(); ?>
 				<div id="bodyContent">
 					<h2 id="siteSub"><?php $this->msg('tagline') ?></h2>
 					<div id="contentSub"><?php $this->html('subtitle') ?></div>
@@ -1591,7 +1578,7 @@ if(empty($wgEnableRecipesTweaksExt) || !RecipesTweaks::isHeaderStripeShown()) {
 			<!-- ARTICLE FOOTER -->
 <?php		wfProfileIn( __METHOD__ . '-articlefooter'); ?>
 <?php
-global $wgTitle, $wgOut, $wgEnableShareFeatureExt;
+global $wgTitle, $wgOut;
 $custom_article_footer = '';
 $namespaceType = '';
 wfRunHooks( 'CustomArticleFooter', array( &$this, &$tpl, &$custom_article_footer ));
@@ -1626,11 +1613,6 @@ if ($custom_article_footer !== '') {
 								(!empty($nav_urls['recentchangeslinked']) ? ('
 								<li id="fe_recent"><a rel="nofollow" id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" alt="' . wfMsgHtml('recentchangeslinked') . '" /></a> <div><a id="fe_recent_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsgHtml('recentchangeslinked') . '</a></div></li>') : '') .
 
-								((!empty($wgEnableShareFeatureExt) && !empty($wgEnableRecipesTweaksExt)) ?
-								('<li><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_sharefeature_img" class="sprite share" alt="'.wfMsgHtml('sf-link').'" /> <div><a style="cursor:pointer" id="fe_sharefeature_link">'.wfMsgHtml('sf-link').'</a></div></li>') : '').
-
-								'</ul>';
-
 		}
 		if (!empty($nav_urls['permalink']) || !empty($nav_urls['whatlinkshere'])) {
 			$actions .=
@@ -1639,7 +1621,7 @@ if ($custom_article_footer !== '') {
 								(!empty($nav_urls['permalink']) ? ('
 								<li id="fe_permalink"><a rel="nofollow" id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_permalink_img" class="sprite move" alt="' . wfMsgHtml('permalink') . '" /></a> <div><a id="fe_permalink_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
 
-								((!empty($nav_urls['whatlinkshere']) && empty($wgEnableRecipesTweaksExt)) ? ('
+								((!empty($nav_urls['whatlinkshere'])) ? ('
 								<li id="fe_whatlinkshere"><a rel="nofollow" id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_whatlinkshere_img" class="sprite pagelink" alt="' . wfMsgHtml('whatlinkshere') . '" /></a> <div><a id="fe_whatlinkshere_link" rel="nofollow" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsgHtml('whatlinkshere') . '</a></div></li>') : '') . '</ul>';
 
 
@@ -1659,7 +1641,7 @@ if ($custom_article_footer !== '') {
 			wfRunHooks('AddNewTalkSection', array( &$this, &$tpl, &$custom_article_footer ));
 			if ($custom_article_footer != '')
 				echo $custom_article_footer;
-		} else if(empty($wgEnableRecipesTweaksExt)) {
+		} else {
 ?>
 								<li><a rel="nofollow" id="fe_edit_icon" href="<?php echo htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_edit_img" class="sprite edit" alt="<?php echo wfMsgHtml('edit') ?>" /></a> <div><?php echo wfMsgHtml('monaco-footer-improve', '<a rel="nofollow" id="fe_edit_link" href="'.htmlspecialchars($wgTitle->getEditURL()).'">'.wfMsgHtml('monaco-footer-improve-linktext').'</a>'); ?></div></li>
 <?php
@@ -1752,12 +1734,12 @@ if ($custom_article_footer !== '') {
 	$showDynamicLinks = true;
 	$dynamicLinksArray = array();
 
-	global $wgRequest, $wgEnableAnswers;
+	global $wgRequest;
 	if ( $wgRequest->getText( 'action' ) == 'edit' || $wgRequest->getText( 'action' ) == 'submit' ) {
 		$showDynamicLinks = false;
 	}
 
-	if ( $showDynamicLinks && empty( $wgEnableAnswers ) ) {
+	if ( $showDynamicLinks ) {
 
 		global $wgMonacoDynamicCreateOverride;
 		$createPage = null;
@@ -1945,23 +1927,6 @@ wfProfileOut( __METHOD__ . '-body');
 			$cssReferences = array_keys($cssMediaWiki);
 
 			// detect whether to use merged JS/CSS files
-			global $wgAllInOne;
-			if(empty($wgAllInOne)) {
-				$wgAllInOne = false;
-			}
-			//$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
-/*
-			if(!$allinone) {
-				preg_match_all("/url\(([^?]+)/", $cssStaticChute, $matches);
-				foreach($matches[1] as $match) {
-					$cssReferences[] = $match;
-				}
-			} else {
-				preg_match("/href=\"([^\"]+)/", $cssStaticChute, $matches);
-				$cssReferences[] = str_replace('&amp;', '&', $matches[1]);
-			}
-			$cssReferences = Wikia::json_encode($cssReferences);
-*/
 			echo <<<EOF
 		<script type="text/javascript">/*<![CDATA[*/
 			(function(){
