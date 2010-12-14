@@ -1691,7 +1691,7 @@ if ($custom_article_footer !== '') {
 				echo $custom_article_footer;
 		} else if(empty($wgEnableRecipesTweaksExt)) {
 ?>
-								<li><a id="fe_edit_icon" href="<?php echo htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_edit_img" class="sprite edit" alt="<?php echo wfMsgHtml('edit') ?>" /></a> <div><?php echo wfMsgHtml('monaco-footer-improve', '<a id="fe_edit_link" href="'.htmlspecialchars($wgTitle->getEditURL()).'">'.wfMsgHtml('monaco-footer-improve-linktext').'</a>'); ?></div></li>
+								<li><a rel="nofollow" id="fe_edit_icon" href="<?php echo htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_edit_img" class="sprite edit" alt="<?php echo wfMsgHtml('edit') ?>" /></a> <div><?php echo wfMsgHtml('monaco-footer-improve', '<a rel="nofollow" id="fe_edit_link" href="'.htmlspecialchars($wgTitle->getEditURL()).'">'.wfMsgHtml('monaco-footer-improve-linktext').'</a>'); ?></div></li>
 <?php
 		}
 
