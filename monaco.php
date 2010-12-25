@@ -33,4 +33,4 @@ $wgMastheadVisible = false; // we may want to integrate masthead into Monaco and
 /* Config Settings */
 $wgMonacoTheme = "sapphire"; // load a pre-made Monaco theme from the styles folder
 $wgMonacoDynamicCreateOverride = false; // Override "Special:CreatePage" urls with something else
-
+$wgMonacoUseMoreButton = true; // Set to false to disable the more button and just list out links

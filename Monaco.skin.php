@@ -1250,11 +1250,6 @@ EOF;
 				'href' => $tpl->data['personal_urls']['mycontris']['href']
 				);
 
-			$data['more']['widgets'] = array(
-				'text' => wfMsg('manage_widgets'),
-				'href' => '#'
-				);
-
 			$data['more']['preferences'] = array(
 				'text' => $tpl->data['personal_urls']['preferences']['text'],
 				'href' => $tpl->data['personal_urls']['preferences']['href']
@@ -1383,6 +1378,17 @@ class MonacoTemplate extends QuickTemplate {
 		return $returnto;
 	}
 
+	/**
+	 * Make this a method so that subskins can override this if they reorganize
+	 * the user header and need the more button to function.
+	 * 
+	 * @author Daniel Friesen
+	 */
+	function useUserMore() {
+		global $wgMonacoUseMoreButton;
+		return $wgMonacoUseMoreButton;
+	}
+
 	function execute() {
 		wfProfileIn( __METHOD__ );
 		global $wgContLang, $wgArticle, $wgUser, $wgLogo, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename;
@@ -1481,9 +1487,29 @@ if( $custom_user_data ) {
 				<span id="header_username"><a href="<?php echo htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-userpage') ?>><?php echo htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></span>
 				<span id="header_mytalk"><a href="<?php echo htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-mytalk') ?>><?php echo htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></span>
 				<span id="header_watchlist"><a href="<?php echo htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-watchlist') ?>><?php echo htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></span>
-				<span>
+<?php
+			if ( $this->useUserMore() ) { ?>
+				<span class="more hovermenu">
 					<button id="headerButtonUser" class="header-button color1"><?php echo trim(wfMsgHtml('moredotdotdot'), ' .') ?><img src="<?php $this->text('blankimg') ?>" /></button>
+					<span class="invisibleBridge"></span>
+					<div id="headerMenuUser" class="headerMenu color1 reset">
+						<ul>
+<?php
+						foreach ( $this->data['userlinks']['more'] as $key => $link ) {
+							echo Html::rawElement( 'li', array( 'id' => "header_$key" ),
+								Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
+						} ?>
+						</ul>
+					</div>
 				</span>
+<?php
+			} else {
+				foreach ( $this->data['userlinks']['more'] as $key => $link ) {
+					echo Html::rawElement( 'span', array( 'id' => "header_$key" ),
+						Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
+				} ?>
+<?php
+			} ?>
 				<span>
 					<a href="<?php echo htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-logout') ?>><?php echo htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a>
 				</span>

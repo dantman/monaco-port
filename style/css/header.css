@@ -117,6 +117,24 @@ a.greyButton big {
 	margin-right: 5px;
 }
 
+#userData .hovermenu {
+	position: relative;
+}
+#userData .hovermenu .invisibleBridge {
+	display: none;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 1em;
+	height: 2em;
+	z-index: 999;
+}
+#userData .hovermenu:hover .invisibleBridge,
+#userData .hovermenu:hover .headerMenu {
+	display: block;
+	right: 0;
+}
+
 #userData #fbconnect { 
 	margin-right: 12px;
 }
