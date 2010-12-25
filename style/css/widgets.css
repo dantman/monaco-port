@@ -161,6 +161,10 @@ body.widgetsAddingBlocked .add {
 	top: 0;
 	width: 200px;
 	z-index: 1000;
+	display: none;
+}
+#navigation.hover-navigation .menu-item:hover > .sub-menu {
+	display: block;
 }
 
 #navigation .menu-item {

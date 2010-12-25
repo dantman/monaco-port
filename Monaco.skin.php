@@ -161,6 +161,30 @@ class MonacoSidebar {
 		return $lines;
 	}
 
+	public function getSubMenu($nodes, $children) {
+		$menu = '';
+		foreach($children as $key => $val) {
+			$link_html = htmlspecialchars($nodes[$val]['text']);
+			if ( !empty( $nodes[$val]['children'] ) ) {
+				$link_html .= '<em>&rsaquo;</em>';
+			}
+			
+			$menu_item =
+				Html::rawElement( 'a', array(
+						'href' => !empty($nodes[$val]['href']) ? $nodes[$val]['href'] : '#',
+						'class' => $nodes[$val]['class'],
+						'rel' => $nodes[$val]['internal'] ? null : 'nofollow'
+					), $link_html ) . "\n";
+			if ( !empty( $nodes[$val]['children'] ) ) {
+				$menu_item .= $this->getSubMenu( $nodes, $nodes[$val]['children'] );
+			}
+			$menu .=
+				Html::rawElement( 'div', array( "class" => "menu-item" ), $menu_item );
+		}
+		$menu = Html::rawElement( 'div', array( 'class' => 'sub-menu widget' ), $menu );
+		return $menu;
+	}
+
 	public function getMenu($lines, $userMenu = false) {
 		global $wgMemc, $wgScript;
 
@@ -170,7 +194,6 @@ class MonacoSidebar {
 			
 			wfRunHooks('MonacoSidebarGetMenu', array(&$nodes));
 			
-			$menu = '<nav id="navigation"'.($userMenu ? ' class="userMenu"' : '').'>';
 			$mainMenu = array();
 			foreach($nodes[0]['children'] as $key => $val) {
 				if(isset($nodes[$val]['children'])) {
@@ -180,15 +203,31 @@ class MonacoSidebar {
 					$mainMenu[$val] = $nodes[$val]['magic'];
 				}
 				if(isset($nodes[$val]['href']) && $nodes[$val]['href'] == 'editthispage') $menu .= '<!--b-->';
-				$menu .= '<div id="menu-item_'.$val.'" class="menu-item">';
+				$menu .= '<div id="menu-item_'.$val.'" class="menu-item';
+				if ( !empty($nodes[$val]['children']) || !empty($nodes[$val]['magic']) ) {
+					$menu .= ' with-sub-menu';
+				}
+				$menu .= '">';
 				$menu .= '<a id="a-menu-item_'.$val.'" href="'.(!empty($nodes[$val]['href']) ? htmlspecialchars($nodes[$val]['href']) : '#').'"';
 				if ( !isset($nodes[$val]['internal']) || !$nodes[$val]['internal'] )
 					$menu .= ' rel="nofollow"';
-				$menu .= ' tabIndex=3>'.htmlspecialchars($nodes[$val]['text']).((!empty($nodes[$val]['children']) || !empty($nodes[$val]['magic'])) ? '<em>&rsaquo;</em>' : '').'</a>';
+				$menu .= ' tabIndex=3>'.htmlspecialchars($nodes[$val]['text']);
+				if ( !empty($nodes[$val]['children']) || !empty($nodes[$val]['magic']) ) {
+					$menu .= '<em>&rsaquo;</em>';
+				}
+				$menu .= '</a>';
+				if ( !empty($nodes[$val]['children']) || !empty($nodes[$val]['magic']) ) {
+					$menu .= $this->getSubMenu($nodes, $nodes[$val]['children']);
+				}
 				$menu .= '</div>';
 				if(isset($nodes[$val]['href']) && $nodes[$val]['href'] == 'editthispage') $menu .= '<!--e-->';
 			}
-			$menu .= '</nav>';
+			
+			$classes = array();
+			if ( $userMenu )
+				$classes[] = 'userMenu';
+			$classes[] = 'hover-navigation';
+			$menu = Html::rawElement( 'nav', array( 'id' => 'navigation', 'class' => implode(' ', $classes) ), $menu );
 
 			if($this->editUrl) {
 				$menu = str_replace('href="editthispage"', 'href="'.$this->editUrl.'"', $menu);
