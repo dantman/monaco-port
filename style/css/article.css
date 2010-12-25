@@ -49,6 +49,20 @@
 #page_controls a:hover {
 	text-decoration: underline;
 }
+/** Highlight active page controls */
+#page_controls li.selected {
+	background: #FFF;
+	padding: 0 8px !important;
+	height: 27px;
+	margin-top: 5px;
+}
+#page_controls li.selected a {
+	color: #000;
+	font-family: arial;
+	font-weight: bold;
+	line-height: 27px;
+}
+
 #control_edit div, #control_form_edit div {
 	clip: rect(0px 16px 16px 0px);
 	left: 0px;
