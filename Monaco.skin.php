@@ -260,8 +260,8 @@ class MonacoSidebar {
 			$wgMemc->set($menuHash, $nodes, 60 * 60 * 24 * 3); // three days
 
 			// use AJAX request method to fetch JS code asynchronously
-			$menuJSurl = Xml::encodeJsVar("{$wgScript}?action=ajax&v=" . self::version. "&rs=getMenu&id={$menuHash}");
-			$menu .= "<script type=\"text/javascript\">/*<![CDATA[*/wsl.loadScriptAjax({$menuJSurl});/*]]>*/</script>";
+			//$menuJSurl = Xml::encodeJsVar("{$wgScript}?action=ajax&v=" . self::version. "&rs=getMenu&id={$menuHash}");
+			//$menu .= "<script type=\"text/javascript\">/*<![CDATA[*/wsl.loadScriptAjax({$menuJSurl});/*]]>*/</script>";
 
 			return $menu;
 		}
@@ -1762,11 +1762,11 @@ if ($custom_article_footer !== '') {
 		<noscript><link rel="stylesheet" type="text/css" href="<?php $this->text( 'stylepath' ) ?>/monaco/style/css/noscript.css?<?php echo $wgStyleVersion ?>" /></noscript>
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
-		$this->html('WikiaScriptLoader');
+		//$this->html('WikiaScriptLoader');
 		$this->html('JSloader');
 		$this->html('headscripts');
 	}
-	echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
+	//echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
 
 ?>
 <?php $this->printRightSidebar() ?>
@@ -1989,22 +1989,6 @@ wfProfileOut( __METHOD__ . '-body');
 			echo "\n\t\t";
 			$this->html('csslinksbottom');
 		} else {
-			$cssMediaWiki = $this->data['csslinksbottom-urls'];
-			//$cssStaticChute = $this->data['mergedCSSprint'];
-
-			$cssReferences = array_keys($cssMediaWiki);
-
-			// detect whether to use merged JS/CSS files
-			echo <<<EOF
-		<script type="text/javascript">/*<![CDATA[*/
-			(function(){
-				var cssReferences = $cssReferences;
-				var len = cssReferences.length;
-				for(var i=0; i<len; i++)
-					setTimeout("wsl.loadCSS.call(wsl, '" + cssReferences[i] + "', 'print')", 100);
-			})();
-		/*]]>*/</script>
-EOF;
 		}
 	}
 
