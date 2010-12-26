@@ -14,6 +14,7 @@ $messages = array();
 $messages['en'] = array(
 	'monaco-desc' => "Wikia's Monaco theme, ported for use in MediaWiki.",
 	'dynamic-links-write-article' => "Create a new article",
+	'dynamic-links-write-article-url' => '-',
 	'dynamic-links-add-image' => "Upload a new image",
 	'monaco-sidebar' => "
 * mainpage|mainpage-description

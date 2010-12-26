@@ -1812,7 +1812,11 @@ if ($custom_article_footer !== '') {
 
 		global $wgMonacoDynamicCreateOverride;
 		$createPage = null;
-		if( !empty($wgMonacoDynamicCreateOverride) ) {
+		$writeArticleUrl = wfMsg('dynamic-links-write-article-url');
+		if ( $writeArticleUrl && $writeArticleUrl !== '-' && !wfEmptyMsg('dynamic-links-write-article-url', $writeArticleUrl) ) {
+			$createPage = Title::newFromText($writeArticleUrl);
+		}
+		if ( !isset($createPage) && !empty($wgMonacoDynamicCreateOverride) ) {
 			$createPage = Title::newFromText($wgMonacoDynamicCreateOverride);
 		}
 		if ( !isset($createPage) ) {
