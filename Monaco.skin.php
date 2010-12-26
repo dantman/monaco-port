@@ -1418,6 +1418,15 @@ class MonacoTemplate extends QuickTemplate {
 	}
 
 	/**
+	 * Shortcut for building these crappy blankimg based icons wikia probably could
+	 * have implemented in a less ugly way.
+	 * @author Daniel Friesen
+	 */
+	function blankimg( $attrs = array() ) {
+		return Html::element( 'img', array( "src" => $this->data['blankimg'] ) + $attrs );
+	}
+
+	/**
 	 * Make this a method so that subskins can override this if they reorganize
 	 * the user header and need the more button to function.
 	 * 
@@ -1708,9 +1717,15 @@ if ($custom_article_footer !== '') {
 			if ($custom_article_footer != '')
 				echo $custom_article_footer;
 		} else {
-?>
-								<li><a id="fe_edit_icon" href="<?php echo htmlspecialchars($wgTitle->getEditURL()) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_edit_img" class="sprite edit" alt="<?php echo wfMsgHtml('edit') ?>" /></a> <div><?php echo wfMsgHtml('monaco-footer-improve', '<a id="fe_edit_link" href="'.htmlspecialchars($wgTitle->getEditURL()).'">'.wfMsgHtml('monaco-footer-improve-linktext').'</a>'); ?></div></li>
-<?php
+			echo "								";
+			echo Html::rawElement( 'li', null,
+				Html::rawElement( 'a', array( "id" => "fe_edit_icon", "href" => $wgTitle->getEditURL() ),
+					$this->blankimg( array( "id" => "fe_edit_img", "class" => "sprite edit", "alt" => wfMsg('edit') ) ) ) .
+				' ' .
+				Html::rawElement( 'div', null,
+					wfMsgHtml('monaco-footer-improve',
+						Html::element( 'a', array( "id" => "fe_edit_link", "href" => $wgTitle->getEditURL() ), wfMsg('monaco-footer-improve-linktext') ) ) ) );
+			echo "\n";
 		}
 
 		if(is_object($wgArticle)) {
@@ -1722,7 +1737,7 @@ if ($custom_article_footer !== '') {
 				$userPageTitle = $user->getUserPage();
 				$userPageLink = $userPageTitle->getLocalUrl();
 				$userPageExists = $userPageTitle->exists();
-				$feUserIcon = Html::element( 'img', array( "src" => $this->data['blankimg'], "id" => "fe_user_img", "class" => "sprite user", "alt" => wfMsg('userpage') ) );
+				$feUserIcon = $this->blankimg( array( "id" => "fe_user_img", "class" => "sprite user", "alt" => wfMsg('userpage') ) );
 				if ( $userPageExists )
 					$feUserIcon = Html::rawElement( 'a', array( "id" => "fe_user_icon", "href" => $userPageLink ), $feUserIcon );
 ?>
@@ -1859,8 +1874,13 @@ if ($custom_article_footer !== '') {
 					<ul>
 <?php
 			foreach ($dynamicLinksArray as $link) {
-				//print_r($link);
-				echo '<li id="' . $link['id']  .'-row" class="link_box_dynamic_item"><a id="' . $link['id'] . '-icon" href="' . htmlspecialchars($link['url']) . '" tabIndex=-1><img src="'.htmlspecialchars($this->data['blankimg']).'" id="' . $link['id'] . '-img" class="sprite '. $link['icon'] .'" alt="' . htmlspecialchars($link['text']) . '" /></a> <a id="' . $link['id'] . '-link" href="' . htmlspecialchars($link['url']) . '" tabIndex=3>'. htmlspecialchars($link['text']) .'</a></li>';
+				echo "						";
+				echo Html::rawElement( 'li', array( "id" => "{$link['id']}-row", "class" => "link_box_dynamic_item" ),
+					Html::rawElement( 'a', array( "id" => "{$link['id']}-icon", "href" => $link['url'], "tabIndex" => -1 ),
+						$this->blankimg( array( "id" => "{$link['id']}-img", "class" => "sprite {$link['icon']}", "alt" => $link['text'] ) ) ) .
+					' ' .
+					Html::element( 'a', array( "id" => "{$link['id']}-link", "href" => $link["url"], "tabIndex" => 3 ), $link["text"] ) );
+				echo "\n";
 			}
 ?>
 					</ul>
