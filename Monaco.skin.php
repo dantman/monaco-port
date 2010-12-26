@@ -1877,7 +1877,7 @@ if ($custom_article_footer !== '') {
 				echo "						";
 				echo Html::rawElement( 'li', array( "id" => "{$link['id']}-row", "class" => "link_box_dynamic_item" ),
 					Html::rawElement( 'a', array( "id" => "{$link['id']}-icon", "href" => $link['url'], "tabIndex" => -1 ),
-						$this->blankimg( array( "id" => "{$link['id']}-img", "class" => "sprite {$link['icon']}", "alt" => $link['text'] ) ) ) .
+						$this->blankimg( array( "id" => "{$link['id']}-img", "class" => "sprite {$link['icon']}" ) ) ) .
 					' ' .
 					Html::element( 'a', array( "id" => "{$link['id']}-link", "href" => $link["url"], "tabIndex" => 3 ), $link["text"] ) );
 				echo "\n";
