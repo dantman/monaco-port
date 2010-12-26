@@ -1125,6 +1125,11 @@ EOF;
 			} else if ($key == 'addsection') {
 				$val['icon'] = 'talk';
 			}
+			
+			$tabText = wfMsg("monaco-tab-$key");
+			if ( $tabText && $tabText != '-' && !wfEmptyMsg("monaco-tab-$key", $tabText) ) {
+				$val["text"] = $tabText;
+			}
 
 			if($key == 'report-problem') {
 				// Do nothing
