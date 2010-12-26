@@ -1824,7 +1824,8 @@ if ($custom_article_footer !== '') {
 	}
 
 	if ( $showDynamicLinks ) {
-
+		$dynamicLinksInternal = array();
+		
 		global $wgMonacoDynamicCreateOverride;
 		$createPage = null;
 		$writeArticleUrl = wfMsg('dynamic-links-write-article-url');
@@ -1841,10 +1842,8 @@ if ($custom_article_footer !== '') {
 		}
 		if ( isset($createPage) && ( $wgUser->isAllowed('edit') || $wgUser->isAnon() ) ) {
 			/* Redirect to login page instead of showing error, see Login friction project */
-			$dynamicLinksArray[] = array(
+			$dynamicLinksInternal["write-article"] = array(
 				'url' => $wgUser->isAnon() ? SpecialPage::getTitleFor('UserLogin')->getLocalURL(array("returnto"=>$createPage->getPrefixedDBkey())) : $createPage->getLocalURL(),
-				'text' => wfMsg('dynamic-links-write-article'),
-				'id' => 'dynamic-links-write-article',
 				'icon' => 'edit',
 			);
 		}
@@ -1857,13 +1856,37 @@ if ($custom_article_footer !== '') {
 			} else {
 				$url = $wgUser->isAnon() ? SpecialPage::getTitleFor('UserLogin')->getLocalURL(array("returnto"=>$uploadPage->getPrefixedDBkey())) : $uploadPage->getLocalURL();
 			}
-			$dynamicLinksArray[] = array(
+			$dynamicLinksInternal["add-image"] = array(
 				'url' => $url,
-				'text' => wfMsg('dynamic-links-add-image'),
-				'id' => 'dynamic-links-add-image',
 				'icon' => 'photo',
 			);
 		}
+		
+		$this->extendDynamicLinks( $dynamicLinksInternal );
+		wfRunHooks( 'MonacoDynamicLinks', array( $this, &$dynamicLinksInternal ) );
+		$this->extendDynamicLinksAfterHook( $dynamicLinksInternal );
+		
+		$dynamicLinksUser = array();
+		foreach ( explode( "\n", wfMsgForContent('dynamic-links') ) as $line ) {
+			if ( !$line || $line[0] == ' ' )
+				continue;
+			$line = trim($line, '* ');
+			$url = wfMsg("dynamic-links-$line-url");
+			if ( $url && $url !== '-' && !wfEmptyMsg("dynamic-links-$line-url", $url) ) {
+				$url = Title::newFromText($url);
+				if ( $url ) {
+					$dynamicLinksUser[$line] = array(
+						"url" => $url,
+						"icon" => "edit", // @note Wikia used messy css sprites so we can't really let this be customized easily
+					);
+				}
+			}
+		}
+		
+		foreach ( $dynamicLinksUser as $key => $value )
+			$dynamicLinksArray[$key] = $value;
+		foreach ( $dynamicLinksInternal as $key => $value )
+			$dynamicLinksArray[$key] = $value;
 	}
 
 	if (count($dynamicLinksArray) > 0) {
@@ -1873,7 +1896,10 @@ if ($custom_article_footer !== '') {
 				<td colspan="2">
 					<ul>
 <?php
-			foreach ($dynamicLinksArray as $link) {
+			foreach ($dynamicLinksArray as $key => $link) {
+				$link['id'] = "dynamic-links-$key";
+				if ( !isset($link['text']) )
+					$link['text'] = wfMsg("dynamic-links-$key");
 				echo "						";
 				echo Html::rawElement( 'li', array( "id" => "{$link['id']}-row", "class" => "link_box_dynamic_item" ),
 					Html::rawElement( 'a', array( "id" => "{$link['id']}-icon", "href" => $link['url'], "tabIndex" => -1 ),
@@ -2016,6 +2042,10 @@ wfProfileOut( __METHOD__ . '-body');
 		} else {
 		}
 	}
+
+	// allow subskins to tweak dynamic links
+	function extendDynamicLinks( &$dynamicLinks ) {}
+	function extendDynamicLinksAfterHook( &$dynamicLinks ) {}
 
 	// allow subskins to add extra sidebar extras
 	function printExtraSidebar() {}

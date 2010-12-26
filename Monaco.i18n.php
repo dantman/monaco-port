@@ -13,6 +13,15 @@ $messages = array();
  */
 $messages['en'] = array(
 	'monaco-desc' => "Wikia's Monaco theme, ported for use in MediaWiki.",
+'dynamic-links' => "
+ You can add dynamic link ids to monaco using this message, add a new id on each line
+ (you can use a * at the start like in sidebar and monaco-sidebar to make this a list)
+ Lines starting with a space will be treated as a comment.
+ After adding a new id to the list you can use the 'dynamic-links-<id>' message
+ to customize the text of the link and 'dynamic-links-<id>-url' message with the name
+ of a page title on the wiki for the dynamic link to link to.
+
+",
 	'dynamic-links-write-article' => "Create a new article",
 	'dynamic-links-write-article-url' => '-',
 	'dynamic-links-add-image' => "Upload a new image",
