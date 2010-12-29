@@ -121,7 +121,7 @@ body.widgetsAddingBlocked .add {
 #search_field {
 	background: transparent;
 	border: 0;
-	color: gray;
+	color: #000;
 	font-size: 9pt;
 	height: 22px;
 	line-height: 22px;
@@ -129,9 +129,9 @@ body.widgetsAddingBlocked .add {
 	padding: 0 3px 0 3px;
 	width: 164px;
 }
-#search_field.field_active {
-	color: #000;
-}
+#search_field.placeholder { color: gray }
+#search_field::-webkit-input-placeholder { color: gray }
+#search_field:-moz-placeholder { color: gray }
 #search-button {
 	border-left: 1px solid #CCC;
 	height: 16px;
