@@ -120,7 +120,7 @@ body.widgetsAddingBlocked .add {
 	-webkit-border-radius: 5px;
 	border-radius: 5px;
 }
-#search_field {
+#searchInput {
 	background: transparent;
 	border: 0;
 	color: #000;
@@ -131,9 +131,9 @@ body.widgetsAddingBlocked .add {
 	padding: 0 3px 0 3px;
 	width: 164px;
 }
-#search_field.placeholder { color: gray }
-#search_field::-webkit-input-placeholder { color: gray }
-#search_field:-moz-placeholder { color: gray }
+#searchInput.placeholder { color: gray }
+#searchInput::-webkit-input-placeholder { color: gray }
+#searchInput:-moz-placeholder { color: gray }
 #search-button {
 	border-left: 1px solid #CCC;
 	height: 16px;
@@ -283,46 +283,23 @@ body.widgetsAddingBlocked .add {
 	white-space: nowrap;
 }
 
-/* ie6/7 search suggest issue fix */
-#search_box {
-	position: relative;
-	z-index: 1;
-}
-
-#searchSuggestContainer {
-	z-index: 20000;
-}
-
-/* jQuery search autosuggest */
-.autocomplete-w1 {
-	left: 0px;
-	margin: 8px 0 0 6px;
-	position: absolute;
-	top: 0px;
-	/* IE6 fix: */
-	_background:none;
-	_margin:0;
-}
-.autocomplete {
+/*** search suggestions ***/
+.os-suggest {
 	background: #FFF;
 	border: 1px solid #999;
 	color: #000;
 	cursor: default;
 	font-size: 0.9em;
-	margin: -6px 6px 6px -6px;
-	max-height: 350px;
-	overflow: hidden;
 	text-align: left;
 	width: 170px !important;
-	/* IE6 specific: */
-	_margin: 0;
 }
-.autocomplete .selected {
-	background: #F0F0F0;
+.os-suggest .os-suggest-result-hl {
+	background: #e0efff;
+	color: #000;
 }
-.autocomplete div {
-	padding: 2px 5px;
-	white-space: nowrap;
+.os-suggest .os-suggest-result {
+	background: #FFF;
+/*	white-space: nowrap;*/
 }
 
 /* macbre: <widget> */
