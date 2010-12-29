@@ -63,65 +63,6 @@
 	line-height: 27px;
 }
 
-#control_edit div, #control_form_edit div {
-	clip: rect(0px 16px 16px 0px);
-	left: 0px;
-}
-#control_history div {
-	clip: rect(0px 32px 16px 16px);
-	left: -16px;
-}
-#control_watch div {
-	clip: rect(0px 48px 16px 32px);
-	left: -32px;
-}
-#control_unwatch div {
-	clip: rect(0px 240px 16px 224px);
-	left: -224px;
-}
-#control_move div {
-	clip: rect(0px 64px 16px 48px);
-	left: -48px;
-}
-#control_protect div, #control_unprotect div {
-	clip: rect(0px 80px 16px 64px);
-	left: -64px;
-}
-#control_delete div, #control_undelete div {
-	clip: rect(0px 96px 16px 80px);
-	left: -80px;
-}
-#control_report-problem div {
-	clip: rect(0px 224px 16px 208px);
-	left: -208px;
-}
-#control_viewsource div {
-	clip: rect(0px 256px 16px 240px);
-	left: -240px;
-}
-#control_addsection div {
-	clip: rect(0px 288px 16px 272px);
-	left: -272px;
-}
-#control_blog-create-tab div {
-	clip: rect(0px 144px 16px 128px);
-	left: -128px;
-}
-#control_purge div {
-	clip: rect(0px 336px 16px 320px);
-	left: -320px;
-}
-#control_share_feature div {
-	clip:rect(0px 352px 16px 336px);
-	left:-336px;
-}
-
-#page_controls .disabled * {
-	filter:alpha(opacity=40);
-	opacity: .4;
-	cursor: wait;
-}
-
 #page-controls .disabled a:hover {
 	text-decoration: none;
 }
