@@ -116,12 +116,14 @@ body.widgetsAddingBlocked .add {
       	background-image: -webkit-gradient(linear, 0% 0%, 0% 40%, from(#BFBFBF), to(#FFF));
 	border: 1px solid #039;
 	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 #search_field {
 	background: transparent;
 	border: 0;
-	color: gray;
+	color: #000;
 	font-size: 9pt;
 	height: 22px;
 	line-height: 22px;
@@ -129,9 +131,9 @@ body.widgetsAddingBlocked .add {
 	padding: 0 3px 0 3px;
 	width: 164px;
 }
-#search_field.field_active {
-	color: #000;
-}
+#search_field.placeholder { color: gray }
+#search_field::-webkit-input-placeholder { color: gray }
+#search_field:-moz-placeholder { color: gray }
 #search-button {
 	border-left: 1px solid #CCC;
 	height: 16px;

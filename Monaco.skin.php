@@ -507,6 +507,10 @@ class SkinMonaco extends SkinTemplate {
 		
 		$out->addStyle( 'monaco/style/rtl.css', 'screen', '', 'rtl' );
 		
+		if ( function_exists('OutputPage::includeJQuery' ) ) {
+			$out->includeJQuery();
+		}
+		
 	}
 
 	/**
@@ -1805,7 +1809,7 @@ if ($custom_article_footer !== '') {
 			<div id="search_box" class="color1" aria-role="search">
 				<form action="<?php $this->text('searchaction') ?>" id="searchform">
 					<label style="display: none;" for="search_field"><?php echo htmlspecialchars($searchLabel) ?></label>
-					<input id="search_field" name="search" type="text" maxlength="200" onfocus="sf_focus(event);" alt="<?php echo htmlspecialchars($searchLabel) ?>" aria-label="<?php echo htmlspecialchars($searchLabel) ?>" placeholder="<?php echo htmlspecialchars($searchLabel) ?>" autocomplete="off"<?php echo $skin->tooltipAndAccesskey('search'); ?> tabIndex=2 aria-required=true aria-flowto="search-button" />
+					<input id="search_field" name="search" type="text" maxlength="200" alt="<?php echo htmlspecialchars($searchLabel) ?>" aria-label="<?php echo htmlspecialchars($searchLabel) ?>" placeholder="<?php echo htmlspecialchars($searchLabel) ?>" autocomplete="off"<?php echo $skin->tooltipAndAccesskey('search'); ?> tabIndex=2 aria-required=true aria-flowto="search-button" />
 					<?php global $wgSearchDefaultFulltext; ?>
 					<input type="hidden" name="<?php echo ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
 					<input type="image" alt="<?php echo htmlspecialchars(wfMsgHtml('search')) ?>" src="<?php $this->text('blankimg') ?>" id="search-button" class="sprite search" tabIndex=2 />
