@@ -2059,6 +2059,28 @@ wfProfileOut( __METHOD__ . '-body');
 	// allow subskins to add extra sidebar extras
 	function printExtraSidebar() {}
 	
+	function customBox( $bar, $cont ) {
+		?>
+			<div class="widget">
+				<h3 class="color1 widget_title"><?php $out = wfMsg( $bar ); if (wfEmptyMsg($bar, $out)) echo htmlspecialchars($bar); else echo htmlspecialchars($out); ?></h3>
+				<div class="widget_contents">
+<?php   if ( is_array( $cont ) ) { ?>
+					<ul>
+<?php 		foreach($cont as $key => $val) { ?>
+						<?php echo $this->makeListItem($key, $val); ?>
+
+<?php		} ?>
+					</ul>
+<?php   } else {
+				# allow raw HTML block to be defined by extensions
+			print $cont;
+		}
+?>
+				</div>
+			</div>
+<?php
+	}
+	
 	// hook for subskins
 	function setupRightSidebar() {}
 	

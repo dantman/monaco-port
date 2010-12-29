@@ -21,7 +21,7 @@ body.widgetsAddingBlocked .add {
 	padding: 2px !important;
 }
 
-.widget dt {
+.widget h3 {
 	cursor: move;
 	font-family: tahoma, arial, sans-serif;
 	font-size: 9pt;
@@ -43,7 +43,7 @@ body.widgetsAddingBlocked .add {
 	margin: 3px 0 0 4px;
 }
 
-.widget dd {
+.widget .widget_contents {
 	font-size: 9pt;
 	padding: 7px;
 	margin: 0;
@@ -51,11 +51,11 @@ body.widgetsAddingBlocked .add {
 	overflow-y: auto;
 	overflow-x: hidden;
 }
-.widget h1 {
+/*.widget h1 {
 	font-family: tahoma, arial, sans-serif;
 	font-size: 10pt;
 	font-weight: bold;
-}
+}*/
 .widget li {
 	padding: .15em 0;
 }
