@@ -116,7 +116,9 @@ body.widgetsAddingBlocked .add {
       	background-image: -webkit-gradient(linear, 0% 0%, 0% 40%, from(#BFBFBF), to(#FFF));
 	border: 1px solid #039;
 	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	border-radius: 5px;
 }
 #search_field {
 	background: transparent;

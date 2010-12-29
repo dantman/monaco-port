@@ -1103,6 +1103,9 @@ div.multipageimagenavbox {
    padding: 4px;
    margin: 1em;
    -moz-border-radius: 6px;
+   -khtml-border-radius: 6px;
+   -webkit-border-radius: 6px;
+   border-radius: 6px;
    background: #f0f0f0;
 }
 

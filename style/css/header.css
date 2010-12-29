@@ -19,9 +19,15 @@
 	text-shadow: none;
 	text-transform: uppercase;
 	-moz-border-radius: 5px;
-	-moz-box-shadow: none;
+	-khtml-border-radius: 5px;
 	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: none;
+	-khtml-box-shadow: none;
 	-webkit-box-shadow: none;
+	-o-box-shadow: none;
+	-ms-box-shadow: none;
+	box-shadow: none;
 	filter: none;
 }
 .header-button img {
