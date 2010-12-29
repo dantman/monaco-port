@@ -2104,7 +2104,7 @@ wfProfileOut( __METHOD__ . '-body');
 			if(isset($this->data['articlelinks']['left'])) {
 				foreach($this->data['articlelinks']['left'] as $key => $val) {
 		  ?>
-							  <li id="control_<?php echo $key ?>" class="<?php echo $val['class'] ?>"><img src="<?php $this->text('blankimg') ?>" class="sprite <?php echo (isset($val['icon'])) ? $val['icon'] : $key ?>" alt="" /><a id="ca-<?php echo $key ?>" href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?>><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
+							  <li id="ca-<?php echo $key ?>" class="<?php echo $val['class'] ?>"><img src="<?php $this->text('blankimg') ?>" class="sprite <?php echo (isset($val['icon'])) ? $val['icon'] : $key ?>" alt="" /><a href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?>><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
 		  <?php
 				}
 				wfRunHooks( 'MonacoAfterArticleLinks' );
