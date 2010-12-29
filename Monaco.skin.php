@@ -507,6 +507,10 @@ class SkinMonaco extends SkinTemplate {
 		
 		$out->addStyle( 'monaco/style/rtl.css', 'screen', '', 'rtl' );
 		
+		if ( function_exists('OutputPage::includeJQuery' ) ) {
+			$out->includeJQuery();
+		}
+		
 	}
 
 	/**
