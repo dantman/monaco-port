@@ -292,6 +292,8 @@ body.widgetsAddingBlocked .add {
 	font-size: 0.9em;
 	text-align: left;
 	width: 170px !important;
+	overflow-y: visible;
+	height: auto !important;
 }
 .os-suggest .os-suggest-result-hl {
 	background: #e0efff;
