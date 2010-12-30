@@ -817,85 +817,8 @@ $this->printCustomHeader();
 wfProfileIn( __METHOD__ . '-header'); ?>
 		<div id="wikia_header" class="reset color2">
 			<div class="monaco_shrinkwrap">
-			<div id="monacoBranding">
-				<?php wfRunHooks( 'MonacoBranding', array( $this ) ) ?>
-		<?php
-$categorylist = $this->data['data']['categorylist'];
-if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
-?>
-				<button id="headerButtonHub" class="header-button color1"><?php echo isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?><img src="<?php $this->text('blankimg') ?>" /></button>
-
-<?php
-}
-?>
-			</div>
-			<div id="userData">
-<?php
-
-$custom_user_data = "";
-if( !wfRunHooks( 'CustomUserData', array( &$this, &$tpl, &$custom_user_data ) ) ){
-	wfDebug( __METHOD__ . ": CustomUserData messed up skin!\n" );
-}
-
-if( $custom_user_data ) {
-	echo $custom_user_data;
-} else {
-	global $wgUser;
-
-	// Output the facebook connect links that were added with PersonalUrls.
-	// @author Sean Colombo
-	foreach($this->data['userlinks'] as $linkName => $linkData){
-		// 
-		if( !empty($linkData['html']) ){
-			echo $linkData['html']; 
-		}
-	}
-
-	if ($wgUser->isLoggedIn()) {
-	?>
-				<span id="header_username"><a href="<?php echo htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-userpage') ?>><?php echo htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></span>
-				<span id="header_mytalk"><a href="<?php echo htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-mytalk') ?>><?php echo htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></span>
-				<span id="header_watchlist"><a href="<?php echo htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-watchlist') ?>><?php echo htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></span>
-<?php
-			if ( $this->useUserMore() ) { ?>
-				<span class="more hovermenu">
-					<button id="headerButtonUser" class="header-button color1"><?php echo trim(wfMsgHtml('moredotdotdot'), ' .') ?><img src="<?php $this->text('blankimg') ?>" /></button>
-					<span class="invisibleBridge"></span>
-					<div id="headerMenuUser" class="headerMenu color1 reset">
-						<ul>
-<?php
-						foreach ( $this->data['userlinks']['more'] as $key => $link ) {
-							echo Html::rawElement( 'li', array( 'id' => "header_$key" ),
-								Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
-						} ?>
-						</ul>
-					</div>
-				</span>
-<?php
-			} else {
-				foreach ( $this->data['userlinks']['more'] as $key => $link ) {
-					echo Html::rawElement( 'span', array( 'id' => "header_$key" ),
-						Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
-				} ?>
-<?php
-			} ?>
-				<span>
-					<a href="<?php echo htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-logout') ?>><?php echo htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a>
-				</span>
-	<?php
-	} else {
-?>
-				<span id="userLogin">
-					<a id="login" href="<?php echo htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
-				</span>
-
-					<a class="wikia-button" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
-
-<?php
-	}
-}
-?>
-		</div>
+<?php $this->printMonacoBranding(); ?>
+<?php $this->printUserData(); ?>
 		</div>
 	</div>
 
@@ -1414,6 +1337,95 @@ wfProfileOut( __METHOD__ . '-body');
 		<!-- /RIGHT SIDEBAR -->
 <?php
 		}
+	}
+	
+	function printMonacoBranding() {
+		?>
+			<div id="monacoBranding">
+				<?php wfRunHooks( 'MonacoBranding', array( $this ) ) ?>
+		<?php
+$categorylist = $this->data['data']['categorylist'];
+if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
+?>
+				<button id="headerButtonHub" class="header-button color1"><?php echo isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?><img src="<?php $this->text('blankimg') ?>" /></button>
+
+<?php
+}
+?>
+			</div>
+<?php
+	}
+	
+	function printUserData() {
+		$skin = $this->data['skin'];
+		?>
+			<div id="userData">
+<?php
+		
+		$custom_user_data = "";
+		if( !wfRunHooks( 'CustomUserData', array( &$this, &$tpl, &$custom_user_data ) ) ){
+			wfDebug( __METHOD__ . ": CustomUserData messed up skin!\n" );
+		}
+		
+		if( $custom_user_data ) {
+			echo $custom_user_data;
+		} else {
+			global $wgUser;
+			
+			// Output the facebook connect links that were added with PersonalUrls.
+			// @author Sean Colombo
+			foreach($this->data['userlinks'] as $linkName => $linkData){
+				// 
+				if( !empty($linkData['html']) ){
+					echo $linkData['html']; 
+				}
+			}
+			
+			if ($wgUser->isLoggedIn()) {
+			?>
+				<span id="header_username"><a href="<?php echo htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-userpage') ?>><?php echo htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></span>
+				<span id="header_mytalk"><a href="<?php echo htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-mytalk') ?>><?php echo htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></span>
+				<span id="header_watchlist"><a href="<?php echo htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-watchlist') ?>><?php echo htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></span>
+<?php
+				if ( $this->useUserMore() ) { ?>
+				<span class="more hovermenu">
+					<button id="headerButtonUser" class="header-button color1"><?php echo trim(wfMsgHtml('moredotdotdot'), ' .') ?><img src="<?php $this->text('blankimg') ?>" /></button>
+					<span class="invisibleBridge"></span>
+					<div id="headerMenuUser" class="headerMenu color1 reset">
+						<ul>
+<?php
+				foreach ( $this->data['userlinks']['more'] as $key => $link ) {
+					echo Html::rawElement( 'li', array( 'id' => "header_$key" ),
+						Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
+				} ?>
+						</ul>
+					</div>
+				</span>
+<?php
+				} else {
+					foreach ( $this->data['userlinks']['more'] as $key => $link ) {
+						echo Html::rawElement( 'span', array( 'id' => "header_$key" ),
+							Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
+					} ?>
+<?php
+				} ?>
+				<span>
+					<a href="<?php echo htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-logout') ?>><?php echo htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a>
+				</span>
+<?php
+			} else {
+?>
+				<span id="userLogin">
+					<a id="login" href="<?php echo htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['login']['text']) ?></a>
+				</span>
+
+					<a class="wikia-button" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
+
+<?php
+			}
+		} ?>
+			</div>
+<?php
 	}
 	
 	// allow subskins to add pre-page islands
