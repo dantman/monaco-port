@@ -388,7 +388,7 @@ EOF;
 		$tpl->set('csslinksbottom-urls', $printStyles);
 		$tpl->set('csslinksbottom', $tmpOut->buildCssLinks());
 */
-		wfProfileOut(__METHOD__ . '::printCSS');
+		//wfProfileOut(__METHOD__ . '::printCSS');
 
 		wfProfileOut( __METHOD__ );
 		return true;
