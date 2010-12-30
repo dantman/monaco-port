@@ -43,6 +43,8 @@ helppage|help",
 	'monaco-footer-lastedit' => '$1 made an edit on $2',
 	'viewrandompage' => "View random page",
 	
+	'masthead-anonymous-user' => "Anonymous user",
+	
 	# These messages don't look right with their content_actions defaults
 	'monaco-tab-edit' => "Edit this page",
 	'monaco-tab-addsection' => "Leave message",

@@ -86,6 +86,10 @@ class SkinMonaco extends SkinTemplate {
 		$out->addStyle( 'monaco/style/css/monaco_ie7.css', 'screen', 'IE 7' );
 		$out->addStyle( 'monaco/style/css/monaco_ie8.css', 'screen', 'IE 8' );
 		
+		if ( $this->showMasthead() ) {
+			$out->addStyle( 'monaco/style/css/masthead.css', 'screen' );
+		}
+		
 		$theme = $wgMonacoTheme;
 		if ( $wgMonacoAllowUsetheme ) {
 			$theme = $wgRequest->getText('usetheme', $theme);
@@ -106,6 +110,37 @@ class SkinMonaco extends SkinTemplate {
 			$out->includeJQuery();
 		}
 		
+	}
+
+	function showMasthead() {
+		global $wgMonacoUseMasthead;
+		if ( !$wgMonacoUseMasthead ) {
+			return false;
+		}
+		return !!$this->getMastheadUser();
+	}
+	
+	function getMastheadUser() {
+		global $wgTitle;
+		if ( !isset($this->mMastheadUser) ) {
+			$ns = $wgTitle->getNamespace();
+			if ( $ns == NS_USER || $ns == NS_USER_TALK ) {
+				$this->mMastheadUser = User::newFromName( $wgTitle->getText(), false );
+				$this->mMastheadTitleVisible = false;
+			} else {
+				$this->mMastheadUser = false;
+				$this->mMastheadTitleVisible = true; // title is visible anyways if we're not on a masthead using page
+			}
+		}
+		return $this->mMastheadUser;
+	}
+	
+	function isMastheadTitleVisible() {
+		if ( !$this->showMasthead() ) {
+			return false;
+		}
+		$this->getMastheadUser();
+		return $this->mMastheadTitleVisible;
 	}
 
 	/**
@@ -129,6 +164,14 @@ class SkinMonaco extends SkinTemplate {
 			$bodyAttrs['class'] .= ' action_' . $action;
 		} else if (empty($action) || in_array($action, array('view', 'purge'))) {
 			$bodyAttrs['class'] .= ' action_view';
+		}
+		
+		if ( $this->showMasthead() ) {
+			if ( $this->isMastheadTitleVisible() ) {
+				$bodyAttrs['class'] .= ' masthead-special';
+			} else {
+				$bodyAttrs['class'] .= ' masthead-regular';
+			}
 		}
 		
 		$bodyAttrs['id'] = "body";
@@ -874,7 +917,8 @@ wfProfileIn( __METHOD__ . '-header'); ?>
 <?php } ?>
 		<div id="wikia_page" class="page">
 <?php
-wfRunHooks('MonacoBeforePageBar', array($this));
+			$this->printMasthead();
+			wfRunHooks('MonacoBeforePageBar', array($this));
 			$this->printPageBar(); ?>
 					<!-- ARTICLE -->
 
@@ -987,7 +1031,7 @@ if ($custom_article_footer !== '') {
 			echo "\n";
 		}
 
-		if(is_object($wgArticle)) {
+		if(is_object($wgArticle) && $wgArticle->getTimestamp()) {
 			$timestamp = $wgArticle->getTimestamp();
 			$lastUpdate = $wgLang->date($timestamp);
 			$userId = $wgArticle->getUser();
@@ -1441,40 +1485,48 @@ wfProfileOut( __METHOD__ . '-body');
 	// that appears within the HEAD tag
 	function printAdditionalHead(){}
 
+	function printMasthead() {
+		$skin = $this->data['skin'];
+		if ( !$skin->showMasthead() ) {
+			return;
+		}
+		global $wgLang;
+		$user = $skin->getMastheadUser();
+		$username = $user->isAnon() ? wfMsg('masthead-anonymous-user') : $user->getName();
+		$editcount = $wgLang->formatNum($user->isAnon() ? 0 : $user->getEditcount());
+		?>
+			<div id="user_masthead" class="accent reset clearfix">
+				<div id="user_masthead_head" class="clearfix">
+					<h2><?php echo htmlspecialchars($username); ?>
+<?php if ( $user->isAnon() ) { ?>
+						<small id="user_masthead_anon"><?php echo $user->getName(); ?></small>
+<?php } else { ?>
+						<div id="user_masthead_scorecard" class="dark_text_1"><?php echo htmlspecialchars($editcount); ?></div>
+<?php } ?>
+					</h2>
+				</div>
+				<ul id="user_masthead_tabs" class="nav_links">
+<?php
+				foreach ( $this->data['articlelinks']['right'] as $navLink ) {
+					$class = "color1";
+					if ( isset($navLink["class"]) ) {
+						$class .= " {$navLink["class"]}";
+					}
+					echo Html::rawElement( 'li', array( "class" => $class ),
+						Html::element( 'a', array( "href" => $navLink["href"] ), $navLink["text"] ) );
+				} ?>
+				</ul>
+			</div>
+<?php
+		unset($this->data['articlelinks']['right']); // hide the right articlelinks since we've already displayed them
+	}
+
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
 	function printPageBar(){
 		// Allow for other skins to conditionally include it
 		$this->realPrintPageBar();
 	}
 	function realPrintPageBar(){
-		$showright = true;
-		global $wgMastheadVisible;
-		if (!empty($wgMastheadVisible)) {
-			$showright = false;
-		}
-	 	/*?>
-		<div id="page_bar" class="reset color1 page_bar clearfix">
-			<ul id="page_tabs" class="primary_tabs page_tabs" role="navigation">
-<?php
-		if(isset($this->data['articlelinks']['right']) && $showright ) {
-			foreach($this->data['articlelinks']['right'] as $key => $val) { ?>
-				<li id="ca-<?php echo $key ?>" class="<?php echo $val['class'] ?>"><a href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?php echo $val['class'] ?>"><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
-<?php
-			}
-		} ?>
-			</ul>
-			<ul id="page_controls" class="page_buttons page_controls" role="toolbar">
-<?php
-		if(isset($this->data['articlelinks']['left'])) {
-			foreach($this->data['articlelinks']['left'] as $key => $val) { ?>
-				<li id="ca-<?php echo $key ?>" class="<?php echo $val['class'] ?>"><img src="<?php $this->text('blankimg') ?>" class="sprite <?php echo (isset($val['icon'])) ? $val['icon'] : $key ?>" alt="" /><a href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?>><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
-<?php
-			}
-			wfRunHooks( 'MonacoAfterArticleLinks' );
-		} ?>
-			</ul>
-		</div>
-<?php*/
 		foreach ( $this->data['articlelinks'] as $side => $links ) {
 			foreach ( $links as $key => $link ) {
 				$this->data['articlelinks'][$side][$key]["id"] = "ca-$key";
@@ -1485,7 +1537,7 @@ wfProfileOut( __METHOD__ . '-body');
 		}
 		
 		$bar = array();
-		if ( $showright && isset($this->data['articlelinks']['right']) ) {
+		if ( isset($this->data['articlelinks']['right']) ) {
 			$bar[] = array(
 				"id" => "page_tabs",
 				"type" => "tabs",
@@ -1559,6 +1611,9 @@ wfProfileOut( __METHOD__ . '-body');
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
 	function printFirstHeading(){
+		if ( !$this->data['skin']->isMastheadTitleVisible() ) {
+			return;
+		}
 		?><h1 id="firstHeading" class="firstHeading" aria-level="1"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title');
 		wfRunHooks( 'MonacoPrintFirstHeading' );
 		?></h1><?php
