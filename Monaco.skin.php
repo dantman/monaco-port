@@ -759,6 +759,7 @@ class MonacoTemplate extends QuickTemplate {
 	function execute() {
 		wfProfileIn( __METHOD__ );
 		global $wgContLang, $wgArticle, $wgUser, $wgLogo, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename;
+		global $wgMonacoUseSitenoticeIsland;
 
 		/*$skin = $wgUser->getSkin();
 		$namespace = $wgTitle->getNamespace();*/
@@ -932,6 +933,11 @@ if( $custom_user_data ) {
 	<div class="monaco_shrinkwrap" id="monaco_shrinkwrap_main">
 <?php wfRunHooks('MonacoBeforePage', array($this)); ?>
 <?php $this->printBeforePage(); ?>
+<?php if ( $wgMonacoUseSitenoticeIsland && $this->data['sitenotice'] ) { ?>
+		<div class="page">
+			<div id="siteNotice"><?php $this->html('sitenotice') ?></div>
+		</div>
+<?php } ?>
 		<div id="wikia_page" class="page">
 <?php
 wfRunHooks('MonacoBeforePageBar', array($this));
@@ -942,7 +948,7 @@ wfRunHooks('MonacoBeforePageBar', array($this));
 			<article id="article" aria-role=main aria-labeledby="firstHeading">
 				<a name="top" id="top"></a>
 				<?php wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed? ?>
-				<?php if ( $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
+				<?php if ( !$wgMonacoUseSitenoticeIsland && $this->data['sitenotice'] ) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 				<?php $this->printFirstHeading(); ?>
 				<div id="bodyContent" class="body_content">
 					<h2 id="siteSub"><?php $this->msg('tagline') ?></h2>
