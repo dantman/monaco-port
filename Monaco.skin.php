@@ -2120,7 +2120,7 @@ wfProfileOut( __METHOD__ . '-body');
 		global $wgUser, $wgTitle;
                 $skin = $wgUser->getSkin();
 	 	?>
-		<div id="page_bar" class="reset color1 clearfix">
+		<div id="page_bar" class="reset color1 page_bar clearfix">
 				<ul id="page_controls" role="toolbar">
 		  <?php
 			if(isset($this->data['articlelinks']['left'])) {
