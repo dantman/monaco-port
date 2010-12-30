@@ -1427,18 +1427,16 @@ wfProfileOut( __METHOD__ . '-body');
 		$this->realPrintPageBar();
 	}
 	function realPrintPageBar(){
-		global $wgUser, $wgTitle;
-                $skin = $wgUser->getSkin();
-	 	?>
-		<div id="page_bar" class="reset color1 page_bar clearfix">
-			<ul id="page_tabs" class="primary_tabs page_tabs" role="navigation">
-<?php
+		$skin = $this->data['skin'];
 		$showright = true;
-		$namespace = $wgTitle->getNamespace();
 		global $wgMastheadVisible;
 		if (!empty($wgMastheadVisible)) {
 			$showright = false;
 		}
+	 	/*?>
+		<div id="page_bar" class="reset color1 page_bar clearfix">
+			<ul id="page_tabs" class="primary_tabs page_tabs" role="navigation">
+<?php
 		if(isset($this->data['articlelinks']['right']) && $showright ) {
 			foreach($this->data['articlelinks']['right'] as $key => $val) { ?>
 				<li id="ca-<?php echo $key ?>" class="<?php echo $val['class'] ?>"><a href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?php echo $val['class'] ?>"><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
@@ -1456,6 +1454,87 @@ wfProfileOut( __METHOD__ . '-body');
 			wfRunHooks( 'MonacoAfterArticleLinks' );
 		} ?>
 			</ul>
+		</div>
+<?php*/
+		foreach ( $this->data['articlelinks'] as $side => $links ) {
+			foreach ( $links as $key => $link ) {
+				$this->data['articlelinks'][$side][$key]["id"] = "ca-$key";
+				$this->data['articlelinks'][$side][$key]["text"] = ucfirst($link["text"]);
+				if ( $side == "left" && !isset($link["icon"]) ) {
+					$this->data['articlelinks'][$side][$key]["icon"] = $key;
+				}
+			}
+		}
+		
+		$bar = array();
+		if ( $showright && isset($this->data['articlelinks']['right']) ) {
+			$bar[] = array(
+				"id" => "page_tabs",
+				"type" => "tabs",
+				"class" => "primary_tabs",
+				"links" => $this->data['articlelinks']['right'],
+			);
+		}
+		$bar[] = array(
+			"id" => "page_controls",
+			"type" => "buttons",
+			"class" => "page_controls",
+			"bad_hook" => "MonacoAfterArticleLinks",
+			"links" => $this->data['articlelinks']['left'],
+		);
+		$this->printCustomPageBar( $bar );
+	}
+
+	var $primaryPageBarPrinted = false;
+	function printCustomPageBar( $bar ) {
+		$isPrimary = !$this->primaryPageBarPrinted;
+		$this->primaryPageBarPrinted = true;
+		
+		?>
+		<div<?php if ( $isPrimary ) { ?> id="page_bar"<?php } ?> class="reset color1 page_bar clearfix">
+<?php
+		foreach ( $bar as $list ) {
+			if ( !isset($list["type"]) ) {
+				$list["type"] = "buttons";
+			}
+			$attrs = array(
+				"class" => "page_{$list["type"]}",
+				"id" => $list["id"],
+				"role" => $list["type"] == "tabs" ? "navigation" : "toolbar",
+			);
+			if ( isset($list["class"]) && $list["class"] ) {
+				$attrs["class"] .= " {$list["class"]}";
+			}
+			
+			echo "			";
+			echo Html::openElement( 'ul', $attrs );
+			echo "\n";
+			foreach ( $list["links"] as $link ) {
+				$liAttrs = array(
+					"id" => isset($link["id"]) ? $link["id"] : null,
+					"class" => isset($link["class"]) ? $link["class"] : null,
+				);
+				$aAttrs = array(
+					"href" => $link["href"],
+				);
+				if ( isset($link["id"]) ) {
+					$aAttrs += $this->data['skin']->tooltipAndAccesskeyAttribs( $link["id"] );
+				}
+				echo "				";
+				echo Html::openElement( 'li', $liAttrs );
+				if ( isset($link["icon"]) ) {
+					echo $this->blankimg( array( "class" => "sprite {$link["icon"]}", "alt" => "" ) );
+				}
+				echo Html::element( 'a', $aAttrs, $link["text"] );
+				echo Html::closeElement( 'li' );
+				echo "\n";
+			}
+			if ( $list["bad_hook"] ) {
+				wfRunHooks( $list["bad_hook"] );
+			} ?>
+			</ul>
+<?php
+		} ?>
 		</div>
 <?php
 	}
