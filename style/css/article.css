@@ -31,47 +31,47 @@
 .page_bar u {
 	float: none;
 }
-#page_controls li {
+.page_buttons li {
 	float: left;
 	margin-right: 12px;
 	line-height: 32px;
 	position: relative;
 }
-#page_controls img {
+.page_buttons img {
 	top: -1px;
 }
-#page_controls a {
+.page_buttons a {
 	background: transparent;
 	margin-left: 2px;
 	position: relative;
 	text-decoration: none;
 }
-#page_controls a:hover {
+.page_buttons a:hover {
 	text-decoration: underline;
 }
 /** Highlight active page controls */
-#page_controls li.selected {
+.page_buttons li.selected {
 	background: #FFF;
 	padding: 0 8px !important;
 	height: 27px;
 	margin-top: 5px;
 }
-#page_controls li.selected a {
+.page_buttons li.selected a {
 	color: #000;
 	font-family: arial;
 	font-weight: bold;
 	line-height: 27px;
 }
 
-#page-controls .disabled a:hover {
+.page_buttons .disabled a:hover {
 	text-decoration: none;
 }
 
-#page_tabs {
+.page_tabs {
 	float: right;
 	font-family: arial, sans-serif;
 }
-#page_tabs li {
+.page_tabs li {
 	background-color: #EEE;
 	color: #000;
 	cursor: pointer;
@@ -82,17 +82,17 @@
 	margin-left: 3px;
 	margin-top: 5px;
 }
-#page_tabs li.selected {
+.page_tabs li.selected {
 	background-color: white;
 	color: #000;
 	font-weight: bold;
 }
-#page_tabs a {
+.page_tabs a {
 	background: transparent;
 	color: #000;
 	text-decoration: none;
 }
-#page_tabs a:hover {
+.page_tabs a:hover {
 	text-decoration: underline;
 }
 

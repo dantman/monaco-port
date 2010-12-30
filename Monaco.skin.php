@@ -1431,7 +1431,7 @@ wfProfileOut( __METHOD__ . '-body');
                 $skin = $wgUser->getSkin();
 	 	?>
 		<div id="page_bar" class="reset color1 page_bar clearfix">
-			<ul id="page_tabs" role="navigation">
+			<ul id="page_tabs" class="primary_tabs page_tabs" role="navigation">
 <?php
 		$showright = true;
 		$namespace = $wgTitle->getNamespace();
@@ -1446,7 +1446,7 @@ wfProfileOut( __METHOD__ . '-body');
 			}
 		} ?>
 			</ul>
-			<ul id="page_controls" role="toolbar">
+			<ul id="page_controls" class="page_buttons page_controls" role="toolbar">
 <?php
 		if(isset($this->data['articlelinks']['left'])) {
 			foreach($this->data['articlelinks']['left'] as $key => $val) { ?>
