@@ -1,6 +1,8 @@
 /*** MAIN COLORS ***/
-.color1, .color1 a, .yui-panel .hd {
+.color1, .yui-panel .hd {
 	background-color: #fec423;
+}
+.color1, .color1 a, .yui-panel .hd {
 	color: #333;
 }
 .color2 {
@@ -25,7 +27,7 @@
 	background-color: #505254;
 	border-color: #fec423;
 }
-#page_bar {
+.page_bar {
 	background-image: none;
 }
 #userData a, #monacoBranding a {
@@ -33,7 +35,7 @@
 }
 
 /*** WIDGETS ***/
-.widget dt {
+.widget h3 {
 	background-color: #505254;
 	color: #fec423;
 }

@@ -69,11 +69,11 @@
 	background: #5A0B00;
 	border-color: #2F0600;
 }
-.widget dd {
+.widget h3 {
 	color: #CCC;
 	background: #2F0600;
 }
-.widget dt {
+.widget .widget_contents {
 	background-color: #780000;
 	background-image: -moz-linear-gradient(top, #780000 0%, #D30000 33%, #D30000 42%, #780000 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #780000), color-stop(0.33, #D30000), color-stop(0.42, #D30000), color-stop(1.0, #780000));
@@ -93,7 +93,10 @@
 	background: #2F0600;
 	color: #CCC;
 }
-#navigation .navigation-hover>a {
+
+#navigation .menu-item:hover > a,
+#navigation .menu-item > a:active,
+#navigation .navigation-hover > a {
 	background: #7D0B0D;
 }
 #link_box_table {
@@ -125,53 +128,54 @@ a, table.gallery td a, div.thumbinner a {
 a:visited, table.gallery td a:visited {
 	color: #FF9235;
 }
+li.new a,
 a.new {
 	color: #ED1901 !important;
 }
-#bodyContent a.external, #bodyContent a.extiw {
+.body_content a.external, .body_content a.extiw {
 	color: #F36F1F;
 }
-#bodyContent a.external:visited, #bodyContent a.extiw:visited {
+.body_content a.external:visited, .body_content a.extiw:visited {
 	color: #F36F1F;
 }
-#bodyContent a.external, #bodyContent a[href ^="gopher://"] {
+.body_content a.external, .body_content a[href ^="gopher://"] {
 	background: center right no-repeat;
 	background-image: url(../images/external.png);
 }
-#page_bar {
+.page_bar {
 	background-color: #780000;
 	background-image: -moz-linear-gradient(top, #780000 0%, #D30000 33%, #D30000 42%, #780000 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #780000), color-stop(0.33, #D30000), color-stop(0.42, #D30000), color-stop(1.0, #780000));
 	border-bottom: none;
 }
-#page_tabs li {
+.page_tabs li {
 	background: #480F06;
 	border: none;
 }
-#page_tabs li.selected {
+.page_tabs li.selected {
 	background: #111;
 	color: #EEE;
 	border: none;
 }
-#page_tabs li a, #page_tabs li.selected a {
+.page_tabs li a, .page_tabs li.selected a {
 	color: #EEE;
 }
-#page_tabs li a.new {
+.page_tabs li a.new {
 	color: #E01700;
 }
-#wikia_page {
+.page {
 	background: #111;
 	border-color: #222;
 	color: #DDD;
 }
-#articleFooter {
+.article_footer {
 	background: #111;
 	border-top: 1px dashed #555;
 }
-#articleFooter td.col2 {
+.article_footer td.col2 {
 	border-left: 1px dashed #555;
 }
-#articleFooter strong {
+.article_footer strong {
 	color: #EEE;
 }
 #toc,
@@ -233,8 +237,8 @@ body.mainpage .firstHeading {
 	border-color: #555;
 	color: #EEE;
 }
-body.masthead-regular #page_bar, body.masthead-special #page_bar,
-body.masthead-regular #page_bar a, body.masthead-special #page_bar a {
+body.masthead-regular .page_bar, body.masthead-special .page_bar,
+body.masthead-regular .page_bar a, body.masthead-special .page_bar a {
 	background: #8F0600;
 	border-color: #555;
 	color: #EEE;

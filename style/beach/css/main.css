@@ -1,6 +1,8 @@
 /*** MAIN COLORS ***/
-.color1, .color1 a, .yui-panel .hd {
+.color1, .yui-panel .hd {
 	background-color: #ecd995;
+}
+.color1, .color1 a, .yui-panel .hd {
 	color: #000;
 }
 .color2 {
@@ -35,7 +37,7 @@
 }
 
 /*** WIDGETS ***/
-.widget dt {
+.widget h3 {
 	background-color: #3e2a18;
 	color: #ecd995;
 }

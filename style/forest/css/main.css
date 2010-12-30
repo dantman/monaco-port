@@ -27,19 +27,19 @@
 	border: none;
 	margin-bottom: 1px;
 }
-#search_box, #page_bar {
+#search_box, .page_bar {
 	background: #646651;
 	background-image: -moz-linear-gradient(top, #B6D0B5, #646651);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#B6D0B5), to(#646651));
 }
-#page_tabs li {
+.page_bar .page_tabs li {
 	background: #DDD;
 }
-#wikia_page, #page_tabs li.selected {
+.page, .page_bar .page_tabs li.selected {
 	background: #EEE;
 	color: #333;
 }
-#page_controls a {
+.page_bar .page_buttons a {
 	color: #FFF;
 }
 
@@ -58,10 +58,10 @@
 	background-color: #303030;
 	color: #FFF;
 }
-.headerMenu {
+#wikia_header .headerMenu {
 	background: #303030;
 }
-.headerMenu a {
+#wikia_header .headerMenu a {
 	color: #FFF;
 }
 #userData a, #monacoBranding a {
@@ -86,7 +86,7 @@
 .widget a {
 	color: #000;
 }
-.widget dd {
+.widget .wikia_content {
 	background: #eee;
 }
 
@@ -95,7 +95,9 @@
 	background: #EEE;
 	color: #333;
 }
-#navigation .navigation-hover>a {
+#navigation .menu-item:hover > a,
+#navigation .menu-item > a:active,
+#navigation .navigation-hover > a {
 	background: #696;
 	color: #FFF;
 }
@@ -172,13 +174,13 @@ body.mainpage #background_accent2 {
 #user_masthead ul.nav_links li.selected a {
 	color: #FFF;
 }
-body.masthead-regular #page_bar,
-body.masthead-special #page_bar {
+body.masthead-regular .page_bar,
+body.masthead-special .page_bar {
 	background: #555;
 	border-color: #AAA;
 }
-body.masthead-regular #page_controls a, 
-body.masthead-special #page_controls a {
+body.masthead-regular .page_bar .page_buttons a, 
+body.masthead-special .page_bar .page_buttons a {
 	color: #FFF;
 }
 

@@ -1,6 +1,8 @@
 /*** MAIN COLORS ***/
-.color1, .color1 a, .yui-panel .hd {
+.color1, .yui-panel .hd {
 	background-color: #fec423;
+}
+.color1, .color1 a, .yui-panel .hd {
 	color: #333;
 }
 .color2 {
@@ -20,8 +22,7 @@
 	color: #000;
 }
 
-
-#page_bar {
+.page_bar {
 	background-image: none;
 }
 

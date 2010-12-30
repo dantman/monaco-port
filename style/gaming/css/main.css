@@ -1,6 +1,8 @@
 /*** MAIN COLORS ***/
-.color1, .color1 a, .yui-panel .hd {
+.color1, .yui-panel .hd {
 	background-color: #ffcb3b;
+}
+.color1, .color1 a, .yui-panel .hd {
 	color: #000;
 }
 .color2 {
@@ -34,7 +36,7 @@
 	background: #09101d url(../images/background.jpg);
 	border-color: #71d1ef;
 }
-#page_bar {
+.page_bar {
 	background-image: none;
 }
 
@@ -53,7 +55,9 @@
 #navigation a {
 	color: #71d1ef;
 }
-.navigation-hover {
+#navigation .menu-item:hover > a,
+#navigation .menu-item > a:active,
+#navigation .navigation-hover > a {
 	background-color: #386878;
 }
 #link_box, #link_box a {
@@ -95,35 +99,35 @@
 body {
 	color: #FFF;
 }
-#wikia_page {
+.page {
 	background: #0e192d;
 	color: #FFF;
 }
-#wikia_page a, #bodyContent a.extiw, #bodyContent a.extiw:active {
+.page a, .body_content a.extiw, .body_content a.extiw:active {
 	color: #71d1ef;
 }
-#wikia_page a.new {
+.page a.new {
 	color: #C20;
 }
-#wikia_page a:visited {
+.page a:visited {
 	color: #809def;
 }
-#wikia_page code {
+.page code {
 	background-color: #112266;
 	color: #FFF;
 }
-#page_tabs li {
+.page_bar .page_tabs li {
 	background: #555;
 	color: #FFF;
 }
-#page_tabs li.selected, #page_tabs li.selected a {
+.page_bar .page_tabs li.selected, .page_bar .page_tabs li.selected a {
 	background: #0e192d;
 	color: #FFF !important;
 }
-#articleFooter {
+.article_footer {
 	background-color: transparent;
 }
-#articleFooter strong {
+.article_footer strong {
 	color: #FFF;
 }
 #preftoc li {
@@ -133,9 +137,9 @@ body {
 	color: #000;
 }
 
-#wikia_page table.toc,
+.page table.toc,
 #catlinks,
-#wikia_page table.gallery td,
+.page table.gallery td,
 ul#filetoc,
 #preferences,
 .prefsection table,
@@ -159,7 +163,7 @@ table.gallery td {
 
 
 /* color fixes */
-#page_controls a {color: #000 !important}
+.page_bar .page_buttons a {color: #000 !important}
 
 #pagehistory li.selected,
 #toc,

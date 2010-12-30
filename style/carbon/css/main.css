@@ -38,18 +38,18 @@
 	border: none;
 	margin-bottom: 1px;
 }
-#search_box, #page_bar {
+#search_box, .page_bar {
 	background: #252525;
 	background-image: url(../images/background.gif);
 }
-#page_bar {
+.page_bar {
 	border-bottom: 1px solid #3C3C3C;
 	overflow: visible;
 }
-#page_controls a {
+.page_bar .page_buttons a {
 	color: #FFF;
 }
-#wikia_page {
+.page {
 	background: #333;
 	border-color: #666;
 	color: #EEE;
@@ -85,11 +85,11 @@
 .widget a {
 	color: #70B8FF;
 }
-.widget dd {
+.widget .widget_contents {
 	background: #2F2F2F;
 	color: #FFF;
 }
-.widget dt {
+.widget h3 {
 	color: #FFF;
 	background: #1D1D1D;
 }
@@ -98,7 +98,9 @@
 	background: #2F2F2F;
 	color: #FFF;
 }
-#navigation .navigation-hover>a {
+#navigation .menu-item:hover > a,
+#navigation .menu-item > a:active,
+#navigation .navigation-hover > a {
 	background: #1D1D1D;
 }
 #navigation .menu-item {
@@ -132,36 +134,36 @@ a, table.gallery td a, div.thumbinner a {
 a:visited, table.gallery td a:visited {
 	color: #7078FF;
 }
-.headerMenu a:visited {
+#wikia_header .headerMenu a:visited {
 	color: #FFFFFF;
 }
 a.new {
 	color: #ED1901 !important;
 }
-#page_tabs {
+.page_bar .page_tabs {
 	position: relative;
 	top: 1px;
 }
-#page_tabs li {
+.page_bar .page_tabs li {
 	background: #222;
 	border: 1px solid #444;
 	border-bottom: none;
 }
-#page_tabs li.selected {
+.page_bar .page_tabs li.selected {
 	background: #333;
 	border-color: #3F3F3F;
 	height: 28px;
 }
-#page_tabs li:hover {
+.page_bar .page_tabs li:hover {
 	background: #4C4C4C;
 }
-#page_tabs li a {
+.page_bar .page_tabs li a {
 	color: #CCC;
 }
-#page_tabs li a.new {
+.page_bar .page_tabs li a.new {
 	color: #F05048;
 }
-#page_tabs li.selected a {
+.page_bar .page_tabs li.selected a {
 	color: #FFF;
 }
 #toc,
@@ -183,10 +185,10 @@ pre {
 	border: 1px dashed #555;
 	color: #FFF;
 }
-#articleFooter {
+.article_footer {
 	background: #333;
 }
-#articleFooter h1 {
+.article_footer h1 {
 	color: #FFF;
 }
 
@@ -207,10 +209,10 @@ body.mainpage.rtl div.monaco_shrinkwrap {
 }
 body.mainpage {
 	background-position: center top;
-}
+}/* Eh? what is this supposed to be here for?
 body.mainpage .firstHeading {
 	display: none;
-}
+}*/
 
 /* @end */
 

@@ -28,18 +28,18 @@
 	border: none;
 	margin-bottom: 1px;
 }
-#search_box, #page_bar {
+#search_box, .page_bar {
 	background: #FBD398;
 	background-image: -moz-linear-gradient(top, #FFEACD, #FBD398);
 	background-image: -webkit-gradient(linear, left top, left bottom, from(#FFEACD), to(#FBD398));
 }
-#page_controls a {
+.page_bar .page_buttons a {
 	color: #555;
 }
-#wikia_page {
+.page {
 	background: #FDFDF0;
 }
-#page_tabs li.selected {
+.page_bar .page_tabs li.selected {
 	background: #FDFDF0;
 }
 
@@ -55,10 +55,10 @@
 .header-button {
 	background-color: #303030;
 }
-.headerMenu {
+#wikia_header .headerMenu {
 	background: #303030;
 }
-.headerMenu a {
+#wikia_header .headerMenu a {
 	color: #FFF;
 }
 #userData a, #monacoBranding a {
@@ -83,7 +83,7 @@
 .widget a {
 	color: #555;
 }
-.widget dd {
+.widget .widget_contents {
 	background: #FDFDF0;
 }
 
@@ -91,7 +91,9 @@
 #navigation a {
 	color: #555;
 }
-#navigation .navigation-hover>a {
+#navigation .menu-item:hover > a,
+#navigation .menu-item > a:active,
+#navigation .navigation-hover > a {
 	background: #74B58A;
 	color: #FFF;
 }
