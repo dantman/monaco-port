@@ -22,7 +22,10 @@ $wgExtensionCredits['skin'][] = array (
 
 $wgValidSkinNames['monaco'] = 'Monaco';
 $wgAutoloadClasses['SkinMonaco'] = dirname(__FILE__).'/Monaco.skin.php';
+$wgAutoloadClasses['MonacoSidebar'] = dirname(__FILE__).'/MonacoSidebar.class.php';
 $wgExtensionMessagesFiles['Monaco'] = dirname(__FILE__).'/Monaco.i18n.php';
+
+$wgHooks['MessageCacheReplace'][] = 'MonacoSidebar::invalidateCache';
 
 /* Bad Configs - These are Wikia junk used inside Monaco.skin.php that should be slowly removed */
 $wgSearchDefaultFulltext = false; // bad config
