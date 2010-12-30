@@ -944,7 +944,7 @@ wfRunHooks('MonacoBeforePageBar', array($this));
 				<?php wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed? ?>
 				<?php if ( $this->data['sitenotice']) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
 				<?php $this->printFirstHeading(); ?>
-				<div id="bodyContent">
+				<div id="bodyContent" class="body_content">
 					<h2 id="siteSub"><?php $this->msg('tagline') ?></h2>
 					<div id="contentSub"><?php $this->html('subtitle') ?></div>
 					<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>

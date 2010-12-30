@@ -96,11 +96,13 @@
 	text-decoration: underline;
 }
 
-#article {
-	min-height: 200px;
+.page article {
 	padding: 10px;
 	position: relative;
 	overflow: visible;
+}
+#article {
+	min-height: 200px;
 }
 
 /*** ARTICLE FOOTER ***/
@@ -194,13 +196,13 @@
 .editingTips #wikia_page {
 	margin-left: 5px
 }
-.editingTips #bodyContent {
+.editingTips .body_content {
 	margin-left: 216px
 }
 .editingWide .accordion-menu {
 	display: none !important
 }
-.editingWide #bodyContent {
+.editingWide .body_content {
 	margin-left: 0px
 }
 .editingWide #wikiPreview {
@@ -255,6 +257,6 @@ span.searchmatch {
 	color: inherit;
 }
 
-#bodyContent a.external, #bodyContent a[href^="gopher://"] {
+.body_content a.external, .body_content a[href^="gopher://"] {
 	background: url(../images/monaco-sprite.png) top right no-repeat;
 }

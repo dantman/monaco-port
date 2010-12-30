@@ -15,12 +15,12 @@
 ** http://style.cleverchimp.com/font_size_intervals/altintervals.html
 */
 
-#wikia_page {
+.page {
 	font: x-small sans-serif;
 }
 
 /* scale back up to a sane default */
-#article {
+.page article {
 	font-size: 127%;
 	line-height: 1.5em;
 }
@@ -215,10 +215,10 @@ span.subpages {
 }
 
 /* Some space under the headers in the content area */
-#bodyContent h1, #bodyContent h2 {
+.body_content h1, .body_content h2 {
 	margin-bottom: .6em;
 }
-#bodyContent h3, #bodyContent h4, #bodyContent h5 {
+.body_content h3, .body_content h4, .body_content h5 {
 	margin-bottom: .3em;
 }
 .firstHeading {
@@ -528,64 +528,64 @@ div.townBox dl dd {
 ** keep the whitespace in front of the ^=, hides rule from konqueror
 ** this is css3, the validator doesn't like it when validating as css2
 */
-#bodyContent a.external,
-#bodyContent a[href ^="gopher://"] {
+.body_content a.external,
+.body_content a[href ^="gopher://"] {
 	background: url(../../../monobook/external.png) center right no-repeat;
 	padding-right: 13px;
 }
-#bodyContent a[href ^="https://"],
+.body_content a[href ^="https://"],
 .link-https {
 	background: url(../../../monobook/lock_icon.gif) center right no-repeat;
 	padding-right: 16px;
 }
-#bodyContent a[href ^="mailto:"],
+.body_content a[href ^="mailto:"],
 .link-mailto {
 	background: url(../../../monobook/mail_icon.gif) center right no-repeat;
 	padding-right: 18px;
 }
-#bodyContent a[href ^="news://"] {
+.body_content a[href ^="news://"] {
 	background: url(../../../monobook/news_icon.png) center right no-repeat;
 	padding-right: 18px;
 }
-#bodyContent a[href ^="ftp://"],
+.body_content a[href ^="ftp://"],
 .link-ftp {
 	background: url(../../../monobook/file_icon.gif) center right no-repeat;
 	padding-right: 18px;
 }
-#bodyContent a[href ^="irc://"],
+.body_content a[href ^="irc://"],
 .link-irc {
 	background: url(../../../monobook/discussionitem_icon.gif) center right no-repeat;
 	padding-right: 18px;
 }
-#bodyContent a.external[href $=".ogg"], #bodyContent a.external[href $=".OGG"],
-#bodyContent a.external[href $=".mid"], #bodyContent a.external[href $=".MID"],
-#bodyContent a.external[href $=".midi"], #bodyContent a.external[href $=".MIDI"],
-#bodyContent a.external[href $=".mp3"], #bodyContent a.external[href $=".MP3"],
-#bodyContent a.external[href $=".wav"], #bodyContent a.external[href $=".WAV"],
-#bodyContent a.external[href $=".wma"], #bodyContent a.external[href $=".WMA"],
+.body_content a.external[href $=".ogg"], .body_content a.external[href $=".OGG"],
+.body_content a.external[href $=".mid"], .body_content a.external[href $=".MID"],
+.body_content a.external[href $=".midi"], .body_content a.external[href $=".MIDI"],
+.body_content a.external[href $=".mp3"], .body_content a.external[href $=".MP3"],
+.body_content a.external[href $=".wav"], .body_content a.external[href $=".WAV"],
+.body_content a.external[href $=".wma"], .body_content a.external[href $=".WMA"],
 .link-audio {
 	background: url("../../../monobook/audio.png") center right no-repeat;
 	padding-right: 13px;
 }
-#bodyContent a.external[href $=".ogm"], #bodyContent a.external[href $=".OGM"],
-#bodyContent a.external[href $=".avi"], #bodyContent a.external[href $=".AVI"],
-#bodyContent a.external[href $=".mpeg"], #bodyContent a.external[href $=".MPEG"],
-#bodyContent a.external[href $=".mpg"], #bodyContent a.external[href $=".MPG"],
+.body_content a.external[href $=".ogm"], .body_content a.external[href $=".OGM"],
+.body_content a.external[href $=".avi"], .body_content a.external[href $=".AVI"],
+.body_content a.external[href $=".mpeg"], .body_content a.external[href $=".MPEG"],
+.body_content a.external[href $=".mpg"], .body_content a.external[href $=".MPG"],
 .link-video {
 	background: url("../../../monobook/video.png") center right no-repeat;
 	padding-right: 13px;
 }
-#bodyContent a.external[href $=".pdf"], #bodyContent a.external[href $=".PDF"],
-#bodyContent a.external[href *=".pdf#"], #bodyContent a.external[href *=".PDF#"],
-#bodyContent a.external[href *=".pdf?"], #bodyContent a.external[href *=".PDF?"],
+.body_content a.external[href $=".pdf"], .body_content a.external[href $=".PDF"],
+.body_content a.external[href *=".pdf#"], .body_content a.external[href *=".PDF#"],
+.body_content a.external[href *=".pdf?"], .body_content a.external[href *=".PDF?"],
 .link-document {
 	background: url("../../../monobook/document.png") center right no-repeat;
 	padding-right: 12px;
 }
 
 /* disable interwiki styling */
-#bodyContent a.extiw,
-#bodyContent a.extiw:active {
+.body_content a.extiw,
+.body_content a.extiw:active {
 	color: #36b;
 	background: none;
 	padding: 0;
@@ -595,7 +595,7 @@ a.external {
 }
 /* this can be used in the content area to switch off
 special external link styling */
-#bodyContent .plainlinks a {
+.body_content .plainlinks a {
 	background: none !important;
 	padding: 0 !important;
 }
@@ -794,8 +794,8 @@ div#userlogin .captcha,
 /* footer icons need a fixed width */
 * > html #f-poweredbyico,
 * > html #f-copyrightico { width: 88px; }
-* > html #bodyContent,
-* > html #bodyContent pre {
+* > html .body_content,
+* > html .body_content pre {
 	overflow-x: auto;
 	width: 100%;
 	padding-bottom: 25px;
