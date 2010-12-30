@@ -1427,7 +1427,6 @@ wfProfileOut( __METHOD__ . '-body');
 		$this->realPrintPageBar();
 	}
 	function realPrintPageBar(){
-		$skin = $this->data['skin'];
 		$showright = true;
 		global $wgMastheadVisible;
 		if (!empty($wgMastheadVisible)) {
@@ -1459,7 +1458,6 @@ wfProfileOut( __METHOD__ . '-body');
 		foreach ( $this->data['articlelinks'] as $side => $links ) {
 			foreach ( $links as $key => $link ) {
 				$this->data['articlelinks'][$side][$key]["id"] = "ca-$key";
-				$this->data['articlelinks'][$side][$key]["text"] = ucfirst($link["text"]);
 				if ( $side == "left" && !isset($link["icon"]) ) {
 					$this->data['articlelinks'][$side][$key]["icon"] = $key;
 				}
