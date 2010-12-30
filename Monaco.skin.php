@@ -1441,7 +1441,7 @@ wfProfileOut( __METHOD__ . '-body');
 		}
 		if(isset($this->data['articlelinks']['right']) && $showright ) {
 			foreach($this->data['articlelinks']['right'] as $key => $val) { ?>
-				<li class="<?php echo $val['class'] ?>"><a href="<?php echo htmlspecialchars($val['href']) ?>" id="ca-<?php echo $key ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?php echo $val['class'] ?>"><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
+				<li id="ca-<?php echo $key ?>" class="<?php echo $val['class'] ?>"><a href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?php echo $val['class'] ?>"><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
 <?php
 			}
 		} ?>
