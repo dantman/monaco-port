@@ -1343,15 +1343,6 @@ wfProfileOut( __METHOD__ . '-body');
 		?>
 			<div id="monacoBranding">
 				<?php wfRunHooks( 'MonacoBranding', array( $this ) ) ?>
-		<?php
-$categorylist = $this->data['data']['categorylist'];
-if(isset($categorylist['nodes']) && count($categorylist['nodes']) > 0 ) {
-?>
-				<button id="headerButtonHub" class="header-button color1"><?php echo isset($categorylist['cat']['text']) ? $categorylist['cat']['text'] : '' ?><img src="<?php $this->text('blankimg') ?>" /></button>
-
-<?php
-}
-?>
 			</div>
 <?php
 	}
