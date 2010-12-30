@@ -137,7 +137,7 @@ class SkinMonaco extends SkinTemplate {
 	
 	function isMastheadTitleVisible() {
 		if ( !$this->showMasthead() ) {
-			return false;
+			return true;
 		}
 		$this->getMastheadUser();
 		return $this->mMastheadTitleVisible;
