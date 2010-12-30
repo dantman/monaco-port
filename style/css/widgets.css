@@ -196,7 +196,9 @@ body.widgetsAddingBlocked .add {
 	text-align: right;
 }
 
-.navigation-hover {
+#navigation .menu-item:hover > a,
+#navigation .menu-item > a:active,
+#navigation .navigation-hover > a {
 	background-color: #e0efff;
 }
 #navigation em {
