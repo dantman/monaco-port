@@ -1544,7 +1544,7 @@ wfProfileOut( __METHOD__ . '-body');
 					echo $this->blankimg( array( "class" => "sprite {$link["icon"]}", "alt" => "" ) );
 				}
 				echo Html::element( 'a', $aAttrs, $link["text"] );
-				echo Html::closeElement( 'li' );
+				echo Xml::closeElement( 'li' );
 				echo "\n";
 			}
 			if ( $list["bad_hook"] ) {
