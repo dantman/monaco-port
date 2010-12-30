@@ -1714,7 +1714,7 @@ if ($custom_article_footer !== '') {
 
 		global $wgArticle, $wgLang;
 ?>
-			<div id="articleFooter" class="reset">
+			<div id="articleFooter" class="reset article_footer">
 				<table cellspacing="0">
 					<tr>
 						<td class="col1">
