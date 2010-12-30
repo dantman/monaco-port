@@ -64,7 +64,7 @@ class SkinMonaco extends SkinTemplate {
 	 * @param $out OutputPage
 	 */
 	function setupSkinUserCss( OutputPage $out ){
-		global $wgMonacoTheme;
+		global $wgMonacoTheme, $wgMonacoAllowUsetheme, $wgRequest;
 
 		parent::setupSkinUserCss( $out );
 		
@@ -86,8 +86,19 @@ class SkinMonaco extends SkinTemplate {
 		$out->addStyle( 'monaco/style/css/monaco_ie7.css', 'screen', 'IE 7' );
 		$out->addStyle( 'monaco/style/css/monaco_ie8.css', 'screen', 'IE 8' );
 		
-		if ( isset($wgMonacoTheme) && is_string($wgMonacoTheme) && $wgMonacoTheme != "sapphire" )
-			$out->addStyle( "monaco/style/{$wgMonacoTheme}/css/main.css", 'screen' );
+		$theme = $wgMonacoTheme;
+		if ( $wgMonacoAllowUsetheme ) {
+			$theme = $wgRequest->getText('usetheme', $theme);
+			if ( preg_match('/[^a-z]/', $theme) ) {
+				$theme = $wgMonacoTheme;
+			}
+		}
+		if ( preg_match('/[^a-z]/', $theme) ) {
+			$theme = "sapphire";
+		}
+		
+		if ( isset($theme) && is_string($theme) && $theme != "sapphire" )
+			$out->addStyle( "monaco/style/{$theme}/css/main.css", 'screen' );
 		
 		$out->addStyle( 'monaco/style/rtl.css', 'screen', '', 'rtl' );
 		
