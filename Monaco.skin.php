@@ -1431,37 +1431,33 @@ wfProfileOut( __METHOD__ . '-body');
                 $skin = $wgUser->getSkin();
 	 	?>
 		<div id="page_bar" class="reset color1 page_bar clearfix">
-				<ul id="page_controls" role="toolbar">
-		  <?php
-			if(isset($this->data['articlelinks']['left'])) {
-				foreach($this->data['articlelinks']['left'] as $key => $val) {
-		  ?>
-							  <li id="ca-<?php echo $key ?>" class="<?php echo $val['class'] ?>"><img src="<?php $this->text('blankimg') ?>" class="sprite <?php echo (isset($val['icon'])) ? $val['icon'] : $key ?>" alt="" /><a href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?>><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
-		  <?php
-				}
-				wfRunHooks( 'MonacoAfterArticleLinks' );
+			<ul id="page_tabs" role="navigation">
+<?php
+		$showright = true;
+		$namespace = $wgTitle->getNamespace();
+		global $wgMastheadVisible;
+		if (!empty($wgMastheadVisible)) {
+			$showright = false;
+		}
+		if(isset($this->data['articlelinks']['right']) && $showright ) {
+			foreach($this->data['articlelinks']['right'] as $key => $val) { ?>
+				<li class="<?php echo $val['class'] ?>"><a href="<?php echo htmlspecialchars($val['href']) ?>" id="ca-<?php echo $key ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?php echo $val['class'] ?>"><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
+<?php
 			}
-		  ?>
-						  </ul>
-						  <ul id="page_tabs" role="navigation">
-		  <?php
-		  $showright = true;
-		  $namespace = $wgTitle->getNamespace();
-		  global $wgMastheadVisible;
-		  if (!empty($wgMastheadVisible)) {
-			  $showright = false;
-		  }
-		  if(isset($this->data['articlelinks']['right']) && $showright ) {
-			  foreach($this->data['articlelinks']['right'] as $key => $val) {
-		  ?>
-							  <li class="<?php echo $val['class'] ?>"><a href="<?php echo htmlspecialchars($val['href']) ?>" id="ca-<?php echo $key ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?> class="<?php echo $val['class'] ?>"><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
-		  <?php
-			  }
-		  }
-		  ?>
-				</ul>
-			</div>
-	<?php
+		} ?>
+			</ul>
+			<ul id="page_controls" role="toolbar">
+<?php
+		if(isset($this->data['articlelinks']['left'])) {
+			foreach($this->data['articlelinks']['left'] as $key => $val) { ?>
+				<li id="ca-<?php echo $key ?>" class="<?php echo $val['class'] ?>"><img src="<?php $this->text('blankimg') ?>" class="sprite <?php echo (isset($val['icon'])) ? $val['icon'] : $key ?>" alt="" /><a href="<?php echo htmlspecialchars($val['href']) ?>" <?php echo $skin->tooltipAndAccesskey('ca-'.$key) ?>><?php echo htmlspecialchars(ucfirst($val['text'])) ?></a></li>
+<?php
+			}
+			wfRunHooks( 'MonacoAfterArticleLinks' );
+		} ?>
+			</ul>
+		</div>
+<?php
 	}
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
