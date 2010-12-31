@@ -64,28 +64,34 @@ class SkinMonaco extends SkinTemplate {
 	 * @param $out OutputPage
 	 */
 	function setupSkinUserCss( OutputPage $out ){
-		global $wgMonacoTheme, $wgMonacoAllowUsetheme, $wgRequest;
+		global $wgMonacoTheme, $wgMonacoAllowUsetheme, $wgRequest, $wgResourceModules;
 
 		parent::setupSkinUserCss( $out );
 		
-		//$out->addStyle( 'common/shared.css' );
-		$out->addStyle( 'monaco/style/css/monobook_modified.css', 'screen' );
-		$out->addStyle( 'monaco/style/css/reset_modified.css', 'screen' );
-		$out->addStyle( 'monaco/style/css/buttons.css', 'screen' );
-		$out->addStyle( 'monaco/style/css/sprite.css', 'screen' );
-		$out->addStyle( 'monaco/style/css/root.css', 'screen' );
-		$out->addStyle( 'monaco/style/css/header.css', 'screen' );
-		$out->addStyle( 'monaco/style/css/article.css', 'screen' );
-		$out->addStyle( 'monaco/style/css/widgets.css', 'screen' ); // ?
-		$out->addStyle( 'monaco/style/css/modal.css', 'screen' ); // ?
-		$out->addStyle( 'monaco/style/css/footer.css', 'screen' );
-		$out->addStyle( 'monaco/style/css/star_rating.css', 'screen' );
-		$out->addStyle( 'monaco/style/css/ny.css', 'screen' );
+		if ( method_exists( 'OutputPage', 'addModuleStyles' ) ) {
+			// MediaWiki 1.17 and above, load the bulk of our styles with the resource loader
+			$out->addModuleStyles( 'skins.monaco' );
+		} else {
+			// MediaWiki 1.16 and below, read our resource loader array and just load
+			// the individual stylesheets. We don't really care much about older
+			// versions of MW when people should be upgrading if they really want
+			// new features, so anyone not using 1.17 can just deal with the extra
+			// http requests... if they really care about the requests they can upgrade
+			// as soon as 1.17 is available to them...
+			foreach ( $wgResourceModules['skins.monaco']['styles'] as $path => $options ) {
+				$path = preg_replace( '#^skins/#', '', $path );
+				$out->addStyle( $path, $options['media'] );
+			}
+		}
 		
+		// ResourceLoader doesn't do ie specific styles that well iirc, so we have
+		// to do those manually.
 		$out->addStyle( 'monaco/style/css/monaco_ltie7.css', 'screen', 'lt IE 7' );
 		$out->addStyle( 'monaco/style/css/monaco_ie7.css', 'screen', 'IE 7' );
 		$out->addStyle( 'monaco/style/css/monaco_ie8.css', 'screen', 'IE 8' );
 		
+		// Likewise the masthead is a conditional feature so it's hard to include
+		// inside of the ResourceLoader.
 		if ( $this->showMasthead() ) {
 			$out->addStyle( 'monaco/style/css/masthead.css', 'screen' );
 		}
@@ -101,12 +107,15 @@ class SkinMonaco extends SkinTemplate {
 			$theme = "sapphire";
 		}
 		
+		// Theme is another conditional feature, we can't really resource load this
 		if ( isset($theme) && is_string($theme) && $theme != "sapphire" )
 			$out->addStyle( "monaco/style/{$theme}/css/main.css", 'screen' );
 		
+		// rtl... hmm, how do we resource load this?
 		$out->addStyle( 'monaco/style/rtl.css', 'screen', '', 'rtl' );
 		
-		if ( function_exists('OutputPage::includeJQuery' ) ) {
+		// Make sure jQuery is loaded.
+		if ( method_exists( 'OutputPage', 'includeJQuery' ) ) {
 			$out->includeJQuery();
 		}
 		

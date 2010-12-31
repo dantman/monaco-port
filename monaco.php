@@ -27,6 +27,23 @@ $wgExtensionMessagesFiles['Monaco'] = dirname(__FILE__).'/Monaco.i18n.php';
 
 $wgHooks['MessageCacheReplace'][] = 'MonacoSidebar::invalidateCache';
 
+$wgResourceModules['skins.monaco'] = array(
+	'styles' => array(
+		'skins/monaco/style/css/monobook_modified.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/reset_modified.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/buttons.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/sprite.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/root.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/header.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/article.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/widgets.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/modal.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/footer.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/star_rating.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/ny.css' => array( 'media' => 'screen' ),
+	),
+);
+
 /* Bad Configs - These are Wikia junk used inside Monaco.skin.php that should be slowly removed */
 $wgSearchDefaultFulltext = false; // bad config
 $wgSpecialPagesRequiredLogin = array(); // bad config, it should be possible to check if the user has special page access without doing something like this
