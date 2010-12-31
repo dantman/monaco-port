@@ -664,7 +664,7 @@ special external link styling */
 	text-decoration: none;
 }
 #prefcontrol {
-	padding-top: 2em;
+	/*padding-top: 2em; @this breaks text on buttons */
 	clear: both;
 }
 .ns-special #preferences {

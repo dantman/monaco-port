@@ -71,7 +71,7 @@ class SkinMonaco extends SkinTemplate {
 		//$out->addStyle( 'common/shared.css' );
 		$out->addStyle( 'monaco/style/css/monobook_modified.css', 'screen' );
 		$out->addStyle( 'monaco/style/css/reset_modified.css', 'screen' );
-		// @note Original monaco included extra wikia_ui/buttons.css here which Wikia dropped into skins/common
+		$out->addStyle( 'monaco/style/css/buttons.css', 'screen' );
 		$out->addStyle( 'monaco/style/css/sprite.css', 'screen' );
 		$out->addStyle( 'monaco/style/css/root.css', 'screen' );
 		$out->addStyle( 'monaco/style/css/header.css', 'screen' );
