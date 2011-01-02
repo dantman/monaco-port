@@ -1592,7 +1592,7 @@ wfProfileOut( __METHOD__ . '-body');
 		echo "		";
 		echo Html::openElement( 'div', array( "id" => $isPrimary ? "page_bar" : null, "class" => $divClass ) );
 		echo "\n";
-		if ( $useCompactBar && isset($deferredList) ) {
+		if ( !$useCompactBar || !isset($deferredList) ) {
 			foreach ( $bar as $list ) {
 				$this->printCustomPageBarList( $list );
 			}
