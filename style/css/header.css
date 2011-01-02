@@ -172,11 +172,13 @@ a.greyButton big {
 	display: none;
 	font-size: 9pt;
 	position: absolute;
+	top: 21px;
 	-moz-opacity: .95;
 	opacity: .95;
 	overflow: hidden;
 	visibility: visible;
 	z-index: 1000;
+	white-space: nowrap;
 }
 .headerMenu a {
 	background: transparent;
