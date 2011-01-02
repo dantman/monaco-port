@@ -67,11 +67,13 @@
 	text-decoration: none;
 }
 
-.page_bar .page_tabs {
+.page_bar .page_tabs,
+.page .compact_page_tabs {
 	float: right;
 	font-family: arial, sans-serif;
 }
-.page_bar .page_tabs li {
+.page_bar .page_tabs li,
+.page .compact_page_tabs li {
 	background-color: #EEE;
 	color: #000;
 	cursor: pointer;
@@ -82,18 +84,36 @@
 	margin-left: 3px;
 	margin-top: 5px;
 }
-.page_bar .page_bar .page_tabs li.selected {
+.page_bar .page_tabs li.selected {
 	background-color: white;
 	color: #000;
 	font-weight: bold;
 }
-.page_bar .page_tabs a {
+.page_bar .page_tabs a,
+.page .compact_page_tabs a {
 	background: transparent;
 	color: #000;
 	text-decoration: none;
 }
-.page_bar .page_tabs a:hover {
+.page_bar .page_tabs a:hover,
+.page .compact_page_tabs a:hover {
 	text-decoration: underline;
+}
+
+.compact_page_bar {
+	margin: 0;
+	height: 5px;
+}
+
+.page .compact_page_tabs {
+	list-style: none;
+	margin: 0;
+	margin-right: 10px;
+	position: relative;
+	z-index: 1;
+}
+.page .compact_page_tabs li {
+	margin-top: 0;
 }
 
 .page article {

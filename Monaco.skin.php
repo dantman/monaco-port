@@ -1566,56 +1566,83 @@ wfProfileOut( __METHOD__ . '-body');
 
 	var $primaryPageBarPrinted = false;
 	function printCustomPageBar( $bar ) {
+		global $wgMonacoCompactSpecialPages;
 		$isPrimary = !$this->primaryPageBarPrinted;
 		$this->primaryPageBarPrinted = true;
 		
-		?>
-		<div<?php if ( $isPrimary ) { ?> id="page_bar"<?php } ?> class="reset color1 page_bar clearfix">
-<?php
-		foreach ( $bar as $list ) {
-			if ( !isset($list["type"]) ) {
-				$list["type"] = "buttons";
+		$count = 0;
+		foreach( $bar as $list ) {
+			$count += count($list['links']);
+		}
+		$useCompactBar = $wgMonacoCompactSpecialPages && $count == 1;
+		$deferredList = null;
+		
+		$divClass = "reset color1 page_bar clearfix";
+		
+		foreach( $bar as $i => $list ) {
+			if ( $useCompactBar && $list["id"] == "page_tabs" && !empty($list["links"]) && isset($list["links"]['nstab-special']) ) {
+				$deferredList = $list;
+				$deferredList['class'] .= ' compact_page_tabs';
+				$divClass .= ' compact_page_bar';
+				unset($bar[$i]);
+				break;
 			}
-			$attrs = array(
-				"class" => "page_{$list["type"]}",
-				"id" => $list["id"],
-				"role" => $list["type"] == "tabs" ? "navigation" : "toolbar",
+		}
+		
+		echo "		";
+		echo Html::openElement( 'div', array( "id" => $isPrimary ? "page_bar" : null, "class" => $divClass ) );
+		echo "\n";
+		if ( $useCompactBar && isset($deferredList) ) {
+			foreach ( $bar as $list ) {
+				$this->printCustomPageBarList( $list );
+			}
+		}
+		echo "		</div>\n";
+		if ( isset($deferredList) ) {
+			$this->printCustomPageBarList( $deferredList );
+		}
+	}
+
+	function printCustomPageBarList( $list ) {
+		if ( !isset($list["type"]) ) {
+			$list["type"] = "buttons";
+		}
+		$attrs = array(
+			"class" => "page_{$list["type"]}",
+			"id" => $list["id"],
+			"role" => $list["type"] == "tabs" ? "navigation" : "toolbar",
+		);
+		if ( isset($list["class"]) && $list["class"] ) {
+			$attrs["class"] .= " {$list["class"]}";
+		}
+		
+		echo "			";
+		echo Html::openElement( 'ul', $attrs );
+		echo "\n";
+		foreach ( $list["links"] as $link ) {
+			$liAttrs = array(
+				"id" => isset($link["id"]) ? $link["id"] : null,
+				"class" => isset($link["class"]) ? $link["class"] : null,
 			);
-			if ( isset($list["class"]) && $list["class"] ) {
-				$attrs["class"] .= " {$list["class"]}";
+			$aAttrs = array(
+				"href" => $link["href"],
+			);
+			if ( isset($link["id"]) ) {
+				$aAttrs += $this->data['skin']->tooltipAndAccesskeyAttribs( $link["id"] );
 			}
-			
-			echo "			";
-			echo Html::openElement( 'ul', $attrs );
+			echo "				";
+			echo Html::openElement( 'li', $liAttrs );
+			if ( isset($link["icon"]) ) {
+				echo $this->blankimg( array( "class" => "sprite {$link["icon"]}", "alt" => "" ) );
+			}
+			echo Html::element( 'a', $aAttrs, $link["text"] );
+			echo Xml::closeElement( 'li' );
 			echo "\n";
-			foreach ( $list["links"] as $link ) {
-				$liAttrs = array(
-					"id" => isset($link["id"]) ? $link["id"] : null,
-					"class" => isset($link["class"]) ? $link["class"] : null,
-				);
-				$aAttrs = array(
-					"href" => $link["href"],
-				);
-				if ( isset($link["id"]) ) {
-					$aAttrs += $this->data['skin']->tooltipAndAccesskeyAttribs( $link["id"] );
-				}
-				echo "				";
-				echo Html::openElement( 'li', $liAttrs );
-				if ( isset($link["icon"]) ) {
-					echo $this->blankimg( array( "class" => "sprite {$link["icon"]}", "alt" => "" ) );
-				}
-				echo Html::element( 'a', $aAttrs, $link["text"] );
-				echo Xml::closeElement( 'li' );
-				echo "\n";
-			}
-			if ( $list["bad_hook"] ) {
-				wfRunHooks( $list["bad_hook"] );
-			} ?>
-			</ul>
-<?php
-		} ?>
-		</div>
-<?php
+		}
+		if ( $list["bad_hook"] ) {
+			wfRunHooks( $list["bad_hook"] );
+		}
+		echo "			</ul>\n";
 	}
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
