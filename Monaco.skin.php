@@ -41,7 +41,7 @@ class SkinMonaco extends SkinTemplate {
 		wfDebugLog('monaco', '##### SkinMonaco initPage #####');
 
 		wfProfileIn(__METHOD__);
-		global $wgHooks;
+		global $wgHooks, $wgJsMimeType;
 
 		SkinTemplate::initPage($out);
 /*
@@ -52,6 +52,14 @@ class SkinMonaco extends SkinTemplate {
 
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
+
+		$out->addScript(
+			'<!--[if IE]><script type="' . htmlspecialchars($wgJsMimeType) .
+				'">\'abbr article aside audio canvas details figcaption figure ' .
+				'footer header hgroup mark menu meter nav output progress section ' .
+				'summary time video\'' .
+				'.replace(/\w+/g,function(n){document.createElement(n)})</script><![endif]-->'
+		);
 
 		wfProfileOut(__METHOD__);
 	}
@@ -839,9 +847,6 @@ class MonacoTemplate extends QuickTemplate {
 		
 		$this->html( 'headelement' );
 
-?>
-<!--[if IE]><script>'abbr article aside audio canvas details figcaption figure footer header hgroup mark menu meter nav output progress section summary time video'.replace(/\w+/g,function(n){document.createElement(n)})</script><![endif]-->
-<?php
 /*
 $allinone = $wgRequest->getBool('allinone', $wgAllInOne);
 echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
