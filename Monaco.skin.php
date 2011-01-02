@@ -635,40 +635,79 @@ EOF;
 		wfProfileIn( __METHOD__ );
 		$links = array();
 
-		// rarely ever happens, but it does
-		if ( empty( $tpl->data['content_actions'] ) ) {
-			return $links;
-		}
-
-		# @todo: might actually be useful to move this to a global var and handle this in extension files --TOR
-		$force_right = array( 'userprofile', 'talk', 'TheoryTab' );
-		foreach($tpl->data['content_actions'] as $key => $val) {
-			/* Fix icons */
-			if($key == 'unprotect') {
-				//unprotect uses the same icon as protect
-				$val['icon'] = 'protect';
-			} else if ($key == 'undelete') {
-				//undelete uses the same icon as delelte
-				$val['icon'] = 'delete';
-			} else if ($key == 'purge') {
-				$val['icon'] = 'refresh';
-			} else if ($key == 'addsection') {
-				$val['icon'] = 'talk';
+		if ( isset($tpl->data['content_navigation']) ) {
+			// Use MediaWiki 1.18's better vector based content_navigation structure
+			// to organize our tabs better
+			foreach ( $tpl->data['content_navigation'] as $section => $nav ) {
+				foreach ( $nav as $key => $val ) {
+					if ( isset($val["redundant"]) && $val["redundant"] ) {
+						continue;
+					}
+					
+					$kk = ( isset($val["id"]) && substr($val["id"], 0, 3) == "ca-" ) ? substr($val["id"], 3) : $key;
+					
+					$msgKey = $kk;
+					if ( $kk == "edit" ) {
+						$title = $this->getRelevantTitle();
+						$msgKey = $title->exists() || ( $title->getNamespace() == NS_MEDIAWIKI && !wfEmptyMsg( $title->getText() ) )
+							? "edit" : "create";
+					}
+					
+					// @note We know we're in 1.18 so we don't need to pass the second param to wfEmptyMsg anymore
+					$tabText = wfMsg("monaco-tab-$msgKey");
+					if ( $tabText && $tabText != '-' && !wfEmptyMsg("monaco-tab-$msgKey") ) {
+						$val["text"] = $tabText;
+					}
+					
+					$links[$section == 'namespaces' ? 'right' : 'left'][$kk] = $val;
+				}
 			}
+		} else {
 			
-			$tabText = wfMsg("monaco-tab-$key");
-			if ( $tabText && $tabText != '-' && !wfEmptyMsg("monaco-tab-$key", $tabText) ) {
-				$val["text"] = $tabText;
+			// rarely ever happens, but it does
+			if ( empty( $tpl->data['content_actions'] ) ) {
+				return $links;
 			}
 
-			if($key == 'report-problem') {
-				// Do nothing
-			} else if( strpos($key, 'nstab-') === 0 || in_array($key, $force_right) ) {
-				$links['right'][$key] = $val;
-			} else {
-				$links['left'][$key] = $val;
+			# @todo: might actually be useful to move this to a global var and handle this in extension files --TOR
+			$force_right = array( 'userprofile', 'talk', 'TheoryTab' );
+			foreach($tpl->data['content_actions'] as $key => $val) {
+				$msgKey = $key;
+				if ( $kk == "edit" ) {
+					$msgKey = $this->mTitle->exists() || ( $this->mTitle->getNamespace() == NS_MEDIAWIKI && !wfEmptyMsg( $this->mTitle->getText() ) )
+						? "edit" : "create";
+				}
+				$tabText = wfMsg("monaco-tab-$msgKey");
+				if ( $tabText && $tabText != '-' && !wfEmptyMsg("monaco-tab-$msgKey", $tabText) ) {
+					$val["text"] = $tabText;
+				}
+
+				if($key == 'report-problem') {
+					// Do nothing
+				} else if( strpos($key, 'nstab-') === 0 || in_array($key, $force_right) ) {
+					$links['right'][$key] = $val;
+				} else {
+					$links['left'][$key] = $val;
+				}
 			}
 		}
+		if ( isset($links['left']) ) {
+			foreach ( $links['left'] as $key => &$v ) {
+				/* Fix icons */
+				if($key == 'unprotect') {
+					//unprotect uses the same icon as protect
+					$v['icon'] = 'protect';
+				} else if ($key == 'undelete') {
+					//undelete uses the same icon as delelte
+					$v['icon'] = 'delete';
+				} else if ($key == 'purge') {
+					$v['icon'] = 'refresh';
+				} else if ($key == 'addsection') {
+					$v['icon'] = 'talk';
+				}
+			}
+		}
+		
 		wfProfileOut( __METHOD__ );
 		return $links;
 	}
