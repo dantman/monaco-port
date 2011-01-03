@@ -78,30 +78,31 @@
 
 /* @group Widgets */
 
-.widget {
+.sidebox,
+.sub-menu {
 	background: #999;
 	border-color: #999;
 	color: #222;
 }
-.widget a {
+.sidebox a {
 	color: #000;
 }
-.widget .wikia_content {
+.sidebox .sidebox_contents {
 	background: #eee;
 }
 
 /* Navigation */
-#navigation a {
+.hover-navigation a {
 	background: #EEE;
 	color: #333;
 }
-#navigation .menu-item:hover > a,
-#navigation .menu-item > a:active,
-#navigation .navigation-hover > a {
+.hover-navigation .menu-item:hover > a,
+.hover-navigation .menu-item > a:active,
+.hover-navigation .navigation-hover > a {
 	background: #696;
 	color: #FFF;
 }
-#navigation .menu-item {
+.hover-navigation .menu-item {
 	border-color: #888;
 }
 #link_box, #link_box_dynamic {
@@ -141,14 +142,12 @@ body.mainpage #background_accent1 {
 	background-image: url(../images/forest_left.png);
 	height: 431px;
 	margin-right: 390px;
-	top: -51px;
 	width: 300px;
 }
 body.mainpage #background_accent2 {
 	background-image: url(../images/forest_right.png);
 	background-position: 300px 0;
 	height: 433px;
-	top: -51px;
 	z-index: 0;
 }
 

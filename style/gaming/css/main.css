@@ -41,30 +41,31 @@
 }
 
 /*** WIDGETS ***/
-.widget {
+.sidebox,
+.sub-menu {
 	background-color: #0e192d;
 	border-color: #71d1ef;
 	color: #FFF;
 }
-.widget a {
+.sidebox a {
 	color: #FFF;
 }
-#navigation .menu-item {
+.hover-navigation .menu-item {
 	border-color: #666;
 }
-#navigation a {
+.hover-navigation a {
 	color: #71d1ef;
 }
-#navigation .menu-item:hover > a,
-#navigation .menu-item > a:active,
-#navigation .navigation-hover > a {
+.hover-navigation .menu-item:hover > a,
+.hover-navigation .menu-item > a:active,
+.hover-navigation .navigation-hover > a {
 	background-color: #386878;
 }
 #link_box, #link_box a {
 	background-color: #09101D;
 	color: #FFF !important;
 }
-#navigation_widget {
+.hover-navigation_widget {
 	border-color: #AAA;
 }
 #search_button {

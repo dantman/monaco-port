@@ -78,32 +78,32 @@
 
 /* @group Widgets */
 
-.widget {
+.sidebox {
 	background: #AAA;
 	border-color: #666;
 }
-.widget a {
+.sidebox a {
 	color: #70B8FF;
 }
-.widget .widget_contents {
+.sidebox .sidebox_contents {
 	background: #2F2F2F;
 	color: #FFF;
 }
-.widget h3 {
+.sidebox .sidebox_title {
 	color: #FFF;
 	background: #1D1D1D;
 }
 /* Navigtation */
-#navigation a {
+.hover-navigation a {
 	background: #2F2F2F;
 	color: #FFF;
 }
-#navigation .menu-item:hover > a,
-#navigation .menu-item > a:active,
-#navigation .navigation-hover > a {
+.hover-navigation .menu-item:hover > a,
+.hover-navigation .menu-item > a:active,
+.hover-navigation .navigation-hover > a {
 	background: #1D1D1D;
 }
-#navigation .menu-item {
+.hover-navigation .menu-item {
 	border-color: #252525;
 }
 #link_box, #link_box_dynamic {

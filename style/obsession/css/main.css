@@ -65,15 +65,16 @@
 
 /* @group Widgets */
 
-.widget {
+.sidebox,
+.sub-menu {
 	background: #5A0B00;
 	border-color: #2F0600;
 }
-.widget h3 {
+.sidebox .sidebox_title {
 	color: #CCC;
 	background: #2F0600;
 }
-.widget .widget_contents {
+.sidebox .sidebox_contents {
 	background-color: #780000;
 	background-image: -moz-linear-gradient(top, #780000 0%, #D30000 33%, #D30000 42%, #780000 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #780000), color-stop(0.33, #D30000), color-stop(0.42, #D30000), color-stop(1.0, #780000));
@@ -86,17 +87,17 @@
 	background-image: -moz-linear-gradient(top, #780000 0%, #D30000 33%, #D30000 42%, #780000 100%);
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, #780000), color-stop(0.33, #D30000), color-stop(0.42, #D30000), color-stop(1.0, #780000));
 }
-#navigation .menu-item {
+.hover-navigation .menu-item {
 	border-color: #1C0400;
 }
-#navigation a {
+.hover-navigation a {
 	background: #2F0600;
 	color: #CCC;
 }
 
-#navigation .menu-item:hover > a,
-#navigation .menu-item > a:active,
-#navigation .navigation-hover > a {
+.hover-navigation .menu-item:hover > a,
+.hover-navigation .menu-item > a:active,
+.hover-navigation .navigation-hover > a {
 	background: #7D0B0D;
 }
 #link_box_table {

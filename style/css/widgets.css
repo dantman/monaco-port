@@ -4,35 +4,40 @@ body.widgetsAddingBlocked .add {
 	opacity: 0.5;
 }
 
-#widget_sidebar {
-	left: 5px;
+
+.sidebar {
 	position: absolute;
-	top: 162px;
+	top: 51px;
 	width: 206px;
 	/*width: 15.45em;*/
 	z-index: 995;
 }
+.left_sidebar {
+	left: 5px;
+}
 
-.widget {
+.sidebox {
 	background: #FFF;
 	border: 1px solid #AAA;
 	color: #000;
-	margin-bottom: 10px !important;
+	margin-bottom: 5px !important;
 	padding: 2px !important;
 }
 
-.widget h3 {
-	cursor: move;
+.sidebox .sidebox_title {
 	font-family: tahoma, arial, sans-serif;
 	font-size: 9pt;
 	font-weight: bold;
 	line-height: 1.2em;
 	padding: 3px;
 }
-.loggedout .widget dt {
+.widget .widget_title {
+	cursor: move;
+}
+.loggedout .sidebox dt {
 	cursor: default;
 }
-.widget dt.mini {
+.sidebox dt.mini {
 	font-size: 8pt;
 	padding: 2px;
 	text-align: center;
@@ -43,7 +48,7 @@ body.widgetsAddingBlocked .add {
 	margin: 3px 0 0 4px;
 }
 
-.widget .widget_contents {
+.sidebox .sidebox_contents {
 	font-size: 9pt;
 	padding: 7px;
 	margin: 0;
@@ -51,12 +56,12 @@ body.widgetsAddingBlocked .add {
 	overflow-y: auto;
 	overflow-x: hidden;
 }
-/*.widget h1 {
+/*.sidebox h1 {
 	font-family: tahoma, arial, sans-serif;
 	font-size: 10pt;
 	font-weight: bold;
 }*/
-.widget li {
+.sidebox li {
 	padding: .15em 0;
 }
 .widget .widgetViewControl {
@@ -144,10 +149,10 @@ body.widgetsAddingBlocked .add {
 	width: 16px;
 }
 
-#navigation * {
+.hover-navigation * {
 	overflow: visible;
 }
-#navigation .widget {
+.hover-navigation .sub-menu {
 	margin: 0 !important;
 }
 
@@ -156,6 +161,7 @@ body.widgetsAddingBlocked .add {
 }
 
 .sub-menu {
+	background: #FFF;
 	border: 1px solid #D4DFD7;
 	padding: 5px 0px;
 	position: absolute;
@@ -165,11 +171,11 @@ body.widgetsAddingBlocked .add {
 	z-index: 1000;
 	display: none;
 }
-#navigation.hover-navigation .menu-item:hover > .sub-menu {
+.hover-navigation .menu-item:hover > .sub-menu {
 	display: block;
 }
 
-#navigation .menu-item {
+.hover-navigation .menu-item {
 	border-bottom: 1px solid #EEE;
 	display: block;
 	font-family: Tahoma, arial, sans-serif;
@@ -178,7 +184,7 @@ body.widgetsAddingBlocked .add {
 	padding: 0;
 	position: relative;
 }
-#navigation a {
+.hover-navigation a {
 	color: #333;
 	display: block;
 	height: 1%;
@@ -187,21 +193,21 @@ body.widgetsAddingBlocked .add {
 	overflow: hidden;
 }
 
-#navigation .Monaco-sidebar_edit {
+.hover-navigation .Monaco-sidebar_edit {
 	font-size: 80%;
 	text-align: right;
 }
 
-#navigation .Monaco-sidebar_more {
+.hover-navigation .Monaco-sidebar_more {
 	text-align: right;
 }
 
-#navigation .menu-item:hover > a,
-#navigation .menu-item > a:active,
-#navigation .navigation-hover > a {
+.hover-navigation .menu-item:hover > a,
+.hover-navigation .menu-item > a:active,
+.hover-navigation .navigation-hover > a {
 	background-color: #e0efff;
 }
-#navigation em {
+.hover-navigation em {
 	font-family: arial, sans-serif;
 	font-size: 16pt;
 	font-weight: bold;
@@ -210,7 +216,7 @@ body.widgetsAddingBlocked .add {
 	right: 3px;
 	top: 0px;
 }
-#navigation .widget {
+.hover-navigation .sidebox {
 	margin: 0;
 }
 

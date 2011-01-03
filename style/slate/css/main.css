@@ -35,7 +35,7 @@
 }
 
 /*** WIDGETS ***/
-.widget h3 {
+.sidebox .sidebox_title {
 	background-color: #505254;
 	color: #fec423;
 }

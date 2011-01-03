@@ -914,43 +914,28 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 	<a class="skiplink wikinav" href="#widget_sidebar" tabIndex=1>Skip to Navigation</a> 
 </div>
 
+	<div id="background_accent1"></div>
+	<div id="background_accent2"></div>
+
 	<!-- HEADER -->
 <?php
+		// curse like cobranding
+		$this->printCustomHeader();
 
-// curse like cobranding
-$this->printCustomHeader();
-
-
-wfProfileIn( __METHOD__ . '-header'); ?>
-		<div id="wikia_header" class="reset color2">
-			<div class="monaco_shrinkwrap">
+		wfProfileIn( __METHOD__ . '-header'); ?>
+	<div id="wikia_header" class="reset color2">
+		<div class="monaco_shrinkwrap">
 <?php $this->printMonacoBranding(); ?>
 <?php $this->printUserData(); ?>
 		</div>
 	</div>
 
-	<div class="monaco_shrinkwrap"><div id="background_accent1"></div></div>
-	<div style="position: relative;"><div id="background_accent2"></div></div>
-
-<?php if (wfRunHooks('AlternateNavLinks')):
-
-		// Rewrite the logo to have the last modified timestamp so that a the newer one will be used after an update.
-		// $wgLogo =
-		?>
+<?php if (wfRunHooks('AlternateNavLinks')): ?>
 		<div id="background_strip" class="reset">
 			<div class="monaco_shrinkwrap">
 
 			<div id="accent_graphic1"></div>
 			<div id="accent_graphic2"></div>
-			<div id="wiki_logo" style="background-image: url(<?php $this->html( 'logopath' ) ?>);"><a href="<?php echo htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>" accesskey="z" rel="home"><?php echo $wgSitename ?></a></div>
-			<!--[if lt IE 7]>
-			<style type="text/css">
-				#wiki_logo {
-					background-image: none !important;
-					filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo $wgLogo ?>', sizingMethod='image');
-				}
-			</style>
-			<![endif]-->
 			</div>
 		</div>
 <?php endif; ?>
@@ -960,15 +945,16 @@ wfProfileIn( __METHOD__ . '-header'); ?>
 		<!-- PAGE -->
 <?php		wfProfileIn( __METHOD__ . '-page'); ?>
 
-	<div class="monaco_shrinkwrap" id="monaco_shrinkwrap_main">
+	<div id="monaco_shrinkwrap_main" class="monaco_shrinkwrap with_left_sidebar">
+		<div id="page_wrapper">
 <?php wfRunHooks('MonacoBeforePage', array($this)); ?>
 <?php $this->printBeforePage(); ?>
 <?php if ( $wgMonacoUseSitenoticeIsland && $this->data['sitenotice'] ) { ?>
-		<div class="page">
-			<div id="siteNotice"><?php $this->html('sitenotice') ?></div>
-		</div>
+			<div class="page">
+				<div id="siteNotice"><?php $this->html('sitenotice') ?></div>
+			</div>
 <?php } ?>
-		<div id="wikia_page" class="page">
+			<div id="wikia_page" class="page">
 <?php
 			$this->printMasthead();
 			wfRunHooks('MonacoBeforePageBar', array($this));
@@ -976,35 +962,35 @@ wfProfileIn( __METHOD__ . '-header'); ?>
 					<!-- ARTICLE -->
 
 <?php		wfProfileIn( __METHOD__ . '-article'); ?>
-			<article id="article" aria-role=main aria-labeledby="firstHeading">
-				<a name="top" id="top"></a>
-				<?php wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed? ?>
-				<?php if ( !$wgMonacoUseSitenoticeIsland && $this->data['sitenotice'] ) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
-				<?php $this->printFirstHeading(); ?>
-				<div id="bodyContent" class="body_content">
-					<h2 id="siteSub"><?php $this->msg('tagline') ?></h2>
-					<div id="contentSub"><?php $this->html('subtitle') ?></div>
-					<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
-					<?php if($this->data['newtalk'] ) { ?><div class="usermessage noprint"><?php $this->html('newtalk')  ?></div><?php } ?>
-					<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
+				<article id="article" aria-role=main aria-labeledby="firstHeading">
+					<a name="top" id="top"></a>
+					<?php wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed? ?>
+					<?php if ( !$wgMonacoUseSitenoticeIsland && $this->data['sitenotice'] ) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
+					<?php $this->printFirstHeading(); ?>
+					<div id="bodyContent" class="body_content">
+						<h2 id="siteSub"><?php $this->msg('tagline') ?></h2>
+						<div id="contentSub"><?php $this->html('subtitle') ?></div>
+						<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
+						<?php if($this->data['newtalk'] ) { ?><div class="usermessage noprint"><?php $this->html('newtalk')  ?></div><?php } ?>
+						<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
 
-					<!-- start content -->
-					<?php
-					// Display content
-					$this->printContent();
+						<!-- start content -->
+						<?php
+						// Display content
+						$this->printContent();
 
-					$this->printCategories();
-					?>
-					<!-- end content -->
-					<?php if($this->data['dataAfterContent']) { $this->html('dataAfterContent'); } ?>
-					<div class="visualClear"></div>
-				</div>
+						$this->printCategories();
+						?>
+						<!-- end content -->
+						<?php if($this->data['dataAfterContent']) { $this->html('dataAfterContent'); } ?>
+						<div class="visualClear"></div>
+					</div>
 
-			</article>
-			<!-- /ARTICLE -->
-			<?php
+				</article>
+				<!-- /ARTICLE -->
+				<?php
 
-		wfProfileOut( __METHOD__ . '-article'); ?>
+			wfProfileOut( __METHOD__ . '-article'); ?>
 
 			<!-- ARTICLE FOOTER -->
 <?php		wfProfileIn( __METHOD__ . '-articlefooter'); ?>
@@ -1124,14 +1110,14 @@ if ($custom_article_footer !== '') {
 	} //end $namespaceType != 'none'
 } //end else from CustomArticleFooter hook
 ?>
-			<!-- /ARTICLE FOOTER -->
+				<!-- /ARTICLE FOOTER -->
 <?php		wfProfileOut( __METHOD__ . '-articlefooter'); ?>
 
-		</div>
-		<!-- /PAGE -->
+			</div>
+			<!-- /PAGE -->
 <?php		wfProfileOut( __METHOD__ . '-page'); ?>
 
-		<noscript><link rel="stylesheet" type="text/css" href="<?php $this->text( 'stylepath' ) ?>/monaco/style/css/noscript.css?<?php echo $wgStyleVersion ?>" /></noscript>
+			<noscript><link rel="stylesheet" type="text/css" href="<?php $this->text( 'stylepath' ) ?>/monaco/style/css/noscript.css?<?php echo $wgStyleVersion ?>" /></noscript>
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
 		//$this->html('WikiaScriptLoader');
@@ -1141,13 +1127,28 @@ if ($custom_article_footer !== '') {
 	//echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
 
 ?>
+		</div>
 <?php $this->printRightSidebar() ?>
 		<!-- WIDGETS -->
 <?php		wfProfileIn( __METHOD__ . '-navigation'); ?>
-		<div id="widget_sidebar" class="reset widget_sidebar">
+		<div id="widget_sidebar" class="reset widget_sidebar left_sidebar sidebar">
+
+<?php
+		// Rewrite the logo to have the last modified timestamp so that a the newer one will be used after an update.
+		// $wgLogo =
+		?>
+			<div id="wiki_logo" style="background-image: url(<?php $this->html( 'logopath' ) ?>);"><a href="<?php echo htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>" accesskey="z" rel="home"><?php echo $wgSitename ?></a></div>
+			<!--[if lt IE 7]>
+			<style type="text/css">
+				#wiki_logo {
+					background-image: none !important;
+					filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='<?php echo Xml::escapeJsString( $this->data['logopath'] ) ?>', sizingMethod='image');
+				}
+			</style>
+			<![endif]-->
 
 			<!-- SEARCH/NAVIGATION -->
-			<div class="widget" id="navigation_widget" aria-role=navigation>
+			<div class="widget sidebox navigation_box" id="navigation_widget" aria-role=navigation>
 <?php
 	global $wgSitename;
 	$msgSearchLabel = wfMsgHtml('Tooltip-search');
@@ -1408,9 +1409,9 @@ wfProfileOut( __METHOD__ . '-body');
 	
 	function customBox( $bar, $cont ) {
 		?>
-			<div class="widget">
-				<h3 class="color1 widget_title"><?php $out = wfMsg( $bar ); if (wfEmptyMsg($bar, $out)) echo htmlspecialchars($bar); else echo htmlspecialchars($out); ?></h3>
-				<div class="widget_contents">
+			<div class="widget sidebox">
+				<h3 class="color1 sidebox_title"><?php $out = wfMsg( $bar ); if (wfEmptyMsg($bar, $out)) echo htmlspecialchars($bar); else echo htmlspecialchars($out); ?></h3>
+				<div class="widget_contents sidebox_contents">
 <?php   if ( is_array( $cont ) ) { ?>
 					<ul>
 <?php 		foreach($cont as $key => $val) { ?>
@@ -1439,7 +1440,7 @@ wfProfileOut( __METHOD__ . '-body');
 		if ( $this->mRightSidebar ) {
 ?>
 		<!-- RIGHT SIDEBAR -->
-		<div id="right_sidebar">
+		<div id="right_sidebar" class="sidebar right_sidebar">
 			<?php echo $this->mRightSidebar ?>
 		</div>
 		<!-- /RIGHT SIDEBAR -->
@@ -1448,11 +1449,17 @@ wfProfileOut( __METHOD__ . '-body');
 	}
 	
 	function printMonacoBranding() {
-		?>
+		ob_start();
+		wfRunHooks( 'MonacoBranding', array( $this ) );
+		$branding = ob_get_contents();
+		ob_end_clean();
+		
+		if ( trim($branding) ) { ?>
 			<div id="monacoBranding">
-				<?php wfRunHooks( 'MonacoBranding', array( $this ) ) ?>
+<?php echo $branding; ?>
 			</div>
 <?php
+		}
 	}
 	
 	function printUserData() {

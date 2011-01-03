@@ -75,29 +75,30 @@
 
 /* @group Widgets */
 
-.widget {
+.sidebox,
+.sub-menu {
 	background: #FDFDF0;
 	border-color: #FFF;
 	color: #222;
 }
-.widget a {
+.sidebox a {
 	color: #555;
 }
-.widget .widget_contents {
+.sidebox .sidebox_contents {
 	background: #FDFDF0;
 }
 
 /* Navigation */
-#navigation a {
+.hover-navigation a {
 	color: #555;
 }
-#navigation .menu-item:hover > a,
-#navigation .menu-item > a:active,
-#navigation .navigation-hover > a {
+.hover-navigation .menu-item:hover > a,
+.hover-navigation .menu-item > a:active,
+.hover-navigation .navigation-hover > a {
 	background: #74B58A;
 	color: #FFF;
 }
-#navigation .menu-item {
+.hover-navigation .menu-item {
 	border-color: #DDD;
 }
 #link_box_table {

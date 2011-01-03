@@ -35,11 +35,11 @@
 }
 
 /*** WIDGETS ***/
-.widget h3 {
+.sidebox .sidebox_title {
 	background-color: #5d1b01;
 	color: #fec423;
 }
-#navigation_widget, #navigation_widget .widget {
+.navigation_box, .navigation_box .sub-menu {
 	background-color: #FFF;
 }
 #link_box {

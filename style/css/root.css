@@ -64,7 +64,7 @@ body.mainpage {
 }
 #monaco_shrinkwrap_main {
 	position: absolute;
-	top: 51px;
+	top: 0;
 }
 #background_accent1 {
 	background-repeat: no-repeat;

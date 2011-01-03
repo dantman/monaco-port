@@ -15,8 +15,8 @@ body {
 	right: auto;
 }
 
-#bodyContent ul,
-#bodyContent ol {
+.body_content ul,
+.body_content ol {
     margin: 0.3em 1.5em 0 0;
 }
 
@@ -25,13 +25,13 @@ body {
 }
 
 /* Fix for Opera bug with horizontal scroll */
-#articleFooter{
+.article_footer{
 	position: relative;
 }
 
 /* fixing FF bug - https://bugzilla.mozilla.org/show_bug.cgi?id=380925 */
-#bodyContent p a,
-#bodyContent li a {
+.body_content p a,
+.body_content li a {
     background-image: none !important;
     padding: 0px !important;
 }
@@ -53,7 +53,7 @@ body {
 }
 
 /* editing tips */
-.editingTips #bodyContent {
+.editingTips .body_content {
 	margin-left: 216px
 }
 .editingTips #widget_sidebar {
@@ -65,7 +65,7 @@ body {
 .editingWide .accordion-menu {
 	display: none !important
 }
-.editingWide #bodyContent {
+.editingWide .body_content {
 	margin-left: 0px
 }
 .editingWide #wikiPreview {
@@ -112,20 +112,20 @@ body {
 	border-right: 1px solid #CCCCCC;
 }
 
-#navigation em {
+.hover-navigation em {
 	right: auto;
 	left: 8px;
 }
 
-#navigation a.yuimenuitemlabel-hassubmenu {
+.hover-navigation a.yuimenuitemlabel-hassubmenu {
 	padding-right: 5px;
 	padding-left: 15px;
 }
-#articleFooter td.col2 {
+.article_footer td.col2 {
 	border-left: 0;
 	border-right: 1px dashed #CCC;
 }
-#articleFooter strong {
+.article_footer strong {
 	float: right;
 	margin: 0 0 0 10px;
 }
@@ -187,7 +187,7 @@ body {
 }
 #fe_history,
 #fe_permalink,
-#articleFooter ul.actions li {
+.article_footer ul.actions li {
 	float: right;
 }
 ul.star-rating {
