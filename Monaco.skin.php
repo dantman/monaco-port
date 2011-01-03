@@ -923,7 +923,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 		$this->printCustomHeader();
 
 		wfProfileIn( __METHOD__ . '-header'); ?>
-	<div id="wikia_header" class="reset color2">
+	<div id="wikia_header" class="color2">
 		<div class="monaco_shrinkwrap">
 <?php $this->printMonacoBranding(); ?>
 <?php $this->printUserData(); ?>

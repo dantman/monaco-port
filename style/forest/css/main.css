@@ -51,7 +51,6 @@
 	background: transparent;
 	border-bottom: none;
 	margin-bottom: 1px;
-	position: relative;
 	z-index: 1;
 }
 .header-button {
@@ -129,14 +128,6 @@
 
 body.mainpage div.monaco_shrinkwrap {
         width: 972px;
-}
-body.mainpage.ltr div.monaco_shrinkwrap {
-        left: 50%;
-        margin-left: -486px;
-}
-body.mainpage.rtl div.monaco_shrinkwrap {
-        right: 50%;
-        margin-right: -486px;
 }
 body.mainpage #background_accent1 {
 	background-image: url(../images/forest_left.png);

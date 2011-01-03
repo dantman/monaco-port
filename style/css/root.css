@@ -61,9 +61,9 @@ body.mainpage {
 .monaco_shrinkwrap {
 	position: relative;
 	width: 100%;
+	margin: 0 auto;
 }
 #monaco_shrinkwrap_main {
-	position: absolute;
 	top: 0;
 }
 #background_accent1 {
