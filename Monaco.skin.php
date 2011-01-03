@@ -7,6 +7,7 @@
  *
  * @author Inez Korczynski <inez@wikia.com>
  * @author Christian Williams
+ * @author Daniel Friesen
  */
 if(!defined('MEDIAWIKI')) {
 	die(-1);
@@ -883,6 +884,10 @@ class MonacoTemplate extends QuickTemplate {
 		wfSuppressWarnings();
 		
 		$this->setupRightSidebar();
+		ob_start();
+		wfRunHooks('MonacoRightSidebar', array($this));
+		$this->addToRightSidebar( ob_get_contents() );
+		ob_end_clean();
 		
 		$this->html( 'headelement' );
 
@@ -945,7 +950,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 		<!-- PAGE -->
 <?php		wfProfileIn( __METHOD__ . '-page'); ?>
 
-	<div id="monaco_shrinkwrap_main" class="monaco_shrinkwrap with_left_sidebar">
+	<div id="monaco_shrinkwrap_main" class="monaco_shrinkwrap with_left_sidebar<?php if ( $this->hasRightSidebar() ) { echo ' with_right_sidebar'; } ?>">
 		<div id="page_wrapper">
 <?php wfRunHooks('MonacoBeforePage', array($this)); ?>
 <?php $this->printBeforePage(); ?>
@@ -975,7 +980,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 						<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
 
 						<!-- start content -->
-						<?php
+<?php
 						// Display content
 						$this->printContent();
 
@@ -1436,8 +1441,12 @@ wfProfileOut( __METHOD__ . '-body');
 		$this->mRightSidebar .= $html;
 	}
 	
+	function hasRightSidebar() {
+		return (bool)trim($this->mRightSidebar);
+	}
+	
 	function printRightSidebar() {
-		if ( $this->mRightSidebar ) {
+		if ( $this->hasRightSidebar() ) {
 ?>
 		<!-- RIGHT SIDEBAR -->
 		<div id="right_sidebar" class="sidebar right_sidebar">

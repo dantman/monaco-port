@@ -15,6 +15,9 @@ body.widgetsAddingBlocked .add {
 .left_sidebar {
 	left: 5px;
 }
+.right_sidebar {
+	right: 5px;
+}
 
 .sidebox {
 	background: #FFF;

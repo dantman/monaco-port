@@ -7,3 +7,7 @@ MediaWiki 1.17 includes the hook OutputPageBodyAttributes and the modifications 
 
 You can also include the ExtendedBodyAttributes.php code if you wish to re-introduce the mainpage and loggedout classes that were in Wikia's version of Monaco, doing this will actually make these css classes available globally to all skins that are programmed using the MediaWiki 1.16 headElement code.
 
+There is also another sub skin for monaco included in the package, AniMonaco, which features some of my own ideas geared towards animanga wiki. You can install it similarly using `require_once("$IP/skins/monaco/animonaco.php");`, be sure to install Monaco first.
+
+Additionally you can install the ContentRightSidebar extension using `require_once("$IP/skins/monaco/ContentRightSiebar.php");`, doing so will provide you with a <right-sidebar>...</right-sidebar> tag which will create right floated content in the page that will be moved into the right sidebar in monaco based skins. You can also use it with the args <right-sidebar with-box title="My Title">...</right-sidebar> to include that sidebar in a sidebar box.
+
