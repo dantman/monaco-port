@@ -19,13 +19,14 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 	display: block;
 	position: absolute;
 	top: -500px;
-	left: 0;
+	left: 5px;
 	width: 206px;
 	text-align: center;
 }
 #skiplinks a.skiplink:active,
 #skiplinks a.skiplink:focus {
 	top: 190px;
+	z-index: 1;
 }
 
 

@@ -1,0 +1,25 @@
+
+#skiplinks a.skiplink,
+.left_sidebar { width: 240px }
+#monaco_shrinkwrap_main.with_left_sidebar #page_wrapper { left: 250px }
+
+#page_wrapper { top: 5px }
+
+.widget.sharebox table td {
+	text-align: center;
+}
+
+#ad_page {
+	text-align: center;
+}
+
+#monacoBranding { display: none }
+
+#userData {
+	line-height: 24px;
+	left: 0;
+	right: auto;
+	width: 250px;
+	padding-left: 5px;
+}
+
