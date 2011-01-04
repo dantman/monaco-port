@@ -682,7 +682,7 @@ EOF;
 			$force_right = array( 'userprofile', 'talk', 'TheoryTab' );
 			foreach($tpl->data['content_actions'] as $key => $val) {
 				$msgKey = $key;
-				if ( $kk == "edit" ) {
+				if ( $key == "edit" ) {
 					$msgKey = $this->mTitle->exists() || ( $this->mTitle->getNamespace() == NS_MEDIAWIKI && !wfEmptyMsg( $this->mTitle->getText() ) )
 						? "edit" : "create";
 				}
