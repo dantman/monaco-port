@@ -69,6 +69,21 @@ class AniMonacoTemplate extends MonacoTemplate {
 			$this->addToRightSidebar($this->mInfobox);
 	}
 	
+	function lateRightSidebar() {
+		global $egAniMonacoRightSidebarCallback;
+		if ( !$egAniMonacoRightSidebarCallback ) {
+			return;
+		}
+		ob_start();
+		call_user_func( $egAniMonacoRightSidebarCallback, $this );
+		$rsidebar = ob_get_contents();
+		ob_end_clean();
+		if ( !trim($rsidebar) ) {
+			return;
+		}
+		$this->sidebarBox(null, $rsidebar, array( "wrapcontents" => false ));
+	}
+	
 	function printExtraSidebar() {
 		global $wgTitle, $wgSitename, $egTwitterName, $wgRequest, $egAniMonacoSidebarCallback;
 		$action = $wgRequest->getText("action", "view");

@@ -2,6 +2,8 @@
 #skiplinks a.skiplink,
 .left_sidebar { width: 240px }
 #monaco_shrinkwrap_main.with_left_sidebar #page_wrapper { left: 245px }
+.right_sidebar { width: 306px; top: 5px; }
+#monaco_shrinkwrap_main.with_right_sidebar #page_wrapper { right: 301px }
 
 #page_wrapper { top: 5px }
 

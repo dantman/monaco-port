@@ -1412,26 +1412,43 @@ wfProfileOut( __METHOD__ . '-body');
 	// allow subskins to add extra sidebar extras
 	function printExtraSidebar() {}
 	
-	function customBox( $bar, $cont ) {
-		?>
-			<div class="widget sidebox">
-				<h3 class="color1 sidebox_title"><?php $out = wfMsg( $bar ); if (wfEmptyMsg($bar, $out)) echo htmlspecialchars($bar); else echo htmlspecialchars($out); ?></h3>
-				<div class="sidebox_contents">
-<?php   if ( is_array( $cont ) ) { ?>
-					<ul>
-<?php 		foreach($cont as $key => $val) { ?>
-						<?php echo $this->makeListItem($key, $val); ?>
-
-<?php		} ?>
-					</ul>
-<?php   } else {
-				# allow raw HTML block to be defined by extensions
-			print $cont;
+	function sidebarBox( $bar, $cont, $options=array() ) {
+		$titleClass = "sidebox_title";
+		$contentClass = "sidebox_contents";
+		if ( isset($options["widget"]) && $options["widget"] ) {
+			$titleClass .= " widget_contents";
+			$contentClass .= " widget_title";
 		}
-?>
-				</div>
-			</div>
-<?php
+		
+		$box = "			";
+		$box .= Html::openElement( 'div', array( "id" => isset($options["id"]) ? $options["id"] : null, "class" => "widget sidebox" ) );
+		$box .= "\n";
+		if ( isset($bar) ) {
+			$box .= "				";
+			$out = wfMsg( $bar );
+			$box .= Html::element( 'h3', array( "class" => "color1 $titleClass" ), wfEmptyMsg($bar, $out) ? $bar : $out );
+			$box .= "\n";
+		}
+		if ( is_array( $cont ) ) {
+			$boxContent .= "					<ul>\n";
+			foreach ( $cont as $key => $val ) {
+				$boxContent .= "						" . $this->makeListItem($key, $val) . "\n";
+
+			}
+			$boxContent .= "					</ul>\n";
+		} else {
+			$boxContent = $cont;
+		}
+		if ( !isset($options["wrapcontents"]) || $options["wrapcontents"] ) {
+			$boxContent = "				".Html::rawElement( 'div', array( "class" => $contentClass ), "\n".$boxContent."				" ) . "\n";
+		}
+		$box .= $boxContent;
+		$box .= Xml::closeElement( 'div ');
+		echo $box;
+	}
+	
+	function customBox( $bar, $cont ) {
+		$this->sidebarBox( $bar, $cont );
 	}
 	
 	// hook for subskins
@@ -1445,12 +1462,17 @@ wfProfileOut( __METHOD__ . '-body');
 		return (bool)trim($this->mRightSidebar);
 	}
 	
+	// Hook for things that you only want in the sidebar if there are already things
+	// inside the sidebar.
+	function lateRightSidebar() {}
+	
 	function printRightSidebar() {
 		if ( $this->hasRightSidebar() ) {
 ?>
 		<!-- RIGHT SIDEBAR -->
 		<div id="right_sidebar" class="sidebar right_sidebar">
-			<?php echo $this->mRightSidebar ?>
+<?php $this->lateRightSidebar(); ?>
+<?php echo $this->mRightSidebar ?>
 		</div>
 		<!-- /RIGHT SIDEBAR -->
 <?php

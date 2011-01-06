@@ -25,4 +25,4 @@ $wgExtensionMessagesFiles['AniMonaco'] = dirname(__FILE__).'/AniMonaco.i18n.php'
 
 $egAniMonacoLeaderboardCallback = null;
 $egAniMonacoSidebarCallback = null;
-
+$egAniMonacoRightSidebarCallback = null;
