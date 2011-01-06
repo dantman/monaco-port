@@ -40,8 +40,10 @@ define('RIGHT_SIDEBAR_CONTENT_END_TOKEN', "<!-- RIGHT SIDEBAR CONTENT END -->");
 function efContentRightSidebarTag( $input, $arg, $parser, $frame ) {
 	$input = $parser->recursiveTagParse( $input, $frame );
 	
+	$with_box = (isset($arg["with-box"]) ? $arg["with-box"] : (isset($arg["withbox"]) ? $arg["withbox"] : null));
+	
 	$out  = RIGHT_SIDEBAR_START_TOKEN;
-	if ( isset($arg["with-box"]) && !in_array(strtolower($arg["with-box"]), array("false", "off", "no", "none")) ) {
+	if ( $with_box && !in_array(strtolower($with_box), array("false", "off", "no", "none")) ) {
 		$out .= RIGHT_SIDEBAR_WITHBOX_TOKEN;
 	}
 	if ( isset($arg["title"]) ) {
