@@ -94,6 +94,7 @@ class AniMonacoTemplate extends MonacoTemplate {
 			if ( $egAniMonacoSidebarCallback ) {
 				call_user_func( $egAniMonacoSidebarCallback, $this );
 			}
+			if ( $wgTitle->exists() ) {
 ?>
 	<script type="text/javascript">
 	var reddit_url = "<?php echo Xml::escapeJsString( $url ) ?>";
@@ -140,6 +141,7 @@ class AniMonacoTemplate extends MonacoTemplate {
 		})();
 	</script>
 <?php
+			}
 		}
 	}
 	
