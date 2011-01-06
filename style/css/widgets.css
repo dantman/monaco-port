@@ -55,6 +55,8 @@ body.widgetsAddingBlocked .add {
 	font-size: 9pt;
 	padding: 7px;
 	margin: 0;
+}
+.widget .widget_contents {
 	max-height: 250px;
 	overflow-y: auto;
 	overflow-x: hidden;

@@ -1416,7 +1416,7 @@ wfProfileOut( __METHOD__ . '-body');
 		?>
 			<div class="widget sidebox">
 				<h3 class="color1 sidebox_title"><?php $out = wfMsg( $bar ); if (wfEmptyMsg($bar, $out)) echo htmlspecialchars($bar); else echo htmlspecialchars($out); ?></h3>
-				<div class="widget_contents sidebox_contents">
+				<div class="sidebox_contents">
 <?php   if ( is_array( $cont ) ) { ?>
 					<ul>
 <?php 		foreach($cont as $key => $val) { ?>
