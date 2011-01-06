@@ -38,7 +38,20 @@ define('RIGHT_SIDEBAR_CONTENT_START_TOKEN', "<!-- RIGHT SIDEBAR CONTENT START --
 define('RIGHT_SIDEBAR_CONTENT_END_TOKEN', "<!-- RIGHT SIDEBAR CONTENT END -->");
 
 function efContentRightSidebarTag( $input, $arg, $parser, $frame ) {
-	$input = $parser->recursiveTagParse( $input, $frame );
+	$isContentTagged = false;
+	$m = array();
+	if ( preg_match( '#^(.*)<content>(.*?)</content>(.*)$#is', $input, $m ) ) {
+		$isContentTagged = true;
+		
+		$startUniq = $parser->uniqPrefix() . "-right-sidebar-content-start-" . Parser::MARKER_SUFFIX;
+		$endUniq = $parser->uniqPrefix() . "-right-sidebar-content-end-" . Parser::MARKER_SUFFIX;
+		$input = "{$m[1]}{$startUniq}{$m[2]}{$endUniq}{$m[3]}";
+		$input = $parser->recursiveTagParse( $input, $frame );
+		$input = str_replace($startUniq, RIGHT_SIDEBAR_CONTENT_START_TOKEN, $input);
+		$input = str_replace($endUniq, RIGHT_SIDEBAR_CONTENT_END_TOKEN, $input);
+	} else {
+		$input = $parser->recursiveTagParse( $input, $frame );
+	}
 	
 	$with_box = (isset($arg["with-box"]) ? $arg["with-box"] : (isset($arg["withbox"]) ? $arg["withbox"] : null));
 	
@@ -49,9 +62,13 @@ function efContentRightSidebarTag( $input, $arg, $parser, $frame ) {
 	if ( isset($arg["title"]) ) {
 		$out .= RIGHT_SIDEBAR_TITLE_START_TOKEN . urlencode($arg["title"]) . RIGHT_SIDEBAR_TITLE_END_TOKEN;
 	}
-	$out .= '<div style="float: right; clear: right; position: relative;">';
-	$out .= RIGHT_SIDEBAR_CONTENT_START_TOKEN . $input . RIGHT_SIDEBAR_CONTENT_END_TOKEN;
-	$out .= '</div>';
+	if ( $isContentTagged ) {
+		$out .= $input;
+	} else {
+		$out .= '<div style="float: right; clear: right; position: relative;">';
+		$out .= RIGHT_SIDEBAR_CONTENT_START_TOKEN . $input . RIGHT_SIDEBAR_CONTENT_END_TOKEN;
+		$out .= '</div>';
+	}
 	$out .= RIGHT_SIDEBAR_END_TOKEN;
 	
 	return $out;
