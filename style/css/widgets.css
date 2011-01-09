@@ -179,7 +179,7 @@ body.widgetsAddingBlocked .add {
 .hover-navigation .menu-item.open > .sub-menu,
 .hover-navigation .menu-item:hover > .sub-menu {
 	display: block;
-	left: 200px;
+	left: 100%;
 	z-index: 1000;
 }
 
