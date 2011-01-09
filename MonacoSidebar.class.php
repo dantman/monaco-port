@@ -14,7 +14,7 @@ if(!defined('MEDIAWIKI')) {
 
 class MonacoSidebar {
 
-	const version = '0.08';
+	const version = '0.09';
 
 	static function invalidateCache() {
 		global $wgMemc;
@@ -167,6 +167,7 @@ class MonacoSidebar {
 				Html::rawElement( 'a', array(
 						'href' => !empty($nodes[$val]['href']) ? $nodes[$val]['href'] : '#',
 						'class' => $nodes[$val]['class'],
+						'tabIndex' => 3,
 						'rel' => $nodes[$val]['internal'] ? null : 'nofollow'
 					), $link_html ) . "\n";
 			if ( !empty( $nodes[$val]['children'] ) ) {

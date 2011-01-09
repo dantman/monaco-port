@@ -42,6 +42,7 @@ $wgResourceModules['skins.monaco'] = array(
 		'skins/monaco/style/css/star_rating.css' => array( 'media' => 'screen' ),
 		'skins/monaco/style/css/ny.css' => array( 'media' => 'screen' ),
 	),
+	'scripts' => 'skins/monaco/style/js/monaco.js',
 );
 
 /* Bad Configs - These are Wikia junk used inside Monaco.skin.php that should be slowly removed */

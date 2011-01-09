@@ -170,14 +170,17 @@ body.widgetsAddingBlocked .add {
 	border: 1px solid #D4DFD7;
 	padding: 5px 0px;
 	position: absolute;
-	right: -202px;
 	top: 0;
 	width: 200px;
-	z-index: 1000;
-	display: none;
+	/* Hide without stopping <tab> from working */
+	left: -1000%;
+	z-index: 0;
 }
+.hover-navigation .menu-item.open > .sub-menu,
 .hover-navigation .menu-item:hover > .sub-menu {
 	display: block;
+	left: 200px;
+	z-index: 1000;
 }
 
 .hover-navigation .menu-item {

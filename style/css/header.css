@@ -128,18 +128,17 @@ a.greyButton big {
 	position: relative;
 }
 #userData .hovermenu .invisibleBridge {
-	display: none;
 	position: absolute;
+	display: none;
 	left: 0;
 	right: 0;
 	top: 1em;
 	height: 2em;
 	z-index: 999;
 }
-#userData .hovermenu:hover .invisibleBridge,
-#userData .hovermenu:hover .headerMenu {
+#userData .hovermenu.open .invisibleBridge,
+#userData .hovermenu:hover .invisibleBridge {
 	display: block;
-	right: 0;
 }
 
 #userData #fbconnect { 
@@ -170,16 +169,23 @@ a.greyButton big {
 	border-width: 0 1px 1px;
 	border-style: solid;
 	border-color: #999;
-	display: none;
 	font-size: 9pt;
 	position: absolute;
+	right: 0;
+	overflow: hidden;
+	white-space: nowrap;
+	/* Hide the menu but leave the contents available for tab selection */
+	top: -100%;
+	-moz-opacity: 0;
+	opacity: 0;
+	z-index: 0;
+}
+.hovermenu.open .headerMenu,
+.hovermenu:hover .headerMenu {
 	top: 21px;
 	-moz-opacity: .95;
 	opacity: .95;
-	overflow: hidden;
-	visibility: visible;
 	z-index: 1000;
-	white-space: nowrap;
 }
 .headerMenu a {
 	background: transparent;

@@ -42,7 +42,7 @@ class SkinMonaco extends SkinTemplate {
 		wfDebugLog('monaco', '##### SkinMonaco initPage #####');
 
 		wfProfileIn(__METHOD__);
-		global $wgHooks, $wgJsMimeType;
+		global $wgHooks, $wgJsMimeType, $wgStylePath, $wgResourceModules;
 
 		SkinTemplate::initPage($out);
 /*
@@ -54,6 +54,15 @@ class SkinMonaco extends SkinTemplate {
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
 
+		if ( method_exists( 'OutputPage', 'addModuleStyles' ) ) {
+			// MediaWiki 1.17 and above, load the bulk of our scripts with the resource loader
+			$out->addModuleScripts( 'skins.monaco' );
+		} else {
+			// MediaWiki 1.16 and below, read our resource loader data and just load
+			// the individual script.
+			$out->addScriptFile( preg_replace( '#^skins/#', "{$wgStylePath}/", $wgResourceModules['skins.monaco']['scripts'] ) );
+		}
+		
 		$out->addScript(
 			'<!--[if IE]><script type="' . htmlspecialchars($wgJsMimeType) .
 				'">\'abbr article aside audio canvas details figcaption figure ' .
@@ -1526,7 +1535,7 @@ wfProfileOut( __METHOD__ . '-body');
 <?php
 				if ( $this->useUserMore() ) { ?>
 				<span class="more hovermenu">
-					<button id="headerButtonUser" class="header-button color1"><?php echo trim(wfMsgHtml('moredotdotdot'), ' .') ?><img src="<?php $this->text('blankimg') ?>" /></button>
+					<button id="headerButtonUser" class="header-button color1" tabIndex="-1"><?php echo trim(wfMsgHtml('moredotdotdot'), ' .') ?><img src="<?php $this->text('blankimg') ?>" /></button>
 					<span class="invisibleBridge"></span>
 					<div id="headerMenuUser" class="headerMenu color1 reset">
 						<ul>
