@@ -4,7 +4,7 @@
  * @license Dual-licensed MIT / GPL2+
  */
 
-$('.hovermenu *')
+jQuery('.hovermenu *')
 	.live("blur", function(e) {
 		$(this).closest('.hovermenu').removeClass('open');
 	})
@@ -12,7 +12,7 @@ $('.hovermenu *')
 		$(this).closest('.hovermenu').addClass('open');
 	});
 
-$(".hover-navigation *")
+jQuery(".hover-navigation *")
 	.live("blur", function(e) {
 		$(this).closest(".hover-navigation").find('.menu-item.with-sub-menu.open').removeClass('open');
 	})
