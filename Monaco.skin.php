@@ -1097,7 +1097,7 @@ if ($custom_article_footer !== '') {
 				if ( $userPageExists )
 					$feUserIcon = Html::rawElement( 'a', array( "id" => "fe_user_icon", "href" => $userPageLink ), $feUserIcon );
 ?>
-								<li><?php echo $feUserIcon ?> <div><?php echo wfMsgHtml('monaco-footer-lastedit', $skin->link( $userPageTitle, htmlspecialchars($user->getName()), array( "id" => "fe_user_link" ) ), $lastUpdate) ?></div></li>
+								<li><?php echo $feUserIcon ?> <div><?php echo wfMsgHtml('monaco-footer-lastedit', $skin->link( $userPageTitle, htmlspecialchars($user->getName()), array( "id" => "fe_user_link" ) ), Html::element('time', array( 'datetime' => wfTimestamp( TS_ISO_8601, $$timestamp ) ), $lastUpdate)) ?></div></li>
 <?php
 			}
 		}
