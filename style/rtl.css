@@ -15,6 +15,19 @@ body {
 	right: auto;
 }
 
+.page_bar .page_buttons li {
+	float: right;
+}
+
+.page_bar .page_tabs,
+.page .compact_page_tabs {
+	float: left;
+}
+.page_bar .page_tabs li,
+.page .compact_page_tabs li {
+	float: right;
+}
+
 .body_content ul,
 .body_content ol {
     margin: 0.3em 1.5em 0 0;
@@ -218,8 +231,13 @@ ul.star-rating {
 	text-indent: 0;
 }
 .sub-menu {
-	left: -205px;
-	right: auto;
+	right: -200%;
+	left: auto;
+}
+.hover-navigation .menu-item.open > .sub-menu,
+.hover-navigation .menu-item:hover > .sub-menu {
+	right: 100%;
+	left: auto;
 }
 #userData .headerMenuButton {
 	float: none;
