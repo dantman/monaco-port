@@ -14,7 +14,7 @@ if(!defined('MEDIAWIKI')) {
 
 class MonacoSidebar {
 
-	const version = '0.09';
+	const version = '0.10';
 
 	static function invalidateCache() {
 		global $wgMemc;
@@ -174,9 +174,9 @@ class MonacoSidebar {
 				$menu_item .= $this->getSubMenu( $nodes, $nodes[$val]['children'] );
 			}
 			$menu .=
-				Html::rawElement( 'div', array( "class" => "menu-item" ), $menu_item );
+				Html::rawElement( 'li', array( "class" => "menu-item" ), $menu_item );
 		}
-		$menu = Html::rawElement( 'div', array( 'class' => 'sub-menu widget' ), $menu );
+		$menu = Html::rawElement( 'ul', array( 'class' => 'sub-menu widget' ), $menu );
 		return $menu;
 	}
 
@@ -198,7 +198,7 @@ class MonacoSidebar {
 					$mainMenu[$val] = $nodes[$val]['magic'];
 				}
 				if(isset($nodes[$val]['href']) && $nodes[$val]['href'] == 'editthispage') $menu .= '<!--b-->';
-				$menu .= '<div id="menu-item_'.$val.'" class="menu-item';
+				$menu .= '<li id="menu-item_'.$val.'" class="menu-item';
 				if ( !empty($nodes[$val]['children']) || !empty($nodes[$val]['magic']) ) {
 					$menu .= ' with-sub-menu';
 				}
@@ -214,7 +214,7 @@ class MonacoSidebar {
 				if ( !empty($nodes[$val]['children']) || !empty($nodes[$val]['magic']) ) {
 					$menu .= $this->getSubMenu($nodes, $nodes[$val]['children']);
 				}
-				$menu .= '</div>';
+				$menu .= '</li>';
 				if(isset($nodes[$val]['href']) && $nodes[$val]['href'] == 'editthispage') $menu .= '<!--e-->';
 			}
 			
@@ -222,6 +222,7 @@ class MonacoSidebar {
 			if ( $userMenu )
 				$classes[] = 'userMenu';
 			$classes[] = 'hover-navigation';
+			$menu = Html::rawElement( 'ul', null, $menu );
 			$menu = Html::rawElement( 'nav', array( 'id' => 'navigation', 'class' => implode(' ', $classes) ), $menu );
 
 			if($this->editUrl) {
