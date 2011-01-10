@@ -16,10 +16,10 @@ jQuery(function($) {
 	
 	$('body')
 		.delegate(".hover-navigation *", "blur", function(e) {
-			$(this).closest(".hover-navigation").find('.menu-item').removeClass('open');
+			$(this).closest(".hover-navigation").find('.menu-item.with-sub-menu.open').removeClass('open');
 		})
 		.delegate(".hover-navigation *", "focus", function(e) {
-			$(this).parents(".menu-item:has(> .sub-menu)").addClass('open');
+			$(this).parents(".menu-item.with-sub-menu").addClass('open');
 		});
 	
 });
