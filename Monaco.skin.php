@@ -692,7 +692,7 @@ EOF;
 			foreach($tpl->data['content_actions'] as $key => $val) {
 				$msgKey = $key;
 				if ( $key == "edit" ) {
-					$msgKey = $this->mTitle->exists() || ( $this->mTitle->getNamespace() == NS_MEDIAWIKI && !wfEmptyMsg( $this->mTitle->getText() ) )
+					$msgKey = $this->mTitle->exists() || ( $this->mTitle->getNamespace() == NS_MEDIAWIKI && !wfEmptyMsg( $this->mTitle->getText(), wfMsg($this->mTitle->getText()) ) )
 						? "edit" : "create";
 				}
 				$tabText = wfMsg("monaco-tab-$msgKey");
