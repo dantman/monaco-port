@@ -7,6 +7,9 @@
 
 #page_wrapper { top: 5px }
 
+.monaco_shrinkwrap { min-width: 750px; }
+.monaco_shrinkwrap.with_right_sidebar { min-width: 1200px; }
+
 .widget.sharebox table td {
 	text-align: center;
 }
