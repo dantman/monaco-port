@@ -1741,7 +1741,7 @@ wfProfileOut( __METHOD__ . '-body');
 		if ( !$this->data['skin']->isMastheadTitleVisible() ) {
 			return;
 		}
-		?><h1 id="firstHeading" class="firstHeading" aria-level="1"><?php $this->data['displaytitle']!=""?$this->html('title'):$this->text('title');
+		?><h1 id="firstHeading" class="firstHeading" aria-level="1"><?php $this->html('title');
 		wfRunHooks( 'MonacoPrintFirstHeading' );
 		?></h1><?php
 	}
