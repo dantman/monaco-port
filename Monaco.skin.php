@@ -152,7 +152,7 @@ class SkinMonaco extends SkinTemplate {
 		if ( !isset($this->mMastheadUser) ) {
 			$ns = $wgTitle->getNamespace();
 			if ( $ns == NS_USER || $ns == NS_USER_TALK ) {
-				$this->mMastheadUser = User::newFromName( $wgTitle->getText(), false );
+				$this->mMastheadUser = User::newFromName( strtok( $wgTitle->getText(), '/' ), false );
 				$this->mMastheadTitleVisible = false;
 			} else {
 				$this->mMastheadUser = false;
