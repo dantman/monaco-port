@@ -34,6 +34,8 @@ define('RIGHT_SIDEBAR_END_TOKEN', "<!-- RIGHT SIDEBAR END -->");
 define('RIGHT_SIDEBAR_WITHBOX_TOKEN', "<!-- RIGHT SIDEBAR WITHBOX -->");
 define('RIGHT_SIDEBAR_TITLE_START_TOKEN', "<!-- RIGHT SIDEBAR TITLE START>");
 define('RIGHT_SIDEBAR_TITLE_END_TOKEN', "<RIGHT SIDEBAR TITLE END -->");
+define('RIGHT_SIDEBAR_CLASS_START_TOKEN', "<!-- RIGHT SIDEBAR CLASS START>");
+define('RIGHT_SIDEBAR_CLASS_END_TOKEN', "<RIGHT SIDEBAR CLASS END -->");
 define('RIGHT_SIDEBAR_CONTENT_START_TOKEN', "<!-- RIGHT SIDEBAR CONTENT START -->");
 define('RIGHT_SIDEBAR_CONTENT_END_TOKEN', "<!-- RIGHT SIDEBAR CONTENT END -->");
 
@@ -62,6 +64,9 @@ function efContentRightSidebarTag( $input, $arg, $parser, $frame ) {
 	if ( isset($arg["title"]) ) {
 		$out .= RIGHT_SIDEBAR_TITLE_START_TOKEN . urlencode($arg["title"]) . RIGHT_SIDEBAR_TITLE_END_TOKEN;
 	}
+	if ( isset($arg["class"]) ) {
+		$out .= RIGHT_SIDEBAR_CLASS_START_TOKEN . urlencode($arg["class"]) . RIGHT_SIDEBAR_CLASS_END_TOKEN;
+	}
 	if ( $isContentTagged ) {
 		$out .= $input;
 	} else {
@@ -80,6 +85,7 @@ function efExtractRightSidebarBoxes( &$html ) {
 	while(true) {
 		$withBox = false;
 		$title = '';
+		$class = null;
 		
 		$start = strpos($html, RIGHT_SIDEBAR_START_TOKEN);
 		if ( $start === false )
@@ -98,6 +104,13 @@ function efExtractRightSidebarBoxes( &$html ) {
 				$title = urldecode(substr($content, $startTitle+strlen(RIGHT_SIDEBAR_TITLE_START_TOKEN), $endTitle-$startTitle-strlen(RIGHT_SIDEBAR_TITLE_START_TOKEN)));
 			}
 		}
+		$startClass = strpos($content, RIGHT_SIDEBAR_CLASS_START_TOKEN);
+		if ( $startClass !== false ) {
+			$endClass = strpos($content, RIGHT_SIDEBAR_CLASS_END_TOKEN, $startClass);
+			if ( $endClass !== false ) {
+				$class = urldecode(substr($content, $startClass+strlen(RIGHT_SIDEBAR_CLASS_START_TOKEN), $endClass-$startClass-strlen(RIGHT_SIDEBAR_CLASS_START_TOKEN)));
+			}
+		}
 		$contentStart = strpos($content, RIGHT_SIDEBAR_CONTENT_START_TOKEN);
 		if ( $contentStart !== false ) {
 			$content = substr($content, $contentStart+strlen(RIGHT_SIDEBAR_CONTENT_START_TOKEN));
@@ -106,7 +119,7 @@ function efExtractRightSidebarBoxes( &$html ) {
 		if ( $contentStart !== false ) {
 			$content = substr($content, 0, $contentEnd);
 		}
-		$boxes[] = array( "with-box" => $withBox, "title" => $title, "content" => $content );
+		$boxes[] = array( "with-box" => $withBox, "title" => $title, "class" => $class, "content" => $content );
 		$html = substr($html, 0, $start) . substr($html, $end+strlen(RIGHT_SIDEBAR_END_TOKEN));
 	}
 	
@@ -119,7 +132,11 @@ function efContentRightSidebarMonacoRightSidebar( $sk ) {
 	
 	foreach ( $boxes as $box ) {
 		if ( $box["with-box"] ) {
-			$sk->customBox( $box["title"], $box["content"] );
+			$attrs = array();
+			if ( isset($box["class"]) ) {
+				$attrs["class"] = $box["class"];
+			}
+			$sk->sidebarBox( $box["title"], $box["content"], $attrs );
 		} else {
 			echo $box["content"];
 		}

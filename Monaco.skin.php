@@ -1429,14 +1429,23 @@ wfProfileOut( __METHOD__ . '-body');
 			$contentClass .= " widget_title";
 		}
 		
+		$attrs = array( "class" => "widget sidebox" );
+		if ( isset($options["id"]) ) {
+			$attrs["id"] = $options["id"];
+		}
+		if ( isset($options["class"]) ) {
+			$attrs["class"] .= " {$options["class"]}";
+		}
+		
 		$box = "			";
-		$box .= Html::openElement( 'div', array( "id" => isset($options["id"]) ? $options["id"] : null, "class" => "widget sidebox" ) );
+		$box .= Html::openElement( 'div', $attrs );
 		$box .= "\n";
 		if ( isset($bar) ) {
 			$box .= "				";
 			$out = wfMsg( $bar );
-			$box .= Html::element( 'h3', array( "class" => "color1 $titleClass" ), wfEmptyMsg($bar, $out) ? $bar : $out );
-			$box .= "\n";
+			$out = wfEmptyMsg($bar, $out) ? $bar : $out;
+			if ( $out )
+				$box .= Html::element( 'h3', array( "class" => "color1 $titleClass" ), $out ) . "\n";
 		}
 		if ( is_array( $cont ) ) {
 			$boxContent .= "					<ul>\n";
@@ -1481,6 +1490,7 @@ wfProfileOut( __METHOD__ . '-body');
 		<!-- RIGHT SIDEBAR -->
 		<div id="right_sidebar" class="sidebar right_sidebar">
 <?php $this->lateRightSidebar(); ?>
+<?php wfRunHooks('MonacoRightSidebar::Late', array($this)); ?>
 <?php echo $this->mRightSidebar ?>
 		</div>
 		<!-- /RIGHT SIDEBAR -->
