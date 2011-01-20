@@ -81,7 +81,7 @@ class AniMonacoTemplate extends MonacoTemplate {
 		if ( !trim($rsidebar) ) {
 			return;
 		}
-		$this->sidebarBox(null, $rsidebar, array( "wrapcontents" => false ));
+		$this->sidebarBox(null, $rsidebar, array( "wrapcontents" => false, "class" => "ad_box" ));
 	}
 	
 	function printExtraSidebar() {
