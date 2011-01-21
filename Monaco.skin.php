@@ -983,7 +983,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 					<?php $this->printFirstHeading(); ?>
 					<div id="bodyContent" class="body_content">
 						<h2 id="siteSub"><?php $this->msg('tagline') ?></h2>
-						<div id="contentSub"><?php $this->html('subtitle') ?></div>
+						<?php if($this->data['subtitle']) { ?><div id="contentSub"><?php $this->html('subtitle') ?></div><?php } ?>
 						<?php if($this->data['undelete']) { ?><div id="contentSub2"><?php     $this->html('undelete') ?></div><?php } ?>
 						<?php if($this->data['newtalk'] ) { ?><div class="usermessage noprint"><?php $this->html('newtalk')  ?></div><?php } ?>
 						<?php if(!empty($skin->newuemsg)) { echo $skin->newuemsg; } ?>
