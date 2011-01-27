@@ -677,7 +677,12 @@ EOF;
 						$val["text"] = $tabText;
 					}
 					
-					$links[$section == 'namespaces' ? 'right' : 'left'][$kk] = $val;
+					switch($section) {
+					case "namespaces": $side = 'right'; break;
+					case "variants": $side = 'variants'; break;
+					default: $side = 'left'; break;
+					}
+					$links[$side][$kk] = $val;
 				}
 			}
 		} else {
@@ -700,6 +705,7 @@ EOF;
 					$val["text"] = $tabText;
 				}
 
+				// @todo Implement variants menu support for pre-1.18
 				if($key == 'report-problem') {
 					// Do nothing
 				} else if( strpos($key, 'nstab-') === 0 || in_array($key, $force_right) ) {
@@ -1655,6 +1661,23 @@ wfProfileOut( __METHOD__ . '-body');
 				"links" => $this->data['articlelinks']['right'],
 			);
 		}
+		if ( isset($this->data['articlelinks']['variants']) ) {
+			global $wgContLang;
+			$preferred = $wgContLang->getPreferredVariant();
+			$bar[] = array(
+				"id" => "page_variants",
+				"type" => "tabs",
+				"class" => "page_variants",
+				"links" => array(
+					array(
+						"class" => 'selected',
+						"text" => $wgContLang->getVariantname( $preferred ),
+						"href" => $this->data['skin']->getTitle()->getLocalURL( '', $preferred ),
+						"links" => $this->data['articlelinks']['variants'],
+					)
+				)
+			);
+		}
 		$bar[] = array(
 			"id" => "page_controls",
 			"type" => "buttons",
@@ -1717,10 +1740,17 @@ wfProfileOut( __METHOD__ . '-body');
 			$attrs["class"] .= " {$list["class"]}";
 		}
 		
-		echo "			";
+		$this->printCustomPageBarListLinks( $list["links"], $attrs, "			", $list["bad_hook"] );
+	}
+	
+	function printCustomPageBarListLinks( $links, $attrs=array(), $indent='', $hook=null ) {
+		echo $indent;
 		echo Html::openElement( 'ul', $attrs );
 		echo "\n";
-		foreach ( $list["links"] as $link ) {
+		foreach ( $links as $link ) {
+			if ( isset($link["links"]) ) {
+				$link["class"] = trim("{$link["class"]} hovermenu");
+			}
 			$liAttrs = array(
 				"id" => isset($link["id"]) ? $link["id"] : null,
 				"class" => isset($link["class"]) ? $link["class"] : null,
@@ -1731,19 +1761,25 @@ wfProfileOut( __METHOD__ . '-body');
 			if ( isset($link["id"]) ) {
 				$aAttrs += $this->data['skin']->tooltipAndAccesskeyAttribs( $link["id"] );
 			}
-			echo "				";
+			echo "$indent	";
 			echo Html::openElement( 'li', $liAttrs );
 			if ( isset($link["icon"]) ) {
 				echo $this->blankimg( array( "class" => "sprite {$link["icon"]}", "alt" => "" ) );
 			}
 			echo Html::element( 'a', $aAttrs, $link["text"] );
+			
+			if ( isset($link["links"]) ) {
+				echo $this->blankimg();
+				$this->printCustomPageBarListLinks( $link["links"], array(), "$indent	" );
+			}
+			
 			echo Xml::closeElement( 'li' );
 			echo "\n";
 		}
-		if ( $list["bad_hook"] ) {
-			wfRunHooks( $list["bad_hook"] );
+		if ( $hook ) {
+			wfRunHooks( $hook );
 		}
-		echo "			</ul>\n";
+		echo "$indent</ul>\n";
 	}
 
 	// Made a separate method so recipes, answers, etc can override. Notably, answers turns it off.
