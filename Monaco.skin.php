@@ -705,10 +705,9 @@ EOF;
 					$val["text"] = $tabText;
 				}
 
-				// @todo Implement variants menu support for pre-1.18
-				if($key == 'report-problem') {
-					// Do nothing
-				} else if( strpos($key, 'nstab-') === 0 || in_array($key, $force_right) ) {
+				if ( strpos($key, 'varlang-') === 0 ) {
+					$links['variants'][$key] = $val;
+				} else if ( strpos($key, 'nstab-') === 0 || in_array($key, $force_right) ) {
 					$links['right'][$key] = $val;
 				} else {
 					$links['left'][$key] = $val;
