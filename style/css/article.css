@@ -26,7 +26,7 @@
 	font-family: tahoma, sans-serif;
 	font-size: 11pt;
 	margin: 2px 2px 0;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	padding: 0 5px;
 }
 
@@ -86,6 +86,7 @@
 	color: #000;
 	cursor: pointer;
 	float: left;
+	position: relative;
 	padding: 0 8px;
 	height: 27px;
 	line-height: 27px;
@@ -106,6 +107,41 @@
 .page_bar .page_tabs a:hover,
 .page .compact_page_tabs a:hover {
 	text-decoration: underline;
+}
+
+.page_bar .page_tabs ul {
+    display: none;
+    position: absolute;
+    right: -1px;
+    background: white;
+    border: 1px solid #CCCCCC;
+    border-top: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    z-index: 6;
+}
+.page_bar .page_tabs ul li {
+	display: block;
+	float: none;
+	background: none;
+	margin: 0;
+}
+.page_bar .page_tabs ul li {
+	display: block;
+}
+.page_bar .page_tabs .hovermenu img {
+	background: url(../images/monaco-sprite.png) -72px -98px;
+	height: 4px;
+	margin-left: 3px;
+	width: 7px;
+}
+.page_bar .page_tabs .hovermenu.open ul,
+.page_bar .page_tabs .hovermenu:hover ul {
+	display: block;
+}
+.page_bar .page_tabs ul li.selected {
+	background-color: #ccc;
 }
 
 .compact_page_bar {
