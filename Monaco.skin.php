@@ -37,7 +37,7 @@ class SkinMonaco extends SkinTemplate {
 	/**
 	 * @author Inez Korczynski <inez@wikia.com>
 	 */
-	public function initPage(&$out) {
+	public function initPage( OutputPage $out ) {
 
 		wfDebugLog('monaco', '##### SkinMonaco initPage #####');
 
