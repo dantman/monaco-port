@@ -1176,7 +1176,18 @@ if ($custom_article_footer !== '') {
 			<div id="search_box" class="color1" aria-role="search">
 				<form action="<?php $this->text('searchaction') ?>" id="searchform">
 					<label style="display: none;" for="search_field"><?php echo htmlspecialchars($searchLabel) ?></label>
-					<input id="searchInput" name="search" type="text" maxlength="200" alt="<?php echo htmlspecialchars($searchLabel) ?>" aria-label="<?php echo htmlspecialchars($searchLabel) ?>" placeholder="<?php echo htmlspecialchars($searchLabel) ?>"<?php echo $skin->tooltipAndAccesskey('search'); ?> tabIndex=2 aria-required=true aria-flowto="search-button" />
+					<?php echo Html::input( 'search', '', 'text', array(
+						'id' => "searchInput",
+						'name' => "search",
+						'type' => "text",
+						'maxlength' => 200,
+						'alt' => $searchLabel,
+						'aria-label' => $searchLabel,
+						'placeholder' => $searchLabel,
+						'tabIndex' => 2,
+						'aria-required' => 'true',
+						'aria-flowto' => "search-button",
+					) + $skin->tooltipAndAccesskeyAttribs('search') ); ?>
 					<?php global $wgSearchDefaultFulltext; ?>
 					<input type="hidden" name="<?php echo ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
 					<input type="image" alt="<?php echo htmlspecialchars(wfMsgHtml('search')) ?>" src="<?php $this->text('blankimg') ?>" id="search-button" class="sprite search" tabIndex=2 />
@@ -1543,10 +1554,12 @@ wfProfileOut( __METHOD__ . '-body');
 			}
 			
 			if ($wgUser->isLoggedIn()) {
+				foreach( array( "username" => "userpage", "mytalk" => "mytalk", "watchlist" => "watchlist" ) as $key ) {
+					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$id" ),
+						Html::element( 'a', array( 'href' => $this->data['userlinks'][$key]['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$key"), $this->data['userlinks'][$key]['text'] ) ) . "\n";
+				}
+				
 			?>
-				<span id="header_username"><a href="<?php echo htmlspecialchars($this->data['userlinks']['userpage']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-userpage') ?>><?php echo htmlspecialchars($this->data['userlinks']['userpage']['text']) ?></a></span>
-				<span id="header_mytalk"><a href="<?php echo htmlspecialchars($this->data['userlinks']['mytalk']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-mytalk') ?>><?php echo htmlspecialchars($this->data['userlinks']['mytalk']['text']) ?></a></span>
-				<span id="header_watchlist"><a href="<?php echo htmlspecialchars($this->data['userlinks']['watchlist']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-watchlist') ?>><?php echo htmlspecialchars($this->data['userlinks']['watchlist']['text']) ?></a></span>
 <?php
 				if ( $this->useUserMore() ) { ?>
 				<span class="more hovermenu">
@@ -1571,7 +1584,7 @@ wfProfileOut( __METHOD__ . '-body');
 <?php
 				} ?>
 				<span>
-					<a href="<?php echo htmlspecialchars($this->data['userlinks']['logout']['href']) ?>"<?php echo $skin->tooltipAndAccesskey('pt-logout') ?>><?php echo htmlspecialchars($this->data['userlinks']['logout']['text']) ?></a>
+					<?php echo Html::element( 'a', array( 'href' => $this->data['userlinks']['logout']['href'] ) + $skin->tooltipAndAccesskeyAttribs('pt-logout'), $this->data['userlinks']['logout']['text'] ); ?>
 				</span>
 <?php
 			} else {
