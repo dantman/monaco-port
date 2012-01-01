@@ -743,15 +743,23 @@ EOF;
 	 */
 	private function getUserLinks($tpl) {
 		wfProfileIn( __METHOD__ );
-		global $wgUser, $wgTitle;
+		global $wgUser, $wgTitle, $wgRequest;
 
 		$data = array();
 
-		if(!$wgUser->isLoggedIn()) {
-			$returnto = "returnto={$this->thisurl}";
-			if( $this->thisquery != '' )
-				$returnto .= "&returntoquery={$this->thisquery}";
+		$page = Title::newFromURL( $wgRequest->getVal( 'title', '' ) );
+		$page = $wgRequest->getVal( 'returnto', $page );
+		$a = array();
+		if ( strval( $page ) !== '' ) {
+			$a['returnto'] = $page;
+			$query = $wgRequest->getVal( 'returntoquery', $this->thisquery );
+			if( $query != '' ) {
+				$a['returntoquery'] = $query;
+			}
+		}
+		$returnto = wfArrayToCGI( $a );
 
+		if(!$wgUser->isLoggedIn()) {
 			$signUpHref = Skin::makeSpecialUrl( 'UserLogin', $returnto );
 			$data['login'] = array(
 				'text' => wfMsg('login'),
