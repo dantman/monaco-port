@@ -95,7 +95,7 @@ body.widgetsAddingBlocked .add {
     display: inline;
 }
 
-.widget form input {
+/*.widget form input {
     margin: 3px 0;
     width: 170px;
 }
@@ -103,7 +103,7 @@ body.widgetsAddingBlocked .add {
 .widget form select {
     margin: 3px 0;
     width: 180px;
-}
+}*/
 
 .widget form input.checkbox,
 .widget form input.editor_button {
