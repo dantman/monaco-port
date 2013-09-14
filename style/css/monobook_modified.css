@@ -1060,10 +1060,6 @@ input#wpSave, input#wpDiff {
 	margin-right: 0.33em;
 }
 
-#editform .editOptions {
-	display: inline;
-}
-
 #wpSave {
 	font-weight: bold;
 }
@@ -1333,4 +1329,17 @@ div#mw-recreate-deleted-warn ul li {
 
 .changes-list-entry a img {
 	display: none;
+}
+
+/* Arcane's fixes for display errors with the WikiEditor extension */
+
+.toolbar {
+    border-top-style: none!important;
+    border-top-width: 1px;
+    padding: 0px 0px !important;
+}
+
+/* Expandable Sections */
+.wikiEditor-ui-toolbar .sections {
+	width: 98%!important;
 }
