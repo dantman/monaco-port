@@ -77,7 +77,7 @@ input[type="submit"],
 input[type="reset"],
 input[type="button"],
 button {
-	height: 19px;
+	height: 27px;
 }
 input[type="submit"].big,
 input[type="reset"].big,
