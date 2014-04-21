@@ -203,6 +203,11 @@ body {
 .article_footer ul.actions li {
 	float: right;
 }
+/* haleyjd 20140420: needed for copyright link */
+#fe_copyright {
+  float: left;
+  clear: none;
+}
 ul.star-rating {
 	float: right;
 	direction: ltr;
