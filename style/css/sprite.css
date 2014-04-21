@@ -39,6 +39,7 @@
 
 .sprite.history { background-position: 0 -122px; }
 .sprite.pagelink { background-position: -16px -122px; }
+.sprite.copyright { background-position: 16px -122px; } /* haleyjd 20140420: restored from previous version */
 .sprite.move { background-position: -32px -122px; }
 .sprite.protect { background-position: -48px -122px; }
 .sprite.viewsource { background-position: -64px -122px; }
@@ -64,6 +65,10 @@
 .sprite.unwatch { background-position: -17px -170px; }
 
 .sprite.details { background-position: 0 -186px; }
+
+/* haleyjd 20140420: styles needed for tabs created by FlaggedRevs */
+.sprite.view    { background-position: -32px -170px; }
+.sprite.current { background-position: 0 -170px; }
 
 .sprite.progress { 
 	background-image: url(../images/ajax.gif);
