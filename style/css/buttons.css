@@ -203,3 +203,11 @@ button.secondary[disabled]:active {
 	background-image: -moz-linear-gradient(top, #CCC 20%, #AAA 70%);
 	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#CCC), to(#AAA));
 }
+
+/* haleyjd 20140420: overrides needed for FlaggedRevs input form components */
+#mw-fr-confirmreview {
+  line-height: 3.0em;
+}
+#mw-fr-submit-accept {
+  margin-right: 0.5em;
+}
