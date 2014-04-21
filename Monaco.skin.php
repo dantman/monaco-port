@@ -1115,6 +1115,8 @@ if ($custom_article_footer !== '') {
 			}
 		}
 ?>
+								<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make generic! -->
+								<li style="padding-top:5px;"><div>Text is available under the <a href=" http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.</div></li>
 							</ul>
 							<?php // echo $namespaceType == 'content' ? $actions : '' ?>
 						</td>
@@ -1126,9 +1128,11 @@ if ($custom_article_footer !== '') {
 <?php
 		//} else {
 ?>
-							<ul class="actions" id="articleFooterActions2">
-								<li><a id="fe_random_icon" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_random_img" class="sprite random" /></a> <div><a id="fe_random_link" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><?php echo wfMsgHtml('viewrandompage') ?></a></div></li>
-
+							<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make general! -->
+							<ul class="actions clearfix" id="articleFooterActions2">
+								<li id="fe_randompage"><a id="fe_random_icon" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_random_img" class="sprite random" /></a> <div><a id="fe_random_link" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><?php echo wfMsgHtml('viewrandompage') ?></a></div></li>
+								<li id="fe_copyright"><a id="fe_copyright_icon" href="http://doomwiki.org/wiki/Doom_Wiki:Copyrights"><img src="<?php $this->text('blankimg') ?>" id="fe_copyright_img" class="sprite copyright" /></a> <div><a id="fe_copyright_link" href="http://doomwiki.org/wiki/Doom_Wiki:Copyrights">Copyrights</a></div></li>
+							</ul>
 						</td>
 					</tr>
 				</table>
@@ -1380,6 +1384,18 @@ if ($custom_article_footer !== '') {
 					</ul>
 				</td>
 			</tr>
+			<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make generic! -->
+			<tr>
+				<td colspan="2" style="text-align:center;">
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+						<input type="hidden" name="cmd" value="_s-xclick">
+						<input type="hidden" name="hosted_button_id" value="D5MLUSDXA8HMQ">
+						<input type="image" src="http://doomwiki.org/w/skins/monaco/style/images/contribute-button.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" style="width:139px;margin:0;">
+						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+					</form>
+
+				</td>
+			</tr>
 		</tbody>
 <?php
 	}
@@ -1562,9 +1578,10 @@ wfProfileOut( __METHOD__ . '-body');
 			}
 			
 			if ($wgUser->isLoggedIn()) {
-				foreach( array( "username" => "userpage", "mytalk" => "mytalk", "watchlist" => "watchlist" ) as $key ) {
-					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$id" ),
-						Html::element( 'a', array( 'href' => $this->data['userlinks'][$key]['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$key"), $this->data['userlinks'][$key]['text'] ) ) . "\n";
+			  // haleyjd 20140420: This needs to use $key => $value syntax to get the proper style for the elements!
+				foreach( array( "username" => "userpage", "mytalk" => "mytalk", "watchlist" => "watchlist" ) as $key => $value ) {
+					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
+						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) ) . "\n";
 				}
 				
 			?>
@@ -1577,8 +1594,10 @@ wfProfileOut( __METHOD__ . '-body');
 						<ul>
 <?php
 				foreach ( $this->data['userlinks']['more'] as $key => $link ) {
+					if($key != 'userpage') { // haleyjd 20140420: Do not repeat user page here.
 					echo Html::rawElement( 'li', array( 'id' => "header_$key" ),
 						Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
+					}
 				} ?>
 						</ul>
 					</div>
@@ -1586,8 +1605,10 @@ wfProfileOut( __METHOD__ . '-body');
 <?php
 				} else {
 					foreach ( $this->data['userlinks']['more'] as $key => $link ) {
+						if($key != 'userpage') { // haleyjd 20140420: Do not repeat user page here.
 						echo Html::rawElement( 'span', array( 'id' => "header_$key" ),
 							Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
+						}
 					} ?>
 <?php
 				} ?>
