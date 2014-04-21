@@ -332,6 +332,10 @@ table.small {
 	padding: 5px;
 	font-size: 95%;
 }
+/* haleyjd 20140420: fix improper expansion of TOC to full article width */
+#toc, .toc {
+  display: inline-block;
+}
 #toc h2,
 .toc h2 {
 	display: inline;
@@ -1062,6 +1066,16 @@ input#wpSave, input#wpDiff {
 
 #editform .editOptions {
 	display: inline;
+	
+	/* haleyjd 20140420: must override some options getting inherited from monobook or somewhere... */
+	background: none;
+	border:     none;
+	padding:    0;
+}
+
+/* haleyjd 20140420: Needs to stick out better */
+#wpSummaryLabel {
+  font-weight: bold;
 }
 
 #wpSave {
