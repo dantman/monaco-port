@@ -15,9 +15,9 @@ if( !defined( 'MEDIAWIKI' ) ) die( "This is an extension to the MediaWiki packag
 $wgExtensionCredits['skin'][] = array (
 	'path' => __FILE__,
 	'name' => 'Monaco',
-	'author' => array('[http://www.wikia.com/ Wikia]', 'Inez Korczynski', 'Christian Williams', '[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]'),
+	'author' => array('Inez Korczynski', 'Christian Williams', '[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]', '[http://doomwiki.org/wiki/User:Quasar James Haley]'),
 	'descriptionmsg' => 'monaco-desc',
-	'url' => "https://github.com/dantman/monaco-port",
+	'url' => "https://github.com/haleyjd/monaco-port",
 );
 
 $wgValidSkinNames['monaco'] = 'Monaco';
@@ -45,7 +45,7 @@ $wgResourceModules['skins.monaco'] = array(
 	'scripts' => 'skins/monaco/style/js/monaco.js',
 );
 
-/* Bad Configs - These are Wikia junk used inside Monaco.skin.php that should be slowly removed */
+/* Bad Configs - These are left-over junk used inside Monaco.skin.php that should be slowly removed */
 $wgSearchDefaultFulltext = false; // bad config
 $wgSpecialPagesRequiredLogin = array(); // bad config, it should be possible to check if the user has special page access without doing something like this
 

@@ -10,9 +10,10 @@ $messages = array();
 
 /** English
  * @author Daniel Friesen
+ * @author James Haley
  */
 $messages['en'] = array(
-	'monaco-desc' => "Wikia's Monaco theme, ported for use in MediaWiki.",
+	'monaco-desc' => "Unbranded Monaco skin for use with vanilla MediaWiki.",
 'dynamic-links' => "
  You can add dynamic link ids to monaco using this message, add a new id on each line
  (you can use a * at the start like in sidebar and monaco-sidebar to make this a list)
