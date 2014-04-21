@@ -219,9 +219,21 @@
 
 #fe_history {
 	float: left;
+	width: 12em; /* haleyjd 20140420: needed for alignment */
 }
 #fe_permalink {
 	float: left;
+	width: 12em; /* haleyjd 20140420: needed for alignment */
+}
+/* haleyjd: moved from php */
+#fe_randompage {
+  float: left;
+  /*margin-right: 20px;*/
+  width: 12em;
+}
+#fe_copyright {
+  float: left;
+  clear: none !important;
 }
 #fe_recent {
 	float: left;
