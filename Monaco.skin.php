@@ -45,11 +45,6 @@ class SkinMonaco extends SkinTemplate {
 		global $wgHooks, $wgJsMimeType, $wgStylePath, $wgResourceModules;
 
 		SkinTemplate::initPage($out);
-/*
-		$this->skinname  = 'monaco';
-		$this->stylename = 'monaco';
-		$this->template  = 'MonacoTemplate';
-*/
 
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
@@ -224,9 +219,7 @@ class SkinMonaco extends SkinTemplate {
 		if(empty($data_array)) {
 			wfDebugLog('monaco', 'There is no cached $data_array, let\'s populate');
 			wfProfileIn(__METHOD__ . ' - DATA ARRAY');
-			// @kill $data_array['categorylist'] = DataProvider::getCategoryList();
-			$data_array['toolboxlinks'] = $this->getToolboxLinks();
-			//$data_array['sidebarmenu'] = $this->getSidebarLinks();
+			$data_array['toolboxlinks'] = $this->getToolboxLinks();			
 			wfProfileOut(__METHOD__ . ' - DATA ARRAY');
 			if($cache) {
 				$parserMemc->set($key, $data_array, 4 * 60 * 60 /* 4 hours */);
@@ -241,14 +234,6 @@ class SkinMonaco extends SkinTemplate {
 				$wgUser->mMonacoData = array();
 
 				wfProfileIn(__METHOD__ . ' - DATA ARRAY');
-				/*
-				$text = $this->getTransformedArticle('User:'.$wgUser->getName().'/Monaco-sidebar', true);
-				if(empty($text)) {
-					$wgUser->mMonacoData['sidebarmenu'] = false;
-				} else {
-					$wgUser->mMonacoData['sidebarmenu'] = $this->parseSidebarMenu($text);
-				}
-				*/
 
 				$text = $this->getTransformedArticle('User:'.$wgUser->getName().'/Monaco-toolbox', true);
 				if(empty($text)) {
@@ -260,13 +245,6 @@ class SkinMonaco extends SkinTemplate {
 
 				$wgUser->saveToCache();
 			}
-
-			/*
-			if($wgUser->mMonacoData['sidebarmenu'] !== false && is_array($wgUser->mMonacoData['sidebarmenu'])) {
-				wfDebugLog('monaco', 'There is user data for sidebarmenu');
-				$data_array['sidebarmenu'] = $wgUser->mMonacoData['sidebarmenu'];
-			}
-			*/
 
 			if($wgUser->mMonacoData['toolboxlinks'] !== false && is_array($wgUser->mMonacoData['toolboxlinks'])) {
 				wfDebugLog('monaco', 'There is user data for toolboxlinks');
@@ -291,43 +269,6 @@ class SkinMonaco extends SkinTemplate {
 			}
 		}
 
-		/*
-		foreach($data_array['sidebarmenu'] as $key => $val) {
-			if(isset($val['org']) && $val['org'] == 'editthispage') {
-				if(isset($tpl->data['content_actions']['edit'])) {
-					$data_array['sidebarmenu'][$key]['href'] = $tpl->data['content_actions']['edit']['href'];
-				} else {
-					unset($data_array['sidebarmenu'][$key]);
-					foreach($data_array['sidebarmenu'] as $key1 => $val1) {
-						if(isset($val1['children'])) {
-							foreach($val1['children'] as $key2 => $val2) {
-								if($key == $val2) {
-									unset($data_array['sidebarmenu'][$key1]['children'][$key2]);
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		if( $wgUser->isAllowed( 'editinterface' ) ) {
-			if(isset($data_array['sidebarmenu'])) {
-				$monacoSidebarUrl = Title::makeTitle(NS_MEDIAWIKI, 'Monaco-sidebar')->getLocalUrl('action=edit');
-				foreach($data_array['sidebarmenu'] as $nodeKey => $nodeVal) {
-					if(empty($nodeVal['magic']) && isset($nodeVal['children']) && isset($nodeVal['depth']) && $nodeVal['depth'] === 1) {
-						$data_array['sidebarmenu'][$nodeKey]['children'][] = $this->lastExtraIndex;
-						$data_array['sidebarmenu'][$this->lastExtraIndex] = array(
-							'text' => wfMsg('monaco-edit-this-menu'),
-							'href' => $monacoSidebarUrl,
-							'class' => 'Monaco-sidebar_edit'
-						);
-					}
-				}
-			}
-		}
-		*/
-
 		$tpl->set('data', $data_array);
 
 		// This is for WidgetLanguages
@@ -338,138 +279,6 @@ class SkinMonaco extends SkinTemplate {
 
 		// User actions links
 		$tpl->set('userlinks', $this->getUserLinks($tpl));
-/* @todo Look at this a tiny bit to figure out what js files to load
-		if ($wgUser->isLoggedIn()) {
-			$package = 'monaco_loggedin_js';
-		}
-		else {
-			// list of namespaces and actions on which we should load package with YUI
-			$ns = array(NS_SPECIAL);
-			$actions = array('edit', 'preview', 'submit');
-
-			if ( in_array($wgTitle->getNamespace(), $ns) || in_array($wgRequest->getVal('action', 'view'), $actions) ) {
-				// edit mode & special/blog pages (package with YUI)
-				$package = 'monaco_anon_everything_else_js';
-			}
-			else {
-				// view mode (package without YUI)
-				$package = 'monaco_anon_article_js';
-			}$this->data['stylepath'].'/monaco/style/images/blank.gif'
-		}
-
-		global $wgStylePath, $wgStyleVersion;
-		// use WikiaScriptLoader to load StaticChute in parallel with other scripts added by wgOut->addScript
-	/*	wfProfileIn(__METHOD__ . '::JSloader');
-
-		$jsReferences = array();
-
-		/*if($allinone && $package == 'monaco_anon_article_js') {
-			global $parserMemc, $wgStyleVersion, $wgEnableViewYUI;
-			$cb = $parserMemc->get(wfMemcKey('wgMWrevId'));
-
-			$addParam = "";
-			if (!empty($wgEnableViewYUI)) {
-				$addParam = "&yui=1";
-			}
-
-			global $wgDevelEnvironment;
-			if(empty($wgDevelEnvironment)){
-				$prefix = "__wikia_combined/";
-			} else {
-				global $wgWikiaCombinedPrefix;
-				$prefix = $wgWikiaCombinedPrefix;
-			}
-			$jsReferences[] = "/{$prefix}cb={$cb}{$wgStyleVersion}&type=CoreJS";
-		} else {
-			$jsHtml = $StaticChute->getChuteHtmlForPackage($package);
-
-			if ($package == "monaco_anon_article_js") {
-				$jsHtml .= $StaticChute->getChuteHtmlForPackage("yui");
-			}
-
-			// get URL of StaticChute package (or a list of separated files) and use WSL to load it
-			preg_match_all("/src=\"([^\"]+)/", $jsHtml, $matches, PREG_SET_ORDER);
-
-			foreach($matches as $script) {
-				$jsReferences[] = str_replace('&amp;', '&', $script[1]);
-			}
-		}*/
-/*
-
-		// scripts from getReferencesLinks() method
-		foreach($tpl->data['references']['js'] as $script) {
-			if (!empty($script['url'])) {
-				$url = $script['url'];
-				/*if($allinone && $package == 'monaco_anon_article_js' && strpos($url, 'title=-') > 0) {
-					continue;
-				}*//*
-				$jsReferences[] = $url;
-			}
-		}
-/*
-		// scripts from $wgOut->mScripts
-		// <script type="text/javascript" src="URL"></script>
-		// load them using WSL and remove from $wgOut->mScripts
-		//
-		// macbre: Perform only for Monaco skin! New Answers skin does not use WikiaScriptLoader
-		if ((get_class($this) == 'SkinMonaco') || (get_class($this) == 'SkinAnswers')) {
-			global $wgJsMimeType;
-
-			$headScripts = $tpl->data['headscripts'];
-			preg_match_all("#<script type=\"{$wgJsMimeType}\" src=\"([^\"]+)\"></script>#", $headScripts, $matches, PREG_SET_ORDER);
-			foreach($matches as $script) {
-				$jsReferences[] = str_replace('&amp;', '&', $script[1]);
-				$headScripts = str_replace($script[0], '', $headScripts);
-			}
-			$tpl->data['headscripts'] = $headScripts;
-
-			// generate code to load JS files
-			$jsReferences = Wikia::json_encode($jsReferences);
-			$jsLoader = <<<EOF
-
-		<script type="text/javascript">/*<![CDATA[* /
-			(function(){
-				var jsReferences = $jsReferences;
-				var len = jsReferences.length;
-				for(var i=0; i<len; i++)
-					wsl.loadScript(jsReferences[i]);
-			})();
-		/*]]>* /</script>
-EOF;
-
-			$tpl->set('JSloader', $jsLoader);
-		}
-
-		wfProfileOut(__METHOD__ . '::JSloader');
-*/
-		// macbre: move media="print" CSS to bottom (RT #25638)
-		//global $wgOut;
-/*
-		wfProfileIn(__METHOD__ . '::printCSS');
-
-		$tmpOut = new OutputPage();
-		$printStyles = array();
-/*
-		// let's filter media="print" CSS out
-		$tmpOut->styles = $wgOut->styles;
-
-		foreach($tmpOut->styles as $style => $options) {
-			if (isset($options['media']) && $options['media'] == 'print') {
-				unset($tmpOut->styles[$style]);
-				$printStyles[$style] = $options;
-			}
-		}*/
-/*
-		// re-render CSS to be included in head
-		$tpl->set('csslinks-urls', $tmpOut->styles);
-		$tpl->set('csslinks', $tmpOut->buildCssLinks());
-
-		// render CSS to be included at the bottom
-		$tmpOut->styles = $printStyles;
-		$tpl->set('csslinksbottom-urls', $printStyles);
-		$tpl->set('csslinksbottom', $tmpOut->buildCssLinks());
-*/
-		//wfProfileOut(__METHOD__ . '::printCSS');
 
 		wfProfileOut( __METHOD__ );
 		return true;
@@ -870,8 +679,8 @@ class MonacoTemplate extends QuickTemplate {
 	}
 
 	/**
-	 * Shortcut for building these crappy blankimg based icons wikia probably could
-	 * have implemented in a less ugly way.
+	 * Shortcut for building these crappy blankimg based icons that probably could
+	 * have been implemented in a less ugly way.
 	 * @author Daniel Friesen
 	 */
 	function blankimg( $attrs = array() ) {
@@ -894,8 +703,6 @@ class MonacoTemplate extends QuickTemplate {
 		global $wgContLang, $wgArticle, $wgUser, $wgLogo, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename;
 		global $wgMonacoUseSitenoticeIsland;
 
-		/*$skin = $wgUser->getSkin();
-		$namespace = $wgTitle->getNamespace();*/
 		$skin = $this->data['skin'];
 		$action = $wgRequest->getText('action');
 		$namespace = $wgTitle->getNamespace();
@@ -913,14 +720,6 @@ class MonacoTemplate extends QuickTemplate {
 		
 		$this->html( 'headelement' );
 
-/*
-$allinone = $wgRequest->getBool('allinone', $wgAllInOne);
-echo WikiaAssets::GetCoreCSS($skin->themename, $wgContLang->isRTL(), $allinone); // StaticChute + browser specific
-echo WikiaAssets::GetExtensionsCSS($this->data['csslinks-urls']);
-echo WikiaAssets::GetThemeCSS($skin->themename, $skin->skinname); 
-echo WikiaAssets::GetSiteCSS($skin->themename, $wgContLang->isRTL(), $allinone); // Common.css, Monaco.css, -
-echo WikiaAssets::GetUserCSS($this->data['csslinks-urls']);
-*/
 
 	$this->printAdditionalHead(); // @fixme not valid
 ?>
@@ -1118,16 +917,9 @@ if ($custom_article_footer !== '') {
 								<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make generic! -->
 								<li style="padding-top:5px;"><div>Text is available under the <a href=" http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.</div></li>
 							</ul>
-							<?php // echo $namespaceType == 'content' ? $actions : '' ?>
 						</td>
 						<td class="col2">
-<?php
-		//if ($namespaceType != 'content' ) {
-?>
 							<?php echo $actions ?>
-<?php
-		//} else {
-?>
 							<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make general! -->
 							<ul class="actions clearfix" id="articleFooterActions2">
 								<li id="fe_randompage"><a id="fe_random_icon" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_random_img" class="sprite random" /></a> <div><a id="fe_random_link" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><?php echo wfMsgHtml('viewrandompage') ?></a></div></li>
@@ -1151,12 +943,9 @@ if ($custom_article_footer !== '') {
 			<noscript><link rel="stylesheet" type="text/css" href="<?php $this->text( 'stylepath' ) ?>/monaco/style/css/noscript.css?<?php echo $wgStyleVersion ?>" /></noscript>
 <?php
 	if(!($wgRequest->getVal('action') != '' || $namespace == NS_SPECIAL)) {
-		//$this->html('WikiaScriptLoader');
 		$this->html('JSloader');
 		$this->html('headscripts');
 	}
-	//echo '<script type="text/javascript">/*<![CDATA[*/for(var i=0;i<wgAfterContentAndJS.length;i++){wgAfterContentAndJS[i]();}/*]]>*/</script>' . "\n";
-
 ?>
 		</div>
 <?php $this->printRightSidebar() ?>
@@ -1276,7 +1065,7 @@ if ($custom_article_footer !== '') {
 				if ( $url ) {
 					$dynamicLinksUser[$line] = array(
 						"url" => $url,
-						"icon" => "edit", // @note Wikia used messy css sprites so we can't really let this be customized easily
+						"icon" => "edit", // @note Designers used messy css sprites so we can't really let this be customized easily
 					);
 				}
 			}
