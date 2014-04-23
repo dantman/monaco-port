@@ -221,7 +221,7 @@ class SkinMonaco extends SkinTemplate {
 		if(empty($data_array)) {
 			wfDebugLog('monaco', 'There is no cached $data_array, let\'s populate');
 			wfProfileIn(__METHOD__ . ' - DATA ARRAY');
-			$data_array['toolboxlinks'] = $this->getToolboxLinks();			
+			$data_array['toolboxlinks'] = $this->getToolboxLinks();
 			wfProfileOut(__METHOD__ . ' - DATA ARRAY');
 			if($cache) {
 				$parserMemc->set($key, $data_array, 4 * 60 * 60 /* 4 hours */);
@@ -272,9 +272,6 @@ class SkinMonaco extends SkinTemplate {
 		}
 
 		$tpl->set('data', $data_array);
-
-		// This is for WidgetLanguages
-		$this->language_urls = $tpl->data['language_urls'];
 
 		// Article content links (View, Edit, Delete, Move, etc.)
 		$tpl->set('articlelinks', $this->getArticleLinks($tpl));
@@ -790,7 +787,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 					<!-- ARTICLE -->
 
 <?php		wfProfileIn( __METHOD__ . '-article'); ?>
-				<article id="article" aria-role=main aria-labeledby="firstHeading">
+				<article id="article" role="main" aria-labelledby="firstHeading">
 					<a name="top" id="top"></a>
 					<?php wfRunHooks('MonacoAfterArticle', array($this)); // recipes: not needed? ?>
 					<?php if ( !$wgMonacoUseSitenoticeIsland && $this->data['sitenotice'] ) { ?><div id="siteNotice"><?php $this->html('sitenotice') ?></div><?php } ?>
@@ -972,13 +969,13 @@ if ($custom_article_footer !== '') {
 			<![endif]-->
 
 			<!-- SEARCH/NAVIGATION -->
-			<div class="widget sidebox navigation_box" id="navigation_widget" aria-role=navigation>
+			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
 <?php
 	global $wgSitename;
 	$msgSearchLabel = wfMsgHtml('Tooltip-search');
 	$searchLabel = wfEmptyMsg('Tooltip-search', $msgSearchLabel) ? (wfMsgHtml('ilsubmit').' '.$wgSitename.'...') : $msgSearchLabel;
 ?>
-			<div id="search_box" class="color1" aria-role="search">
+			<div id="search_box" class="color1" role="search">
 				<form action="<?php $this->text('searchaction') ?>" id="searchform">
 					<label style="display: none;" for="search_field"><?php echo htmlspecialchars($searchLabel) ?></label>
 					<?php echo Html::input( 'search', '', 'text', array(
