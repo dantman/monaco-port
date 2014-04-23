@@ -23,10 +23,22 @@ $wgExtensionCredits['skin'][] = array (
 $wgExtensionMessagesFiles['ContentRightSidebar'] = dirname(__FILE__).'/ContentRightSidebar.i18n.php';
 
 /**
+ * Resource module
+ * haleyjd 20140423
+ */
+$wgResourceModules['skins.monaco.ContentRightSidebar'] = array (
+  'scripts' => 'skins/monaco/style/ContentRightSidebar.js',
+  'dependencies' => array (
+    'mediawiki.page.startup',
+    'mediawiki.page.ready',
+  ),
+);
+
+/**
  * Register parser extensions
  */
 $wgHooks['ParserFirstCallInit'][] = array( 'efContentRightSidebarRegisterParser' ); 
-function efContentRightSidebarRegisterParser( &$parser ) 
+function efContentRightSidebarRegisterParser(&$parser) 
 {
   $parser->setHook('right-sidebar', 'efContentRightSidebarTag', 0);
   return true;
@@ -42,7 +54,7 @@ define('RIGHT_SIDEBAR_CLASS_END_TOKEN', "<RIGHT SIDEBAR CLASS END -->");
 define('RIGHT_SIDEBAR_CONTENT_START_TOKEN', "<!-- RIGHT SIDEBAR CONTENT START -->");
 define('RIGHT_SIDEBAR_CONTENT_END_TOKEN', "<!-- RIGHT SIDEBAR CONTENT END -->");
 
-function efContentRightSidebarTag( $input, $arg, $parser, $frame ) 
+function efContentRightSidebarTag($input, $arg, $parser, $frame) 
 {
   $isContentTagged = false;
   $m = array();
@@ -69,15 +81,15 @@ function efContentRightSidebarTag( $input, $arg, $parser, $frame )
   {
     $out .= RIGHT_SIDEBAR_WITHBOX_TOKEN;
   }
-  if( isset($arg["title"]))
+  if(isset($arg["title"]))
   {
     $out .= RIGHT_SIDEBAR_TITLE_START_TOKEN . urlencode($arg["title"]) . RIGHT_SIDEBAR_TITLE_END_TOKEN;
   }
-  if( isset($arg["class"]))
+  if(isset($arg["class"]))
   {
     $out .= RIGHT_SIDEBAR_CLASS_START_TOKEN . urlencode($arg["class"]) . RIGHT_SIDEBAR_CLASS_END_TOKEN;
   }
-  if( $isContentTagged)
+  if($isContentTagged)
   {
     $out .= $input;
   } 
@@ -151,7 +163,7 @@ function efExtractRightSidebarBoxes(&$html)
 $wgHooks['MonacoRightSidebar'][] = 'efContentRightSidebarMonacoRightSidebar';
 function efContentRightSidebarMonacoRightSidebar( $sk )
 {
-  $boxes = efExtractRightSidebarBoxes( $sk->data['bodytext'] );
+  $boxes = efExtractRightSidebarBoxes($sk->data['bodytext']);
 
   foreach($boxes as $box)
   {
@@ -162,13 +174,16 @@ function efContentRightSidebarMonacoRightSidebar( $sk )
       {
         $attrs["class"] = $box["class"];
       }
-      $sk->sidebarBox( $box["title"], $box["content"], $attrs );
+      $sk->sidebarBox($box["title"], $box["content"], $attrs);
     }
     else 
     {
       echo $box["content"];
     }
   }
+  
+  if(!empty($boxes))
+    $sk->getOutput()->addModuleScripts('skins.monaco.ContentRightSidebar');
 
   return true;
 }
