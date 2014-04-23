@@ -42,23 +42,16 @@ class SkinMonaco extends SkinTemplate {
 		wfDebugLog('monaco', '##### SkinMonaco initPage #####');
 
 		wfProfileIn(__METHOD__);
-		global $wgHooks, $wgJsMimeType, $wgStylePath, $wgResourceModules;
+		global $wgHooks, $wgJsMimeType;
 
 		SkinTemplate::initPage($out);
 
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
 
-		if ( method_exists( 'OutputPage', 'addModuleScripts' ) ) {
-			// MediaWiki 1.17 and above, load the bulk of our scripts with the resource loader
-			$out->addModuleScripts('skins.monaco');
-			$out->addModuleScripts('skins.monaco.ContentRightSidebar');
-		} else {
-			// MediaWiki 1.16 and below, read our resource loader data and just load
-			// the individual script.
-			$out->addScriptFile(preg_replace('#^skins/#', "{$wgStylePath}/", $wgResourceModules['skins.monaco']['scripts']));
-			$out->addScriptFile(preg_replace('#^skins/#', "{$wgStylePath}/", $wgResourceModules['skins.monaco.ContentRightSidebar']['scripts']));
-		}
+		// Load the bulk of our scripts with the MediaWiki 1.17+ resource loader
+		$out->addModuleScripts('skins.monaco');
+		$out->addModuleScripts('skins.monaco.ContentRightSidebar');
 		
 		$out->addScript(
 			'<!--[if IE]><script type="' . htmlspecialchars($wgJsMimeType) .
@@ -83,21 +76,8 @@ class SkinMonaco extends SkinTemplate {
 
 		parent::setupSkinUserCss( $out );
 		
-		if ( method_exists( 'OutputPage', 'addModuleStyles' ) ) {
-			// MediaWiki 1.17 and above, load the bulk of our styles with the resource loader
-			$out->addModuleStyles( 'skins.monaco' );
-		} else {
-			// MediaWiki 1.16 and below, read our resource loader array and just load
-			// the individual stylesheets. We don't really care much about older
-			// versions of MW when people should be upgrading if they really want
-			// new features, so anyone not using 1.17 can just deal with the extra
-			// http requests... if they really care about the requests they can upgrade
-			// as soon as 1.17 is available to them...
-			foreach ( $wgResourceModules['skins.monaco']['styles'] as $path => $options ) {
-				$path = preg_replace( '#^skins/#', '', $path );
-				$out->addStyle( $path, $options['media'] );
-			}
-		}
+		// Load the bulk of our styles with the MediaWiki 1.17+ resource loader
+		$out->addModuleStyles( 'skins.monaco' );
 		
 		// ResourceLoader doesn't do ie specific styles that well iirc, so we have
 		// to do those manually.
@@ -126,6 +106,8 @@ class SkinMonaco extends SkinTemplate {
 		if ( isset($theme) && is_string($theme) && $theme != "sapphire" )
 			$out->addStyle( "monaco/style/{$theme}/css/main.css", 'screen' );
 		
+		// TODO: explicit RTL style sheets are supposed to be obsolete w/ResourceLoader
+		// I have no way to test this currently, however. -haleyjd
 		// rtl... hmm, how do we resource load this?
 		$out->addStyle( 'monaco/style/rtl.css', 'screen', '', 'rtl' );
 	}
