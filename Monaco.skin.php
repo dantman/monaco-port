@@ -128,12 +128,6 @@ class SkinMonaco extends SkinTemplate {
 		
 		// rtl... hmm, how do we resource load this?
 		$out->addStyle( 'monaco/style/rtl.css', 'screen', '', 'rtl' );
-		
-		// Make sure jQuery is loaded.
-		if ( method_exists( 'OutputPage', 'includeJQuery' ) ) {
-			$out->includeJQuery();
-		}
-		
 	}
 
 	function showMasthead() {
