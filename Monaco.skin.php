@@ -51,11 +51,13 @@ class SkinMonaco extends SkinTemplate {
 
 		if ( method_exists( 'OutputPage', 'addModuleScripts' ) ) {
 			// MediaWiki 1.17 and above, load the bulk of our scripts with the resource loader
-			$out->addModuleScripts( 'skins.monaco' );
+			$out->addModuleScripts('skins.monaco');
+			$out->addModuleScripts('skins.monaco.ContentRightSidebar');
 		} else {
 			// MediaWiki 1.16 and below, read our resource loader data and just load
 			// the individual script.
-			$out->addScriptFile( preg_replace( '#^skins/#', "{$wgStylePath}/", $wgResourceModules['skins.monaco']['scripts'] ) );
+			$out->addScriptFile(preg_replace('#^skins/#', "{$wgStylePath}/", $wgResourceModules['skins.monaco']['scripts']));
+			$out->addScriptFile(preg_replace('#^skins/#', "{$wgStylePath}/", $wgResourceModules['skins.monaco.ContentRightSidebar']['scripts']));
 		}
 		
 		$out->addScript(

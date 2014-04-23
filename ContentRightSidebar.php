@@ -23,18 +23,6 @@ $wgExtensionCredits['skin'][] = array (
 $wgExtensionMessagesFiles['ContentRightSidebar'] = dirname(__FILE__).'/ContentRightSidebar.i18n.php';
 
 /**
- * Resource module
- * haleyjd 20140423
- */
-$wgResourceModules['skins.monaco.ContentRightSidebar'] = array (
-  'scripts' => 'skins/monaco/style/ContentRightSidebar.js',
-  'dependencies' => array (
-    'mediawiki.page.startup',
-    'mediawiki.page.ready',
-  ),
-);
-
-/**
  * Register parser extensions
  */
 $wgHooks['ParserFirstCallInit'][] = array( 'efContentRightSidebarRegisterParser' ); 
@@ -181,9 +169,6 @@ function efContentRightSidebarMonacoRightSidebar( $sk )
       echo $box["content"];
     }
   }
-  
-  if(!empty($boxes))
-    $sk->getOutput()->addModuleScripts('skins.monaco.ContentRightSidebar');
 
   return true;
 }

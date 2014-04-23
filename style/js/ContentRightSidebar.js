@@ -1,4 +1,6 @@
 (function (mw, $) {
-  // Apply the wikipage.content hook to right sideboxes
-  $(function () { mw.hook('wikipage.content').fire($('.sidebox')); });
+  // Enable collapsible content to work in sidebars
+  mw.loader.using('jquery.makeCollapsible', function () {
+    $(function () { $('#right_sidebar').find('.mw-collapsible').makeCollapsible(); });
+  });
 }(mediaWiki, jQuery));
