@@ -49,7 +49,7 @@ class SkinMonaco extends SkinTemplate {
 		// Function addVariables will be called to populate all needed data to render skin
 		$wgHooks['SkinTemplateOutputPageBeforeExec'][] = array(&$this, 'addVariables');
 
-		if ( method_exists( 'OutputPage', 'addModuleStyles' ) ) {
+		if ( method_exists( 'OutputPage', 'addModuleScripts' ) ) {
 			// MediaWiki 1.17 and above, load the bulk of our scripts with the resource loader
 			$out->addModuleScripts( 'skins.monaco' );
 		} else {
