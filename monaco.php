@@ -61,11 +61,11 @@ $wgSpecialPagesRequiredLogin = array(); // bad config, it should be possible to 
 $wgMastheadVisible = false; // we may want to integrate masthead into Monaco and make it a optional skin feature
 
 /* Config Settings */
-$wgMonacoAllowUsetheme = false; // Set to false to disable &usetheme= support.
-$wgMonacoTheme = "sapphire"; // load a pre-made Monaco theme from the styles folder
+$wgMonacoAllowUsetheme = false;         // Set to false to disable &usetheme= support.
+$wgMonacoTheme = "sapphire";            // load a pre-made Monaco theme from the styles folder
 $wgMonacoDynamicCreateOverride = false; // Override "Special:CreatePage" urls with something else
-$wgMonacoUseMoreButton = true; // Set to false to disable the more button and just list out links
-$wgMonacoUseSitenoticeIsland = false; // Use an island above the content area for the sitenotice instead of embedding it above the page title
-$wgMonacoUseMasthead = true; // Show the masthead on userpages
-$wgMonacoCompactSpecialPages = false; // Compact the tab_bar on special pages
+$wgMonacoUseMoreButton = true;          // Set to false to disable the more button and just list out links
+$wgMonacoUseSitenoticeIsland = false;   // Use an island above the content area for the sitenotice instead of embedding it above the page title
+$wgMonacoUseMasthead = true;            // Show the masthead on userpages
+$wgMonacoCompactSpecialPages = false;   // Compact the tab_bar on special pages
 

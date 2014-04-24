@@ -1159,7 +1159,6 @@ if ($custom_article_footer !== '') {
 						<input type="image" src="http://doomwiki.org/w/skins/monaco/style/images/contribute-button.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" style="width:139px;margin:0;">
 						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 					</form>
-
 				</td>
 			</tr>
 		</tbody>
