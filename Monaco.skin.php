@@ -891,8 +891,8 @@ if ($custom_article_footer !== '') {
 			}
 		}
 ?>
-								<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make generic! -->
-								<li style="padding-top:5px;"><div>Text is available under the <a href=" http://creativecommons.org/licenses/by-sa/3.0/">Creative Commons Attribution-ShareAlike License</a>; additional terms may apply.</div></li>
+								<!-- haleyjd 20140425: generic copyright text support -->
+								<li style="padding-top: 5px;"><div id="copyright"><?php $this->html('copyright') ?></div></li>
 							</ul>
 						</td>
 						<td class="col2">
