@@ -1156,7 +1156,7 @@ if ($custom_article_footer !== '') {
 					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 						<input type="hidden" name="cmd" value="_s-xclick">
 						<input type="hidden" name="hosted_button_id" value="D5MLUSDXA8HMQ">
-						<input type="image" src="<?php echo $this->data['stylepath'] . '/monaco/style/images/contribute-button.png'; ?>" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" style="width:139px;margin:0;">
+						<input type="image" src="<?php $this->text('stylepath') ?>/monaco/style/images/contribute-button.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" style="width:139px;margin:0;">
 						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 					</form>
 				</td>
