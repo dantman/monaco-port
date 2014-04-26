@@ -819,35 +819,6 @@ if ($custom_article_footer !== '') {
 	$action = $wgRequest->getVal('action', 'view');
 	if ($namespaceType != 'none' && in_array($action, array('view', 'purge', 'edit', 'history', 'delete', 'protect'))) {
 		$nav_urls = $this->data['nav_urls'];
-
-		$actions = '';
-		if (!empty($this->data['content_actions']['history']) || !empty($nav_urls['recentchangeslinked'])) {
-
-			$actions =
-								'<ul id="articleFooterActions3" class="actions clearfix">' .
-								(!empty($this->data['content_actions']['history']) ? ('
-								<li id="fe_history"><a id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_history_img" class="sprite history" /></a> <div><a id="fe_history_link" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
-
-								(!empty($nav_urls['recentchangeslinked']) ? ('
-								<li id="fe_recent"><a id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" /></a> <div><a id="fe_recent_link" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsgHtml('recentchangeslinked') . '</a></div></li>') : '') . '
-								</ul>';
-
-		}
-		if (!empty($nav_urls['permalink']) || !empty($nav_urls['whatlinkshere'])) {
-			$actions .=
-								'<ul id="articleFooterActions4" class="actions clearfix">' .
-
-								(!empty($nav_urls['permalink']) ? ('
-								<li id="fe_permalink"><a id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_permalink_img" class="sprite move" /></a> <div><a id="fe_permalink_link" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
-
-								((!empty($nav_urls['whatlinkshere'])) ? ('
-								<li id="fe_whatlinkshere"><a id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_whatlinkshere_img" class="sprite pagelink" /></a> <div><a id="fe_whatlinkshere_link" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsgHtml('whatlinkshere') . '</a></div></li>') : '') . '
-								</ul>';
-
-
-
-		}
-
 		global $wgArticle, $wgLang;
 ?>
 			<div id="articleFooter" class="reset article_footer">
@@ -892,17 +863,71 @@ if ($custom_article_footer !== '') {
 		}
 
 		$feCopyIcon = $this->blankimg(array("id" => "fe_copyright_img", "class" => "sprite copyright"));
-		$feRandIcon = $this->blankimg(array("id" => "fe_random_img",    "class" => "sprite random"));
-		$feRandIcon = Html::rawElement("a", array("id" => "fe_random_icon", "href" => Skin::makeSpecialUrl('Randompage')), $feRandIcon);
-		$feRandLink = Html::rawElement("a", array("id" => "fe_random_link", "href" => Skin::makeSpecialUrl('Randompage')), wfMsgHtml('viewrandompage'));
 ?>
 								<!-- haleyjd 20140425: generic copyright text support -->
 								<li><?php echo $feCopyIcon ?> <div id="copyright"><?php $this->html('copyright') ?></div></li>
 							</ul>
 						</td>
 						<td class="col2">
-							<?php echo $actions ?>
-
+<?php            
+		if(!empty($this->data['content_actions']['history']) || !empty($nav_urls['recentchangeslinked']))
+		{
+?>
+							<ul id="articleFooterActions3" class="actions clearfix"> 
+<?php
+			if(!empty($this->data['content_actions']['history'])) 
+			{
+				$feHistoryIcon = $this->blankimg(array("id" => "fe_history_img", "class" => "sprite history"));
+				$feHistoryIcon = Html::rawElement("a", array("id" => "fe_history_icon", "href" => $this->data['content_actions']['history']['href']), $feHistoryIcon);
+				$feHistoryLink = Html::rawElement("a", array("id" => "fe_history_link", "href" => $this->data['content_actions']['history']['href']), $this->data['content_actions']['history']['text']);
+?>
+								<li id="fe_history"><?php echo $feHistoryIcon ?> <div><?php echo $feHistoryLink ?></div></li>
+<?php
+			}
+			if(!empty($nav_urls['recentchangeslinked']))
+			{
+				$feRecentIcon = $this->blankimg(array("id" => "fe_recent_img", "class" => "sprite recent"));
+				$feRecentIcon = Html::rawElement("a", array("id" => "fe_recent_icon", "href" => $nav_urls['recentchangeslinked']['href']), $feRecentIcon);
+				$feRecentLink = Html::rawElement("a", array("id" => "fe_recent_link", "href" => $nav_urls['recentchangeslinked']['href']), wfMsgHtml('recentchangeslinked'));
+?>
+								<li id="fe_recent"><?php echo $feRecentIcon ?> <div><?php echo $feRecentLink ?> </div></li>
+<?php
+			}
+?>
+							</ul>
+<?php
+		}
+		if(!empty($nav_urls['permalink']) || !empty($nav_urls['whatlinkshere']))
+		{
+?>
+							<ul id="articleFooterActions4" class="actions clearfix">
+<?php
+			if(!empty($nav_urls['permalink'])) 
+			{
+				$fePermaIcon = $this->blankimg(array("id" => "fe_permalink_img", "class" => "sprite move"));
+				$fePermaIcon = Html::rawElement("a", array("id" => "fe_permalink_icon", "href" => $nav_urls['permalink']['href']), $fePermaIcon);
+				$fePermaLink = Html::rawElement("a", array("id" => "fe_permalink_link", "href" => $nav_urls['permalink']['href']), $nav_urls['permalink']['text']);
+?>
+								<li id="fe_permalink"><?php echo $fePermaIcon ?> <div><?php echo $fePermaLink ?></div></li>
+<?php
+			}
+			if(!empty($nav_urls['whatlinkshere'])) 
+			{
+				$feWhatIcon = $this->blankimg(array("id" => "fe_whatlinkshere_img", "class" => "sprite pagelink"));
+				$feWhatIcon = Html::rawElement("a", array("id" => "fe_whatlinkshere_icon", "href" => $nav_urls['whatlinkshere']['href']), $feWhatIcon);
+				$feWhatLink = Html::rawElement("a", array("id" => "fe_whatlinkshere_link", "href" => $nav_urls['whatlinkshere']['href']), wfMsgHtml('whatlinkshere'));
+?>
+								<li id="fe_whatlinkshere"><?php echo $feWhatIcon ?> <div><?php echo $feWhatLink ?></div></li>
+<?php
+			}
+?>
+							</ul>
+<?php
+		}
+		$feRandIcon = $this->blankimg(array("id" => "fe_random_img", "class" => "sprite random"));
+		$feRandIcon = Html::rawElement("a", array("id" => "fe_random_icon", "href" => Skin::makeSpecialUrl('Randompage')), $feRandIcon);
+		$feRandLink = Html::rawElement("a", array("id" => "fe_random_link", "href" => Skin::makeSpecialUrl('Randompage')), wfMsgHtml('viewrandompage'));
+?>
 							<ul class="actions clearfix" id="articleFooterActions2">
 								<li id="fe_randompage"><?php echo $feRandIcon ?> <div><?php echo $feRandLink ?></div></li>
 							</ul>
