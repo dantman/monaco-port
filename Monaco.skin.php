@@ -829,8 +829,8 @@ if ($custom_article_footer !== '') {
 								<li id="fe_history"><a id="fe_history_icon" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_history_img" class="sprite history" /></a> <div><a id="fe_history_link" href="' . htmlspecialchars($this->data['content_actions']['history']['href']) . '">' . $this->data['content_actions']['history']['text'] . '</a></div></li>') : '') .
 
 								(!empty($nav_urls['recentchangeslinked']) ? ('
-								<li id="fe_recent"><a id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" /></a> <div><a id="fe_recent_link" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsgHtml('recentchangeslinked') . '</a></div></li>') : '') .
-								'</ul>';
+								<li id="fe_recent"><a id="fe_recent_icon" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_recent_img" class="sprite recent" /></a> <div><a id="fe_recent_link" href="' . htmlspecialchars($nav_urls['recentchangeslinked']['href']) . '">' . wfMsgHtml('recentchangeslinked') . '</a></div></li>') : '') . '
+								</ul>';
 
 		}
 		if (!empty($nav_urls['permalink']) || !empty($nav_urls['whatlinkshere'])) {
@@ -841,8 +841,8 @@ if ($custom_article_footer !== '') {
 								<li id="fe_permalink"><a id="fe_permalink_icon" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_permalink_img" class="sprite move" /></a> <div><a id="fe_permalink_link" href="' . htmlspecialchars($nav_urls['permalink']['href']) . '">' . $nav_urls['permalink']['text'] . '</a></div></li>') : '') .
 
 								((!empty($nav_urls['whatlinkshere'])) ? ('
-								<li id="fe_whatlinkshere"><a id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_whatlinkshere_img" class="sprite pagelink" /></a> <div><a id="fe_whatlinkshere_link" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsgHtml('whatlinkshere') . '</a></div></li>') : '') . 
-								'</ul>';
+								<li id="fe_whatlinkshere"><a id="fe_whatlinkshere_icon" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '"><img src="'.htmlspecialchars($this->data['blankimg']).'" id="fe_whatlinkshere_img" class="sprite pagelink" /></a> <div><a id="fe_whatlinkshere_link" href="' . htmlspecialchars($nav_urls['whatlinkshere']['href']) . '">' . wfMsgHtml('whatlinkshere') . '</a></div></li>') : '') . '
+								</ul>';
 
 
 
@@ -890,17 +890,21 @@ if ($custom_article_footer !== '') {
 <?php
 			}
 		}
+
+		$feCopyIcon = $this->blankimg(array("id" => "fe_copyright_img", "class" => "sprite copyright"));
+		$feRandIcon = $this->blankimg(array("id" => "fe_random_img",    "class" => "sprite random"));
+		$feRandIcon = Html::rawElement("a", array("id" => "fe_random_icon", "href" => Skin::makeSpecialUrl('Randompage')), $feRandIcon);
+		$feRandLink = Html::rawElement("a", array("id" => "fe_random_link", "href" => Skin::makeSpecialUrl('Randompage')), wfMsgHtml('viewrandompage'));
 ?>
 								<!-- haleyjd 20140425: generic copyright text support -->
-								<li style="padding-top: 5px;"><div id="copyright"><?php $this->html('copyright') ?></div></li>
+								<li><?php echo $feCopyIcon ?> <div id="copyright"><?php $this->html('copyright') ?></div></li>
 							</ul>
 						</td>
 						<td class="col2">
 							<?php echo $actions ?>
-							<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make general! -->
+
 							<ul class="actions clearfix" id="articleFooterActions2">
-								<li id="fe_randompage"><a id="fe_random_icon" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><img src="<?php $this->text('blankimg') ?>" id="fe_random_img" class="sprite random" /></a> <div><a id="fe_random_link" href="<?php echo Skin::makeSpecialUrl( 'Randompage' ) ?>"><?php echo wfMsgHtml('viewrandompage') ?></a></div></li>
-								<li id="fe_copyright"><a id="fe_copyright_icon" href="http://doomwiki.org/wiki/Doom_Wiki:Copyrights"><img src="<?php $this->text('blankimg') ?>" id="fe_copyright_img" class="sprite copyright" /></a> <div><a id="fe_copyright_link" href="http://doomwiki.org/wiki/Doom_Wiki:Copyrights">Copyrights</a></div></li>
+								<li id="fe_randompage"><?php echo $feRandIcon ?> <div><?php echo $feRandLink ?></div></li>
 							</ul>
 						</td>
 					</tr>
