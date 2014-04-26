@@ -51,7 +51,6 @@ class SkinMonaco extends SkinTemplate {
 
 		// Load the bulk of our scripts with the MediaWiki 1.17+ resource loader
 		$out->addModuleScripts('skins.monaco');
-		$out->addModuleScripts('skins.monaco.ContentRightSidebar');
 		
 		$out->addScript(
 			'<!--[if IE]><script type="' . htmlspecialchars($wgJsMimeType) .
