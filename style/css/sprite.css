@@ -70,6 +70,9 @@
 .sprite.view    { background-position: -32px -170px; }
 .sprite.current { background-position: 0 -170px; }
 
+/* haleyjd 20140426: sprite for mobile view link */
+.sprite.mobile  { background-position: -16px -186px; }
+
 .sprite.progress { 
 	background-image: url(../images/ajax.gif);
 }
