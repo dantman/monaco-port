@@ -930,6 +930,16 @@ if ($custom_article_footer !== '') {
 ?>
 							<ul class="actions clearfix" id="articleFooterActions2">
 								<li id="fe_randompage"><?php echo $feRandIcon ?> <div><?php echo $feRandLink ?></div></li>
+<?php
+		// haleyjd 20140426: support for Extension:MobileFrontend
+		if($this->get('mobileview') !== null)
+		{
+			$feMobileIcon = $this->blankimg(array("id" => "fe_mobile_img", "class" => "sprite mobile"));
+?>
+								<li id="fe_mobile"><?php echo $feMobileIcon ?> <div><?php $this->html('mobileview') ?></div></li>
+<?php
+		}
+?>
 							</ul>
 						</td>
 					</tr>
