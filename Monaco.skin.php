@@ -967,11 +967,6 @@ if ($custom_article_footer !== '') {
 		<!-- WIDGETS -->
 <?php		wfProfileIn( __METHOD__ . '-navigation'); ?>
 		<div id="widget_sidebar" class="reset widget_sidebar left_sidebar sidebar">
-
-<?php
-		// Rewrite the logo to have the last modified timestamp so that a the newer one will be used after an update.
-		// $wgLogo =
-		?>
 			<div id="wiki_logo" style="background-image: url(<?php $this->html( 'logopath' ) ?>);"><a href="<?php echo htmlspecialchars($this->data['nav_urls']['mainpage']['href'])?>" accesskey="z" rel="home"><?php echo $wgSitename ?></a></div>
 			<!--[if lt IE 7]>
 			<style type="text/css">

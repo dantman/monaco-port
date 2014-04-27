@@ -18,7 +18,7 @@ $wgExtensionCredits['skin'][] = array (
 	'name' => 'Monaco',
 	'author' => array('Inez Korczynski', 'Christian Williams', '[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]', '[http://doomwiki.org/wiki/User:Quasar James Haley]'),
 	'descriptionmsg' => 'monaco-desc',
-	'url' => "https://github.com/haleyjd/monaco-port",
+	'url' => 'https://github.com/haleyjd/monaco-port',
 );
 
 $wgValidSkinNames['monaco'] = 'Monaco';
