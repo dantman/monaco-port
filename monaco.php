@@ -46,14 +46,6 @@ $wgResourceModules['skins.monaco'] = array(
 	'scripts' => 'skins/monaco/style/js/monaco.js',
 );
 
-/**
- * Resource module for ContentRightSidebar
- * haleyjd 20140423
- */
-$wgResourceModules['skins.monaco.ContentRightSidebar'] = array (
-  'scripts' => 'skins/monaco/style/js/ContentRightSidebar.js',
-);
-
 /* Bad Configs - These are left-over junk used inside Monaco.skin.php that should be slowly removed */
 $wgSearchDefaultFulltext = false; // bad config
 $wgSpecialPagesRequiredLogin = array(); // bad config, it should be possible to check if the user has special page access without doing something like this
