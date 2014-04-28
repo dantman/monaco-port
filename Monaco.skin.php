@@ -861,10 +861,15 @@ if ($custom_article_footer !== '') {
 			}
 		}
 
-		$feCopyIcon = $this->blankimg(array("id" => "fe_copyright_img", "class" => "sprite copyright"));
+		if($this->data['copyright'])
+		{
+			$feCopyIcon = $this->blankimg(array("id" => "fe_copyright_img", "class" => "sprite copyright"));
 ?>
 								<!-- haleyjd 20140425: generic copyright text support -->
 								<li><?php echo $feCopyIcon ?> <div id="copyright"><?php $this->html('copyright') ?></div></li>
+<?php
+		}
+?>
 							</ul>
 						</td>
 						<td class="col2">
