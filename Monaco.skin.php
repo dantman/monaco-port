@@ -8,6 +8,7 @@
  * @author Inez Korczynski <inez@wikia.com>
  * @author Christian Williams
  * @author Daniel Friesen
+ * @author James Haley
  */
 if(!defined('MEDIAWIKI')) {
 	die(-1);
