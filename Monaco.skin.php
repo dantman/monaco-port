@@ -675,7 +675,7 @@ class MonacoTemplate extends QuickTemplate {
 
 	function execute() {
 		wfProfileIn( __METHOD__ );
-		global $wgContLang, $wgArticle, $wgUser, $wgLogo, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename;
+		global $wgContLang, $wgUser, $wgLogo, $wgStyleVersion, $wgRequest, $wgTitle, $wgSitename;
 		global $wgMonacoUseSitenoticeIsland;
 
 		$skin = $this->data['skin'];
@@ -819,7 +819,7 @@ if ($custom_article_footer !== '') {
 	$action = $wgRequest->getVal('action', 'view');
 	if ($namespaceType != 'none' && in_array($action, array('view', 'purge', 'edit', 'history', 'delete', 'protect'))) {
 		$nav_urls = $this->data['nav_urls'];
-		global $wgArticle, $wgLang;
+		global $wgLang;
 ?>
 			<div id="articleFooter" class="reset article_footer">
 				<table cellspacing="0">
@@ -844,20 +844,25 @@ if ($custom_article_footer !== '') {
 			echo "\n";
 		}
 
-		if(is_object($wgArticle) && $wgArticle->getTimestamp()) {
-			$timestamp = $wgArticle->getTimestamp();
+		// haleyjd 20140801: Rewrite to use ContextSource/WikiPage instead of wgArticle global which has been removed from MediaWiki 1.23
+		$myContext = $this->getSkin()->getContext();
+		if($myContext->canUseWikiPage())
+		{
+			$wikiPage   = $myContext->getWikiPage();
+			$timestamp  = $wikiPage->getTimestamp();
 			$lastUpdate = $wgLang->date($timestamp);
-			$userId = $wgArticle->getUser();
-			if($userId > 0) {
-				$user = User::newFromName($wgArticle->getUserText());
-				$userPageTitle = $user->getUserPage();
-				$userPageLink = $userPageTitle->getLocalUrl();
+			$userId     = $wikiPage->getUser();
+			if($userId > 0)
+			{
+				$user = User::newFromName($wikiPage->getUserText());
+				$userPageTitle  = $user->getUserPage();
+				$userPageLink   = $userPageTitle->getLocalUrl();
 				$userPageExists = $userPageTitle->exists();
-				$feUserIcon = $this->blankimg( array( "id" => "fe_user_img", "class" => "sprite user" ) );
-				if ( $userPageExists )
+				$feUserIcon     = $this->blankimg(array( "id" => "fe_user_img", "class" => "sprite user" ));
+				if($userPageExists)
 					$feUserIcon = Html::rawElement( 'a', array( "id" => "fe_user_icon", "href" => $userPageLink ), $feUserIcon );
 ?>
-								<li><?php echo $feUserIcon ?> <div><?php echo wfMsgHtml('monaco-footer-lastedit', $skin->link( $userPageTitle, htmlspecialchars($user->getName()), array( "id" => "fe_user_link" ) ), Html::element('time', array( 'datetime' => wfTimestamp( TS_ISO_8601, $$timestamp ) ), $lastUpdate)) ?></div></li>
+								<li><?php echo $feUserIcon ?> <div><?php echo wfMsgHtml('monaco-footer-lastedit', $skin->link($userPageTitle, htmlspecialchars($user->getName()), array( "id" => "fe_user_link" )), Html::element('time', array( 'datetime' => wfTimestamp( TS_ISO_8601, $$timestamp )), $lastUpdate)) ?></div></li>
 <?php
 			}
 		}
