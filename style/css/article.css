@@ -61,8 +61,6 @@
 .page_bar .page_buttons li.selected {
 	background: #FFF;
 	padding: 0 8px !important;
-	height: 27px;
-	margin-top: 5px;
 }
 .page_bar .page_buttons li.selected a {
 	color: #000;
