@@ -70,7 +70,7 @@ class MonacoSidebar {
 				if($title) {
 					if ($title->getNamespace() == NS_SPECIAL) {
 						$dbkey = $title->getDBkey();
-						$specialCanonicalName = SpecialPage::resolveAlias($dbkey);
+						$specialCanonicalName = SpecialPageFactory::resolveAlias($dbkey);
 						if (!$specialCanonicalName) $specialCanonicalName = $dbkey;
 					}
 					$title = $title->fixSpecialName();
