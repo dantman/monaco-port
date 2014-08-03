@@ -201,10 +201,7 @@ body.mainpage div.monaco_shrinkwrap {
 }
 body.mainpage {
 	background-position: center top;
-}/* Eh? what is this supposed to be here for?
-body.mainpage .firstHeading {
-	display: none;
-}*/
+}
 
 /* @end */
 

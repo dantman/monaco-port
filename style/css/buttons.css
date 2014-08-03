@@ -207,26 +207,34 @@ button.secondary[disabled]:active {
 
 /* haleyjd 20140420: overrides needed for FlaggedRevs input form components */
 #mw-fr-confirmreview {
-  line-height: 3.0em;
+	line-height: 3.0em;
 }
 #mw-fr-submit-accept {
-  margin-right: 0.5em;
+	margin-right: 0.5em;
 }
 
 /* haleyjd 20140423: overrides needed for Special:UserLogin */
-#wpLoginAttempt , #wpCreateaccount {
-  height: auto;
-  text-shadow: none;
+#wpLoginAttempt, #wpCreateaccount {
+	padding: 0.5em 1em;
+	border-radius: 3px;
+	cursor: pointer;
+	width: 100%;
+	display: block;
+	font: bold 1.3em sans-serif;
+	box-shadow: none;
+	height: auto;
 }
 
-#wpLoginAttempt:hover , #wpCreateaccount:hover {
-  background-color: #093;
-  background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
-  background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
-  text-shadow: #000 0 1px 1px;
+#wpLoginAttempt:hover, #wpCreateaccount:hover {
+	box-shadow: 0px 1px rgba(0, 0, 0, 0.1), 0px -3px rgba(0, 0, 0, 0.2) inset;
+	text-shadow: 0px 1px rgba(0, 0, 0, 0.1);
 }
 
-#mw-createaccount-join:active {
-  color: #000;
-  background-color: #C1C1C1;
+#wpLoginAttempt:focus, #wpCreateaccount:focus {
+	box-shadow: 0px 1px rgba(0, 0, 0, 0.1), 0px -3px rgba(0, 0, 0, 0.2) inset;
+	text-shadow: 0px 1px rgba(0, 0, 0, 0.1);
+}
+
+#wpLoginAttempt:active, #wpCreateaccount:active {
+	box-shadow: none;
 }

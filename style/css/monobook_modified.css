@@ -773,6 +773,7 @@ div#userloginForm .captcha {
 	font-weight: bold;
 }
 
+/*
 .page-Special_Userlogin #siteSub {
 	visibility: hidden !important;
 }
@@ -780,6 +781,7 @@ div#userloginForm .captcha {
 .page-Special_UserLogin .firstHeading {
 	display: none !important;	
 }
+*/
 
 div#userlogin form#userlogin2 label,
 div #userlogin form#userlogin2 .pseudolabel {
