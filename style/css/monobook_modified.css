@@ -741,7 +741,7 @@ div#userlogin form#userlogin2 table {
 
 div#userloginForm h2,
 div#userlogin form#userlogin2 h2 {
-	padding-top: 0;
+	padding-top: 0.5em;
 }
 
 div#userlogin .captcha,
@@ -804,7 +804,7 @@ div#userlogin form#userlogin2 table {
 
 #userloginForm h2,
 div#userlogin form#userlogin2 h2 {
-	padding-top: 0;
+	padding-top: 0.5em;
 }
 
 div#userlogin .captcha,
