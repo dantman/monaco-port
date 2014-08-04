@@ -84,6 +84,7 @@ class SkinMonaco extends SkinTemplate {
 		$out->addStyle( 'monaco/style/css/monaco_ltie7.css', 'screen', 'lt IE 7' );
 		$out->addStyle( 'monaco/style/css/monaco_ie7.css', 'screen', 'IE 7' );
 		$out->addStyle( 'monaco/style/css/monaco_ie8.css', 'screen', 'IE 8' );
+		$out->addStyle( 'monaco/style/css/monaco_gteie8.css', 'screen', 'gte IE 8');
 		
 		// Likewise the masthead is a conditional feature so it's hard to include
 		// inside of the ResourceLoader.

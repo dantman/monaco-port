@@ -1,0 +1,19 @@
+a.wikia-button,
+span.wikia-button a ,
+input[type="submit"].wikia-button,
+input[type="reset"].wikia-button,
+input[type="button"].wikia-button,
+button.wikia-button {
+  background-image: url(../images/gradient_up.png);
+  background-size: 100% 100%;
+}
+
+a.wikia-button:active,
+span.wikia-button a:active,
+input[type="submit"].wikia-button:active,
+input[type="reset"].wikia-button:active,
+input[type="button"].wikia-button:active,
+button.wikia-button:active {
+  background-image: url(../images/gradient_down.png);
+  background-size: 100% 100%;
+}
