@@ -73,6 +73,9 @@
 /* haleyjd 20140426: sprite for mobile view link */
 .sprite.mobile  { background-position: -16px -186px; }
 
+/* haleyjd 20140807: female user icon */
+.sprite.user-female { background-position: -32px -186px; }
+
 .sprite.progress { 
 	background-image: url(../images/ajax.gif);
 }

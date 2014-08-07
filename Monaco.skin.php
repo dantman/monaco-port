@@ -859,7 +859,8 @@ if ($custom_article_footer !== '') {
 				$userPageTitle  = $user->getUserPage();
 				$userPageLink   = $userPageTitle->getLocalUrl();
 				$userPageExists = $userPageTitle->exists();
-				$feUserIcon     = $this->blankimg(array( "id" => "fe_user_img", "class" => "sprite user" ));
+				$userGender     = $user->getOption("gender");
+				$feUserIcon     = $this->blankimg(array( "id" => "fe_user_img", "class" => ($userGender == "female" ? "sprite user-female" : "sprite user" )));
 				if($userPageExists)
 					$feUserIcon = Html::rawElement( 'a', array( "id" => "fe_user_icon", "href" => $userPageLink ), $feUserIcon );
 ?>
