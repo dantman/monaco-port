@@ -46,6 +46,12 @@ $wgResourceModules['skins.monaco'] = array(
 	'scripts' => 'skins/monaco/style/js/monaco.js',
 );
 
+/* haleyjd 20140819: Widget Framework 2.0 */
+$wgResourceModules['ext.monacoWidget'] = array(
+	'scripts' => 'skins/monaco/ext/ext.monacoWidget.js',
+	'styles'  => 'skins/monaco/ext/ext.monacoWidget.css',
+);
+
 /* Bad Configs - These are left-over junk used inside Monaco.skin.php that should be slowly removed */
 $wgSearchDefaultFulltext = false; // bad config
 $wgSpecialPagesRequiredLogin = array(); // bad config, it should be possible to check if the user has special page access without doing something like this

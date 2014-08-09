@@ -1,0 +1,40 @@
+/**
+ * Monaco Widget Framework 2.0
+ * Replaces old obsolete YUI-based WidgetFramework plugin with frontend-driven
+ * dynamic content. Widgets can be defined through the wiki frontend via use
+ * of Extension:Gadgets.
+ * Added to ResourceLoader as ext.monacoWidget
+ *
+ * @file
+ * @ingroup Skins
+ * @author James Haley
+ * @copyright © 2014 James Haley
+ * @license GNU General Public License 2.0 or later
+ *
+ */
+
+/* AJAX toggle button */
+.monacoWidgetAjaxToggle {
+  float:  right;
+  width:  16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+/* Content area div */
+.monacoWidgetContentArea {
+  margin:  2px 0 1px 0;
+  padding: 0;
+}
+
+/* Standard list style */
+.monacoWidgetStdList {
+  list-style-type:     none;
+  list-style-position: outside;
+  font-size:           95%;
+  color:               inherit;
+  background-color:    #FAFAFA;
+  padding:             0.5em;
+  margin:              0;
+  border:              1px solid #CCC;
+}
