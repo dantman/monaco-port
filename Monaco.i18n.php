@@ -46,6 +46,8 @@ helppage|help",
 	
 	'masthead-anonymous-user' => "Anonymous user",
 	
+	'skinname-monaco' => "Monaco",
+	
 	# These messages don't look right with their content_actions defaults
 	'monaco-tab-edit' => "Edit this page",
 	'monaco-tab-addsection' => "Leave message",
