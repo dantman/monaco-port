@@ -23,8 +23,8 @@
 
 /* Content area div */
 .monacoWidgetContentArea {
-  margin:  2px 0 1px 0;
-  padding: 0;
+  margin:  2px 0 1px 0 !important;
+  padding: 0 !important;
 }
 
 /* Standard list style */
@@ -34,7 +34,7 @@
   font-size:           95%;
   color:               inherit;
   background-color:    #FAFAFA;
-  padding:             0.5em;
-  margin:              0;
+  padding:             0.5em !important;
+  margin:              0 !important;
   border:              1px solid #CCC;
 }
