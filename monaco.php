@@ -46,7 +46,7 @@ $wgResourceModules['skins.monaco'] = array(
 	'scripts' => 'skins/monaco/style/js/monaco.js',
 );
 
-/* haleyjd 20140819: Widget Framework 2.0 */
+/* haleyjd 20140809: Widget Framework 2.0 */
 $wgResourceModules['ext.monacoWidget'] = array(
 	'scripts' => 'skins/monaco/ext/ext.monacoWidget.js',
 	'styles'  => 'skins/monaco/ext/ext.monacoWidget.css',
