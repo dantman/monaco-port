@@ -213,8 +213,11 @@
       diff = (((new Date()).getTime() - date.getTime()) / 1000),
       day_diff = Math.floor(diff / 86400);
       
-    if(isNaN(day_diff) || day_diff < 0 || day_diff >= 31)
+    if(isNaN(day_diff) || day_diff >= 31)
       return;
+    
+    if(day_diff < 0) // possible when there's time drift between server and client
+      return "just now";
     
     return day_diff == 0 && 
       (diff < 60 && "just now" ||
