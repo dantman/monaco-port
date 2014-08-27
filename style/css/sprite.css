@@ -76,6 +76,10 @@
 /* haleyjd 20140807: female user icon */
 .sprite.user-female { background-position: -32px -186px; }
 
+/* haleyjd 20140827: additional social media icons */
+.sprite.gplus { background-position: -48px -186px; }
+.sprite.tweet { background-position: -64px -186px; }
+
 .sprite.progress { 
 	background-position: 0 0;
 	background-image: url(../images/ajax.gif);
