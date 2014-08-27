@@ -1407,8 +1407,8 @@ wfProfileOut( __METHOD__ . '-body');
 <?php
 				foreach ( $this->data['userlinks']['more'] as $key => $link ) {
 					if($key != 'userpage') { // haleyjd 20140420: Do not repeat user page here.
-					echo Html::rawElement( 'li', array( 'id' => "header_$key" ),
-						Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
+						echo Html::rawElement( 'li', array( 'id' => "header_$key" ),
+							Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
 					}
 				} ?>
 						</ul>
@@ -1418,8 +1418,8 @@ wfProfileOut( __METHOD__ . '-body');
 				} else {
 					foreach ( $this->data['userlinks']['more'] as $key => $link ) {
 						if($key != 'userpage') { // haleyjd 20140420: Do not repeat user page here.
-						echo Html::rawElement( 'span', array( 'id' => "header_$key" ),
-							Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
+							echo Html::rawElement( 'span', array( 'id' => "header_$key" ),
+								Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
 						}
 					} ?>
 <?php
