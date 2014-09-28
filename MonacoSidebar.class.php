@@ -38,28 +38,31 @@ class MonacoSidebar {
 		$line_temp[0] = trim($line_temp[0], '[]');
 		if(count($line_temp) >= 2 && $line_temp[1] != '') {
 			$line = trim($line_temp[1]);
-			$link = trim(wfMsgForContent($line_temp[0]));
+			$link = trim(wfMessage($line_temp[0])->inContentLanguage()->text());
 		} else {
 			$line = trim($line_temp[0]);
 			$link = trim($line_temp[0]);
 		}
 
-
 		$descText = null;
 
 		if(count($line_temp) > 2 && $line_temp[2] != '') {
 			$desc = $line_temp[2];
-			if (wfEmptyMsg($desc, $descText = wfMsg($desc))) {
+			if ( wfMessage( $desc )->exists() ) {
+				$descText = wfMessage( $desc )->text();
+			} else {
 				$descText = $desc;
 			}
 		}
 
-		if (wfEmptyMsg($line, $text = wfMsg($line))) {
+		if ( wfMessage( $line )->exists() ) {
+			$text = wfMessage( $line )->text();
+		} else {
 			$text = $line;
 		}
 
 		if($link != null) {
-			if (wfEmptyMsg($line_temp[0], $link)) {
+			if ( !wfMessage( $line_temp[0] )->exists() ) {
 				$link = $line_temp[0];
 			}
 			if (preg_match( '/^(?:' . wfUrlProtocols() . ')/', $link )) {
@@ -88,8 +91,8 @@ class MonacoSidebar {
 	 * @return array
 	 */
 	public static function getMessageAsArray($messageKey) {
-        $message = trim(wfMsgForContent($messageKey));
-        if(!wfEmptyMsg($messageKey, $message)) {
+        $message = trim(wfMessage($messageKey)->inContentLanguage()->text());
+        if( wfMessage($messageKey, $message)->exists() ) {
                 $lines = explode("\n", $message);
                 if(count($lines) > 0) {
                         return $lines;
@@ -325,18 +328,20 @@ class MonacoSidebar {
 		$internal = false;
 
 		if(count($lineTmp) == 2 && $lineTmp[1] != '') {
-			$link = trim(wfMsgForContent($lineTmp[0]));
+			$link = trim(wfMessage($lineTmp[0])->inContentLanguage()->text());
 			$line = trim($lineTmp[1]);
 		} else {
 			$link = trim($lineTmp[0]);
 			$line = trim($lineTmp[0]);
 		}
 
-		if(wfEmptyMsg($line, $text = wfMsg($line))) {
+		if ( wfMessage( $line )->exists() ) {
+			$text = wfMessage( $line )->text();
+		} else {
 			$text = $line;
 		}
 
-		if(wfEmptyMsg($lineTmp[0], $link)) {
+		if ( !wfMessage( $lineTmp[0] )->exists() ) {
 			$link = $lineTmp[0];
 		}
 
@@ -368,7 +373,7 @@ class MonacoSidebar {
 		$original_lower = strtolower($node['original']);
 		if(in_array($original_lower, array('#voted#', '#popular#', '#visited#', '#newlychanged#', '#topusers#'))) {
 			if($node['text']{0} == '#') {
-				$node['text'] = wfMsg(trim($node['original'], ' *')); // TODO: That doesn't make sense to me
+				$node['text'] = wfMessage(trim($node['original'], ' *'))->text(); // TODO: That doesn't make sense to me
 			}
 			$node['magic'] = trim($original_lower, '#');
 			return true;
