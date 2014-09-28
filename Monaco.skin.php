@@ -1231,7 +1231,7 @@ if ($custom_article_footer !== '') {
 			$createPage = Title::newFromText($wgMonacoDynamicCreateOverride);
 		}
 		if ( !isset($createPage) ) {
-			if ( SpecialPage::exists('CreatePage') ) {
+			if ( SpecialPageFactory::exists('CreatePage') ) {
 				$createPage = SpecialPage::getTitleFor('CreatePage');
 			}
 		}
