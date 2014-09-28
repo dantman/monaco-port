@@ -23,7 +23,7 @@ $wgExtensionMessagesFiles['ContentRightSidebar'] = dirname(__FILE__).'/ContentRi
 /**
  * Register parser extensions
  */
-$wgHooks['ParserFirstCallInit'][] = array( 'efContentRightSidebarRegisterParser' ); 
+$wgHooks['ParserFirstCallInit'][] = array( 'efContentRightSidebarRegisterParser' );
 function efContentRightSidebarRegisterParser( &$parser ) {
 	$parser->setHook('right-sidebar', 'efContentRightSidebarTag', 0);
 	return true;
@@ -44,7 +44,7 @@ function efContentRightSidebarTag( $input, $arg, $parser, $frame ) {
 	$m = array();
 	if ( preg_match( '#^(.*)<content>(.*?)</content>(.*)$#is', $input, $m ) ) {
 		$isContentTagged = true;
-		
+
 		$startUniq = $parser->uniqPrefix() . "-right-sidebar-content-start-" . Parser::MARKER_SUFFIX;
 		$endUniq = $parser->uniqPrefix() . "-right-sidebar-content-end-" . Parser::MARKER_SUFFIX;
 		$input = "{$m[1]}{$startUniq}{$m[2]}{$endUniq}{$m[3]}";
@@ -54,9 +54,9 @@ function efContentRightSidebarTag( $input, $arg, $parser, $frame ) {
 	} else {
 		$input = $parser->recursiveTagParse( $input, $frame );
 	}
-	
+
 	$with_box = (isset($arg["with-box"]) ? $arg["with-box"] : (isset($arg["withbox"]) ? $arg["withbox"] : null));
-	
+
 	$out  = RIGHT_SIDEBAR_START_TOKEN;
 	if ( $with_box && !in_array(strtolower($with_box), array("false", "off", "no", "none")) ) {
 		$out .= RIGHT_SIDEBAR_WITHBOX_TOKEN;
@@ -75,18 +75,18 @@ function efContentRightSidebarTag( $input, $arg, $parser, $frame ) {
 		$out .= '</div>';
 	}
 	$out .= RIGHT_SIDEBAR_END_TOKEN;
-	
+
 	return $out;
 }
 
 function efExtractRightSidebarBoxes( &$html ) {
 	$boxes = array();
-	
+
 	while(true) {
 		$withBox = false;
 		$title = '';
 		$class = null;
-		
+
 		$start = strpos($html, RIGHT_SIDEBAR_START_TOKEN);
 		if ( $start === false )
 			break;
@@ -122,14 +122,14 @@ function efExtractRightSidebarBoxes( &$html ) {
 		$boxes[] = array( "with-box" => $withBox, "title" => $title, "class" => $class, "content" => $content );
 		$html = substr($html, 0, $start) . substr($html, $end+strlen(RIGHT_SIDEBAR_END_TOKEN));
 	}
-	
+
 	return $boxes;
 }
 
 $wgHooks['MonacoRightSidebar'][] = 'efContentRightSidebarMonacoRightSidebar';
 function efContentRightSidebarMonacoRightSidebar( $sk ) {
 	$boxes = efExtractRightSidebarBoxes( $sk->data['bodytext'] );
-	
+
 	foreach ( $boxes as $box ) {
 		if ( $box["with-box"] ) {
 			$attrs = array();
@@ -141,7 +141,7 @@ function efContentRightSidebarMonacoRightSidebar( $sk ) {
 			echo $box["content"];
 		}
 	}
-	
+
 	return true;
 }
 

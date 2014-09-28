@@ -162,7 +162,7 @@ class MonacoSidebar {
 			if ( !empty( $nodes[$val]['children'] ) ) {
 				$link_html .= '<em>&rsaquo;</em>';
 			}
-			
+
 			$menu_item =
 				Html::rawElement( 'a', array(
 						'href' => !empty($nodes[$val]['href']) ? $nodes[$val]['href'] : '#',
@@ -186,9 +186,9 @@ class MonacoSidebar {
 		$nodes = $this->parse($lines);
 
 		if(count($nodes) > 0) {
-			
+
 			wfRunHooks('MonacoSidebarGetMenu', array(&$nodes));
-			
+
 			$mainMenu = array();
 			foreach($nodes[0]['children'] as $key => $val) {
 				if(isset($nodes[$val]['children'])) {
@@ -217,7 +217,7 @@ class MonacoSidebar {
 				$menu .= '</li>';
 				if(isset($nodes[$val]['href']) && $nodes[$val]['href'] == 'editthispage') $menu .= '<!--e-->';
 			}
-			
+
 			$classes = array();
 			if ( $userMenu )
 				$classes[] = 'userMenu';

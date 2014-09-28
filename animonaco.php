@@ -10,7 +10,7 @@
 
 if( !defined( 'MEDIAWIKI' ) ) die( "This is an extension to the MediaWiki package and cannot be run standalone." );
 
-$wgExtensionCredits['skin'][] = array (
+$wgExtensionCredits['skin'][] = array(
 	'path' => __FILE__,
 	'name' => 'AniMonaco',
 	'author' => array('[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]'),

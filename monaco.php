@@ -12,7 +12,7 @@
 
 if( !defined( 'MEDIAWIKI' ) ) die( "This is an extension to the MediaWiki package and cannot be run standalone." );
 
-$wgExtensionCredits['skin'][] = array (
+$wgExtensionCredits['skin'][] = array(
 	'path' => __FILE__,
 	'name' => 'Monaco',
 	'author' => array('[http://www.wikia.com/ Wikia]', 'Inez Korczynski', 'Christian Williams', '[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]'),

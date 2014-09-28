@@ -19,17 +19,17 @@ class SkinAniMonaco extends SkinMonaco {
 	function setupSkinUserCss( OutputPage $out ){
 
 		parent::setupSkinUserCss( $out );
-		
+
 		$out->addStyle( 'monaco/style/css/animonaco.css', 'screen' );
-		
+
 	}
-	
+
 }
 
 class AniMonacoTemplate extends MonacoTemplate {
-	
+
 	// @todo Find a clean way to hook into the user links and put a break after My Talk so that we have one line Username + My Talk and the rest on the next line
-	
+
 	function execute() {
 		global $wgRequest;
 		if ( function_exists('efInfoboxExtract') ) {
@@ -44,7 +44,7 @@ class AniMonacoTemplate extends MonacoTemplate {
 		}
 		parent::execute();
 	}
-	
+
 	function printBeforePage() {
 		global $egAniMonacoLeaderboardCallback;
 		if ( !$egAniMonacoLeaderboardCallback ) {
@@ -63,12 +63,12 @@ class AniMonacoTemplate extends MonacoTemplate {
 		</div>
 <?php
 	}
-	
+
 	function setupRightSidebar() {
 		if ( $this->mInfobox )
 			$this->addToRightSidebar($this->mInfobox);
 	}
-	
+
 	function lateRightSidebar() {
 		global $egAniMonacoRightSidebarCallback;
 		if ( !$egAniMonacoRightSidebarCallback ) {
@@ -83,7 +83,7 @@ class AniMonacoTemplate extends MonacoTemplate {
 		}
 		$this->sidebarBox(null, $rsidebar, array( "wrapcontents" => false, "class" => "ad_box" ));
 	}
-	
+
 	function printExtraSidebar() {
 		global $wgTitle, $wgSitename, $egTwitterName, $wgRequest, $egAniMonacoSidebarCallback;
 		$action = $wgRequest->getText("action", "view");
@@ -144,6 +144,6 @@ class AniMonacoTemplate extends MonacoTemplate {
 			}
 		}
 	}
-	
+
 }
 

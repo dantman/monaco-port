@@ -32,9 +32,9 @@ $messages['en'] = array(
 ** portal-url|portal
 ** currentevents-url|currentevents",
 	'monaco-toolbox' => "
-recentchanges-url|recentchanges 
-randompage-url|randompage 
-specialpages-url|specialpages 
+recentchanges-url|recentchanges
+randompage-url|randompage
+specialpages-url|specialpages
 helppage|help",
 	'community' => "Community",
 	'specialpages-url' => "Special:SpecialPages",
@@ -42,9 +42,9 @@ helppage|help",
 	'monaco-footer-improve-linktext' => 'editing this page',
 	'monaco-footer-lastedit' => '$1 made an edit on $2',
 	'viewrandompage' => "View random page",
-	
+
 	'masthead-anonymous-user' => "Anonymous user",
-	
+
 	# These messages don't look right with their content_actions defaults
 	'monaco-tab-edit' => "Edit this page",
 	'monaco-tab-addsection' => "Leave message",
