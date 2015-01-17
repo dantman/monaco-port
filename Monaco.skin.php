@@ -1197,14 +1197,13 @@ if ($custom_article_footer !== '') {
 					</ul>
 				</td>
 			</tr>
-			<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make generic! -->
+			<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make generic! (hosted button id value edited for Orain) -->
 			<tr>
 				<td colspan="2" style="text-align:center;">
-					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+					<form action="https://www.paypal.com/us/cgi-bin/webscr" method="post">
 						<input type="hidden" name="cmd" value="_s-xclick">
-						<input type="hidden" name="hosted_button_id" value="D5MLUSDXA8HMQ">
+						<input type="hidden" name="hosted_button_id" value="9PHM56HNJ428S">
 						<input type="image" src="<?php $this->text('stylepath') ?>/monaco/style/images/contribute-button.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" style="width:139px;margin:0;">
-						<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 					</form>
 				</td>
 			</tr>
