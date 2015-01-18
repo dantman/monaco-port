@@ -1,4 +1,4 @@
-/*
+﻿/*
 ** MediaWiki 'monobook' style sheet for CSS2-capable browsers.
 ** Copyright Gabriel Wicke - http://wikidev.net/
 ** License: GPL (http://www.gnu.org/copyleft/gpl.html)
@@ -224,7 +224,7 @@ span.subpages {
 	margin-bottom: .3em;
 }
 .firstHeading {
-	margin-bottom: .1em;
+	margin-bottom: .5em;
 	overflow: visible;
 }
 
