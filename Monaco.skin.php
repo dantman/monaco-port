@@ -1203,7 +1203,7 @@ if ($custom_article_footer !== '') {
 					<form action="https://www.paypal.com/us/cgi-bin/webscr" method="post">
 						<input type="hidden" name="cmd" value="_s-xclick">
 						<input type="hidden" name="hosted_button_id" value="9PHM56HNJ428S">
-						<input type="image" src="<?php $this->text('stylepath') ?>/monaco/style/images/contribute-button.png" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!" style="width:139px;margin:0;">
+						<input type="image" src="<?php $this->text('stylepath') ?>/monaco/style/images/contribute-button.png" border="0" name="submit" alt="Click here to donate to Orain via Paypal!" style="width:139px;margin:0;">
 					</form>
 				</td>
 			</tr>
