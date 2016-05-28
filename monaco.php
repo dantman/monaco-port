@@ -19,16 +19,19 @@ $wgExtensionCredits['skin'][] = array (
 	'author' => array('Inez Korczynski', 'Christian Williams', '[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]', '[http://doomwiki.org/wiki/User:Quasar James Haley]'),
 	'descriptionmsg' => 'monaco-desc',
 	'url' => 'https://github.com/haleyjd/monaco-port',
+	'license-name' => 'GPLv2+',
 );
 
 $wgValidSkinNames['monaco'] = 'Monaco';
 $wgAutoloadClasses['SkinMonaco'] = dirname(__FILE__).'/Monaco.skin.php';
 $wgAutoloadClasses['MonacoSidebar'] = dirname(__FILE__).'/MonacoSidebar.class.php';
-$wgExtensionMessagesFiles['Monaco'] = dirname(__FILE__).'/Monaco.i18n.php';
+//$wgExtensionMessagesFiles['Monaco'] = dirname(__FILE__).'/Monaco.i18n.php';
+$wgMessagesDirs['Monaco'] = __DIR__ . '/i18n';
 
 $wgHooks['MessageCacheReplace'][] = 'MonacoSidebar::invalidateCache';
 
 $wgResourceModules['skins.monaco'] = array(
+	'position' => 'top',
 	'styles' => array(
 		'skins/monaco/style/css/monobook_modified.css' => array( 'media' => 'screen' ),
 		'skins/monaco/style/css/reset_modified.css' => array( 'media' => 'screen' ),
@@ -42,12 +45,14 @@ $wgResourceModules['skins.monaco'] = array(
 		'skins/monaco/style/css/footer.css' => array( 'media' => 'screen' ),
 		'skins/monaco/style/css/star_rating.css' => array( 'media' => 'screen' ),
 		'skins/monaco/style/css/ny.css' => array( 'media' => 'screen' ),
+		'skins/monaco/style/css/print.css' => array( 'media' => 'print' ),
 	),
 	'scripts' => 'skins/monaco/style/js/monaco.js',
 );
 
 /* haleyjd 20140809: Widget Framework 2.0 */
 $wgResourceModules['ext.monacoWidget'] = array(
+	'position' => 'bottom',
 	'scripts' => 'skins/monaco/ext/ext.monacoWidget.js',
 	'styles'  => 'skins/monaco/ext/ext.monacoWidget.css',
 );
@@ -59,7 +64,7 @@ $wgSpecialPagesRequiredLogin = array(); // bad config, it should be possible to 
 $wgMastheadVisible = false; // we may want to integrate masthead into Monaco and make it a optional skin feature
 
 /* Config Settings */
-$wgMonacoAllowUsetheme = false;         // Set to false to disable &usetheme= support.
+$wgMonacoAllowUsetheme = true;         // Set to false to disable &usetheme= support.
 $wgMonacoTheme = "sapphire";            // load a pre-made Monaco theme from the styles folder
 $wgMonacoDynamicCreateOverride = false; // Override "Special:CreatePage" urls with something else
 $wgMonacoUseMoreButton = true;          // Set to false to disable the more button and just list out links

@@ -12,7 +12,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 	color: white;
 }
 .color2 {
-	background-color: white;
+	background-color: #F5F5F5;
 }
 
 #skiplinks a.skiplink {
@@ -200,5 +200,8 @@ img[src$="noad.gif"] {
 }
 body > table {
 	margin: 0 auto;
+}
+.toolbar {
+    border-top-style: none!important;
 }
 /* @end */

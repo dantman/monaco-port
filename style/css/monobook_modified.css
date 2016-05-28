@@ -1,4 +1,4 @@
-﻿/*
+/*
 ** MediaWiki 'monobook' style sheet for CSS2-capable browsers.
 ** Copyright Gabriel Wicke - http://wikidev.net/
 ** License: GPL (http://www.gnu.org/copyleft/gpl.html)
@@ -21,7 +21,7 @@
 
 /* scale back up to a sane default */
 .page article {
-	font-size: 100%;
+	font-size: 127%;
 	line-height: 1.5em;
 }
 .visualClear {
@@ -115,8 +115,10 @@ h6 .editsection { font-size: 125%; font-weight: normal; }
 
 ul {
 	line-height: 1.5em;
+	list-style-type: square;
 	margin: .3em 0 0 1.5em;
 	padding: 0;
+	list-style-image: url(../images/bullet.gif);
 }
 ol {
 	line-height: 1.5em;
@@ -193,6 +195,23 @@ pre {
 }
 
 /*
+** MediaWiki 1.25 page status indicator support
+*/
+
+.mw-indicators {
+  float: right;
+  line-height: 1.5em;
+  font-size: 95%;
+}
+
+.mw-indicator {
+  display: -moz-inline-block;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+
+/*
 ** the main content area
 */
 
@@ -222,7 +241,7 @@ span.subpages {
 	margin-bottom: .3em;
 }
 .firstHeading {
-	margin-bottom: .5em;
+	margin-bottom: .1em;
 	overflow: visible;
 }
 
@@ -526,65 +545,6 @@ div.townBox dl dd {
 }
 #pagehistory span.minor {
 	font-weight: bold;
-}
-
-/*
-** keep the whitespace in front of the ^=, hides rule from konqueror
-** this is css3, the validator doesn't like it when validating as css2
-*/
-.body_content a.external,
-.body_content a[href ^="gopher://"] {
-	background: url(../../../monobook/external.png) center right no-repeat;
-	padding-right: 13px;
-}
-.body_content a[href ^="https://"],
-.link-https {
-	background: url(../../../monobook/lock_icon.gif) center right no-repeat;
-	padding-right: 16px;
-}
-.body_content a[href ^="mailto:"],
-.link-mailto {
-	background: url(../../../monobook/mail_icon.gif) center right no-repeat;
-	padding-right: 18px;
-}
-.body_content a[href ^="news://"] {
-	background: url(../../../monobook/news_icon.png) center right no-repeat;
-	padding-right: 18px;
-}
-.body_content a[href ^="ftp://"],
-.link-ftp {
-	background: url(../../../monobook/file_icon.gif) center right no-repeat;
-	padding-right: 18px;
-}
-.body_content a[href ^="irc://"],
-.link-irc {
-	background: url(../../../monobook/discussionitem_icon.gif) center right no-repeat;
-	padding-right: 18px;
-}
-.body_content a.external[href $=".ogg"], .body_content a.external[href $=".OGG"],
-.body_content a.external[href $=".mid"], .body_content a.external[href $=".MID"],
-.body_content a.external[href $=".midi"], .body_content a.external[href $=".MIDI"],
-.body_content a.external[href $=".mp3"], .body_content a.external[href $=".MP3"],
-.body_content a.external[href $=".wav"], .body_content a.external[href $=".WAV"],
-.body_content a.external[href $=".wma"], .body_content a.external[href $=".WMA"],
-.link-audio {
-	background: url("../../../monobook/audio.png") center right no-repeat;
-	padding-right: 13px;
-}
-.body_content a.external[href $=".ogm"], .body_content a.external[href $=".OGM"],
-.body_content a.external[href $=".avi"], .body_content a.external[href $=".AVI"],
-.body_content a.external[href $=".mpeg"], .body_content a.external[href $=".MPEG"],
-.body_content a.external[href $=".mpg"], .body_content a.external[href $=".MPG"],
-.link-video {
-	background: url("../../../monobook/video.png") center right no-repeat;
-	padding-right: 13px;
-}
-.body_content a.external[href $=".pdf"], .body_content a.external[href $=".PDF"],
-.body_content a.external[href *=".pdf#"], .body_content a.external[href *=".PDF#"],
-.body_content a.external[href *=".pdf?"], .body_content a.external[href *=".PDF?"],
-.link-document {
-	background: url("../../../monobook/document.png") center right no-repeat;
-	padding-right: 12px;
 }
 
 /* disable interwiki styling */
@@ -1056,12 +1016,18 @@ ul#filetoc {
 }
 
 input#wpSummary {
+	font-family: inherit;
 	width: 80%;
 }
 
 /* @bug 1714 */
 input#wpSave, input#wpDiff {
+	font-family: inherit;
 	margin-right: 0.33em;
+}
+
+input#wpPreview {
+   font-family: inherit;
 }
 
 #editform .editOptions {
@@ -1083,6 +1049,12 @@ input#wpSave, input#wpDiff {
 }
 
 /* Classes for article validation */
+
+select#wpaccuracy, select#wpdepth, select#wpstyle, 
+input#mw-fr-commentbox, input#mw-fr-submit-accept, 
+input#mw-fr-submit-unaccept, input#mw-fr-submit-reject {
+	font-family: inherit;
+}
 
 table.revisionform_default {
 	border: 1px solid #000000;
@@ -1291,24 +1263,24 @@ div#mw-recreate-deleted-warn ul li {
 
 /* MW arrow icons */
 .mw-arr-r {
-	background-image: url('../../../common/images/Arr_r.png');
+	background-image: url('../images/Arr_r.png');
 	background-repeat: no-repeat;
 }
 
 .mw-arr-l {
-        background-image: url('../../../common/images/Arr_l.png');
+        background-image: url('../images/Arr_l.png');
         background-repeat: no-repeat;
 }
 
 .mw-arr-d,
 .mw-sort-desc {
-        background-image: url('../../../common/images/Arr_d.png');
+        background-image: url('../images/Arr_d.png');
         background-repeat: no-repeat;
 }
 
 .mw-arr-u,
 .mw-sort-asc {
-        background-image: url('../../../common/images/Arr_u.png');
+        background-image: url('../images/Arr_u.png');
         background-repeat: no-repeat;
 }
 
@@ -1349,15 +1321,3 @@ div#mw-recreate-deleted-warn ul li {
 	display: none;
 }
 
-/* Arcane's fixes for display errors with the WikiEditor extension */
-
-.toolbar {
-    border-top-style: none!important;
-    border-top-width: 1px;
-    padding: 0px 0px !important;
-}
-
-/* Expandable Sections */
-.wikiEditor-ui-toolbar .sections {
-	width: 98%!important;
-}
