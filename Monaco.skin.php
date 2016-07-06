@@ -1190,7 +1190,13 @@ if ($custom_article_footer !== '') {
 					</ul>
 				</td>
 			</tr>
-
+<?php
+	}
+	//END: create static box
+?>
+	</table>
+			</div>
+			
                         <div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
 			<dl id="WidgetNewsBox_wg" class="widget WidgetNewsBox">
 				<dt id="WidgetNewsBox_header" class="color1 widget_title" style="cursor: default;">
@@ -1221,13 +1227,6 @@ if ($custom_article_footer !== '') {
 			</dd><br>
 		</dl>
 	</div>
-
-<?php
-	}
-	//END: create static box
-?>
-	</table>
-			</div>
 			<!-- /SEARCH/NAVIGATION -->
 <?php		$this->printExtraSidebar(); ?>
 <?php		wfRunHooks( 'MonacoSidebarEnd', array( $this ) ); ?>
