@@ -1190,18 +1190,38 @@ if ($custom_article_footer !== '') {
 					</ul>
 				</td>
 			</tr>
-			<!-- haleyjd 20140420: FIXME: DoomWiki.org-specific; make generic! -->
-			<!--<tr>
-				<!--<td colspan="2" style="text-align:center;"> -->
-					<!--<form action="https://www.paypal.com/cgi-bin/webscr" method="post"> -->
-						<!--<input type="hidden" name="cmd" value="_s-xclick"> -->
-						<!--<input type="hidden" name="hosted_button_id" value="D5MLUSDXA8HMQ"> -->
-						<!--<input type="image" src="<?php $this->text('stylepath') ?> /monaco/style/images/contribute-button.png" name="submit" alt="PayPal - The safer, easier way to pay online!" style="border: 0; width:139px; margin:0;"> -->
-						<!--<img alt="" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1" style="border: 0;"> -->
-					<!--</form> -->
-				<!--</td> -->
-			<!--</tr> -->
-		<!--</tbody> -->
+
+                        <div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
+			<dl id="WidgetNewsBox_wg" class="widget WidgetNewsBox">
+				<dt id="WidgetNewsBox_header" class="color1 widget_title" style="cursor: default;">
+                                     &nbsp;Powered By:
+				</dt>
+			<dd id="WidgetNewsBox_content" class="shadow widget_contents"><br>
+				<center><a href="https://www.christoffen.com">
+                                             <img src="http://wiki.christoffen.com/skins/monaco/rsz_slide3.png">
+                                        </a></center>
+			</dd><br>
+		</dl>
+	</div>
+
+                    
+			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
+			<dl id="WidgetNewsBox_wg" class="widget WidgetNewsBox">
+				<dt id="WidgetNewsBox_header" class="color1 widget_title" style="cursor: default;">
+                                      &nbsp;Welcome!
+				</dt>
+                           <style>
+                           .shadow .widget_contents {
+                            margin-left: 10px;
+                            }
+                          </style>
+			<dd id="WidgetNewsBox_content" class="shadow widget_contents"><br>
+				&nbsp;We are currently writing &nbsp;documentation for Christoffen &nbsp;Corporation, creating a user- &nbsp;made, open, free API reference &nbsp;and also a function reference for &nbsp;the
+                                APIs created by Christoffen &nbsp;Corporation as well. Please &nbsp;standby, we're getting there! -- &nbsp;MGage, 07/05/2016
+			</dd><br>
+		</dl>
+	</div>
+
 <?php
 	}
 	//END: create static box
