@@ -1,4 +1,3 @@
-
 body.widgetsAddingBlocked .add {
 	cursor: default;
 	opacity: 0.5;
@@ -23,20 +22,27 @@ body.widgetsAddingBlocked .add {
 	background: #FFF;
 	border: 1px solid #AAA;
 	color: #000;
-	margin-bottom: 5px !important;
+	margin-bottom: 10px !important;
 	padding: 2px !important;
 }
 
 .sidebox .sidebox_title {
 	font-family: tahoma, arial, sans-serif;
-	font-size: 9pt;
-	font-weight: bold;
-	line-height: 1.2em;
-	padding: 3px;
+	font-size: 7pt;
+	line-height: 1.0em;
+	padding: 5px; 
+        font-weight: bold;       
 }
 .widget .widget_title {
+	font-family: tahoma, 
 	cursor: move;
+        height: 17px;
+        padding-top: 3px;
+        padding-left: 6px;
+	font-size: 8pt;
+        font-weight: bold;
 }
+
 .loggedout .sidebox dt {
 	cursor: default;
 }
@@ -54,12 +60,17 @@ body.widgetsAddingBlocked .add {
 .sidebox .sidebox_contents {
 	font-size: 9pt;
 	padding: 7px;
-	margin: 0;
+	margin: 10px;
 }
 .widget .widget_contents {
 	max-height: 250px;
 	overflow-y: auto;
 	overflow-x: hidden;
+        padding-top: 5px;
+        padding-left: 6px;
+        padding-bottom: 5px;
+        padding-right: 6px;
+	font-size: 9pt;
 }
 /*.sidebox h1 {
 	font-family: tahoma, arial, sans-serif;
