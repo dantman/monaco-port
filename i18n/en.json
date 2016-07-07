@@ -22,5 +22,5 @@
 	"skinname-monaco": "Monaco",
 	"monaco-tab-edit": "Edit this page",
 	"monaco-tab-addsection": "Leave message",
-	"latest": "<news>"
+	"latest": "<news limit="2"/>"
 }
