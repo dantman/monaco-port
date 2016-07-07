@@ -3,6 +3,10 @@ body.widgetsAddingBlocked .add {
 	opacity: 0.5;
 }
 
+#rc {
+	padding: 5px;
+	margin: 5px;
+}
 
 .sidebar {
 	position: absolute;
@@ -30,11 +34,11 @@ body.widgetsAddingBlocked .add {
 	font-family: tahoma, arial, sans-serif;
 	font-size: 7pt;
 	line-height: 1.0em;
-	padding: 5px; 
-        font-weight: bold;       
+	padding: 5px;
+        font-weight: bold;
 }
 .widget .widget_title {
-	font-family: tahoma, 
+	font-family: tahoma,
 	cursor: move;
         height: 17px;
         padding-top: 3px;
@@ -152,7 +156,7 @@ body.widgetsAddingBlocked .add {
 	padding: 0 3px 0 3px;
 	width: 164px;
 }
-#searchInput:focus { 
+#searchInput:focus {
 	box-shadow: none;
 }
 #searchInput.placeholder { color: gray }
