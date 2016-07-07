@@ -1196,37 +1196,40 @@ if ($custom_article_footer !== '') {
 ?>
 	</table>
 			</div>
-			
-                        <div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
-			<dl id="WidgetNewsBox_wg" class="widget WidgetNewsBox">
-				<dt id="WidgetNewsBox_header" class="color1 widget_title" style="cursor: default;">
-                                     &nbsp;Powered By:
-				</dt>
-			<dd id="WidgetNewsBox_content" class="shadow widget_contents"><br>
+
+			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
+                          <div class="widget_title color1">
+                                    Powered By:
+                           </div>
+                          <div class="shadow widget_contents">
 				<center><a href="https://www.christoffen.com">
                                              <img src="http://wiki.christoffen.com/skins/monaco/rsz_slide3.png">
                                         </a></center>
-			</dd><br>
-		</dl>
-	</div>
+                           </div>
+                        </div>
 
-                    
+
 			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
-			<dl id="WidgetNewsBox_wg" class="widget WidgetNewsBox">
-				<dt id="WidgetNewsBox_header" class="color1 widget_title" style="cursor: default;">
-                                      &nbsp;Welcome!
-				</dt>
-                           <style>
-                           .shadow .widget_contents {
-                            margin-left: 10px;
-                            }
-                          </style>
-			<dd id="WidgetNewsBox_content" class="shadow widget_contents"><br>
-				&nbsp;We are currently writing &nbsp;documentation for Christoffen &nbsp;Corporation, creating a user- &nbsp;made, open, free API reference &nbsp;and also a function reference for &nbsp;the
-                                APIs created by Christoffen &nbsp;Corporation as well. Please &nbsp;standby, we're getting there! -- &nbsp;MGage, 07/05/2016
-			</dd><br>
-		</dl>
-	</div>
+                          <div class="widget_title color1">
+                                      Welcome!
+                           </div>
+                          <div class="shadow widget_contents">
+                                We are currently writing documentation for Christoffen Corporation, creating a user-made, open, free API reference and also a function reference for the
+                                APIs created by Christoffen Corporation as well. Please standby, we're getting there! --MGage, 07/05/2016
+                           </div>
+                        </div>
+
+
+			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
+                          <div class="widget_title color1">
+                                Community
+                           </div>
+                          <div class="shadow widget_contents">
+                            Here, we intend to mock up the community box SW-style (and we don't mean "Southwest")
+                           </div>
+                        </div>
+
+
 			<!-- /SEARCH/NAVIGATION -->
 <?php		$this->printExtraSidebar(); ?>
 <?php		wfRunHooks( 'MonacoSidebarEnd', array( $this ) ); ?>
