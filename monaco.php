@@ -16,9 +16,10 @@ if( !defined( 'MEDIAWIKI' ) ) die( "This is an extension to the MediaWiki packag
 $wgExtensionCredits['skin'][] = array (
 	'path' => __FILE__,
 	'name' => 'Monaco',
+	'version' => 'version',
 	'author' => array('Inez Korczynski', 'Christian Williams', '[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]', '[http://doomwiki.org/wiki/User:Quasar James Haley]'),
 	'descriptionmsg' => 'monaco-desc',
-	'url' => 'https://github.com/haleyjd/monaco-port',
+	'url' => 'https://github.com/MGageMorgan/monaco-port',
 	'license-name' => 'GPLv2+',
 );
 
@@ -71,4 +72,4 @@ $wgMonacoUseMoreButton = true;          // Set to false to disable the more butt
 $wgMonacoUseSitenoticeIsland = false;   // Use an island above the content area for the sitenotice instead of embedding it above the page title
 $wgMonacoUseMasthead = true;            // Show the masthead on userpages
 $wgMonacoCompactSpecialPages = false;   // Compact the tab_bar on special pages
-
+$wgUseCommunity = false;

@@ -8,4 +8,213 @@
  * @author James Haley
  */
 
+a.wikia-button,
+span.wikia-button a ,
+input[type="submit"].wikia-button,
+input[type="reset"].wikia-button,
+input[type="button"].wikia-button,
+button.wikia-button {
+	background-color: #093;
+	background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
+	border: 1px solid #beddbe;
+	color: #FFF;
+	cursor: pointer;
+	display: inline-block;
+	font: bold 12px/17px "Lucida Grande", sans-serif;
+	height: 17px;
+	margin: 0;
+	padding: 0 7px;
+	text-decoration: none;
+	white-space: nowrap;
+	-moz-border-radius: 7px;
+	-khtml-border-radius: 7px;
+	-webkit-border-radius: 7px;
+	border-radius: 7px;
+	-moz-box-shadow: 0 0 0 1px #2c802c;
+	-khtml-box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+	-webkit-box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+	-o-box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+	-ms-box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+	box-shadow: 0 1px 0 #2c802c, 0 -1px 0 #2c802c, 1px 0 0 #2c802c, -1px 0 0 #2c802c;
+}
 
+/* Secondary Buttons */
+a.wikia-button.secondary,
+span.wikia-button.secondary a,
+input[type="submit"].wikia-button.secondary,
+input[type="reset"].wikia-button.secondary,
+input[type="button"].wikia-button.secondary,
+button.wikia-button.secondary {
+	background-color: #CCC;
+	background-image: -moz-linear-gradient(top, #CCC 20%, #AAA 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#CCC), to(#AAA));
+	border-color: #E2E2E2;
+	color: #333;
+	-moz-box-shadow: 0 0 0 1px #999;
+	-khtml-box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+	-webkit-box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+	-o-box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+	-ms-box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+	box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+	box-shadow: 0 1px 0 #999, 0 -1px 0 #999, 1px 0 0 #999, -1px 0 0 #999;
+}
+
+/* Big Buttons*/
+a.wikia-button.big,
+span.wikia-button.big a,
+input[type="submit"].wikia-button.big,
+input[type="reset"].wikia-button.big,
+input[type="button"].wikia-button.big,
+button.wikia-button.big {
+	height: 30px;
+	font-size: 15px;
+	line-height: 30px;
+	padding: 0 15px;
+}
+
+/* Border-box model: Inputs and buttons count border as part of height. Increase height. */
+input[type="submit"].wikia-button,
+input[type="reset"].wikia-button,
+input[type="button"].wikia-button,
+button.wikia-button {
+	height: 19px;
+}
+input[type="submit"].wikia-button.big,
+input[type="reset"].wikia-button.big,
+input[type="button"].wikia-button.big,
+button.wikia-button.big {
+	height: 32px;
+}
+
+/* Fix Mozilla Button Sizing */
+input[type="submit"].wikia-button::-moz-focus-inner,
+input[type="reset"].wikia-button::-moz-focus-inner,
+input[type="button"].wikia-button::-moz-focus-inner,
+button.wikia-button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
+
+/* IE Styles */
+/*
+a.wikia-button,
+span.wikia-button a,
+input[type="submit"].wikia-button,
+input[type="reset"].wikia-button,
+input[type="button"].wikia-button,
+button.wikia-button {
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FF009933", EndColorStr="#FF006722");
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF009933', endColorstr='#FF006722', gradientType='0')";
+	outline: 1px solid #2c802c;
+	overflow: visible;
+	width: auto;
+}
+
+a.wikia-button.secondary,
+span.wikia-button.secondary a,
+input[type="submit"].wikia-button.secondary,
+input[type="reset"].wikia-button.secondary,
+input[type="button"].wikia-button.secondary,
+button.wikia-button.secondary {
+	filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr="#FFCCCCCC", EndColorStr="#FFAAAAAA");
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF009933', endColorstr='#FF006722', gradientType='0')";
+	outline: 1px solid #999;
+}
+*/
+
+/* Visited, Hover and Active states */
+a.wikia-button:visited,
+span.wikia-button a:visited {
+	color: #FFF;
+}
+a.wikia-button.secondary:visited,
+span.wikia-button.secondary a:visited {
+	color: #333;
+}
+
+a.wikia-button:hover,
+span.wikia-button a:hover,
+input[type="submit"].wikia-button:hover,
+input[type="reset"].wikia-button:hover,
+input[type="button"].wikia-button:hover,
+button.wikia-button:hover {
+	text-decoration: none;
+	text-shadow: #000 0 1px 1px;
+}
+a.wikia-button.secondary:hover,
+span.wikia-button.secondary a:hover,
+input[type="submit"].wikia-button.secondary:hover,
+input[type="reset"].wikia-button.secondary:hover,
+input[type="button"].wikia-button.secondary:hover,
+button.wikia-button.secondary:hover {
+	text-shadow: #FFF 0 1px 1px;
+}
+
+a.wikia-button:active,
+span.wikia-button a:active,
+input[type="submit"].wikia-button:active,
+input[type="reset"].wikia-button:active,
+input[type="button"].wikia-button:active,
+button.wikia-button:active {
+	color: #FFF;
+	background-image: -moz-linear-gradient(top, #006722 20%, #093 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#006722), to(#093));
+}
+a.wikia-button.secondary:active,
+span.wikia-button.secondary a:active,
+input[type="submit"].wikia-button.secondary:active,
+input[type="reset"].wikia-button.secondary:active,
+input[type="button"].wikia-button.secondary:active,
+button.wikia-button.secondary:active {
+	color: #333;
+	background-image: -moz-linear-gradient(top, #AAA 20%, #CCC 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#AAA), to(#CCC));
+}
+
+/* Disabled styling */
+a.wikia-button[disabled],
+span.wikia-button a[disabled],
+input[type="submit"][disabled].wikia-button,
+input[type="reset"][disabled].wikia-button,
+input[type="button"][disabled].wikia-button,
+button[disabled].wikia-button {
+	cursor: default;
+	opacity: .5;
+}
+a.wikia-button[disabled]:hover,
+span.wikia-button a[disabled]:hover,
+input[type="submit"][disabled].wikia-button:hover,
+input[type="reset"][disabled].wikia-button:hover,
+input[type="button"][disabled].wikia-button:hover,
+button[disabled].wikia-button:hover {
+	text-shadow: none;
+}
+a.wikia-button[disabled]:active,
+span.wikia-button a[disabled]:active,
+input[type="submit"][disabled].wikia-button:active,
+input[type="reset"][disabled].wikia-button:active,
+input[type="button"][disabled].wikia-button:active,
+button[disabled].wikia-button:active {
+	background-image: -moz-linear-gradient(top, #093 20%, #006722 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#093), to(#006722));
+}
+a.wikia-button.secondary[disabled]:active,
+span.wikia-button.secondary a[disabled]:active,
+input.wikia-button.secondary[type="submit"][disabled]:active,
+input.wikia-button.secondary[type="reset"][disabled]:active,
+input.wikia-button.secondary[type="button"][disabled]:active,
+button.wikia-button.secondary[disabled]:active {
+	background-image: -moz-linear-gradient(top, #CCC 20%, #AAA 70%);
+	background-image: -webkit-gradient(linear, 0% 20%, 0% 70%, from(#CCC), to(#AAA));
+}
+
+/* haleyjd 20140420: overrides needed for FlaggedRevs input form components */
+/*
+#mw-fr-confirmreview {
+	line-height: 3.0em;
+}
+#mw-fr-submit-accept {
+	margin-right: 0.5em;
+}
+*/

@@ -1196,46 +1196,70 @@ if ($custom_article_footer !== '') {
 ?>
 	</table>
 			</div>
-
+<?php include "monaco.php";
+	if ($wgUseCommunity == TRUE) { ?>
 			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
                           <div class="widget_title color1">
                                 Community
                            </div>
                           <div class="shadow widget_contents">
-													Welcome, <?php echo $this->getSkin()->getUser()->getName(); ?>!
-													<br><br>
-													If you are listed above as an IP, please log in to edit.
-                           </div>
-													 <div id="rc" class="color2">
-														 	<b>Latest Activity:</b>
-														  <?php
-															echo wfMessage( 'latest' )->parseAsBlock()
-															?>
-													 </div>
-                        </div>
+                          <?php echo wfMessage( 'number' )->parse() ?>
+         <br><br>
+<?php if($wgUser->isLoggedIn()) {  ?>
+    Welcome back, 			
+			<?php // Output the facebook connect links that were added with PersonalUrls.
+			// @author Sean Colombo
+			foreach($this->data['userlinks'] as $linkName => $linkData){
+				//
+				if( !empty($linkData['html']) ){
+					echo $linkData['html'];
+				}
+			}
+				// haleyjd 20140420: This needs to use $key => $value syntax to get the proper style for the elements!
+				foreach( array( "username" => "userpage" ) as $key => $value ) {
+					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
+						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) ) . "!\n";
+				}
 
+			?><br>
+<?php 				// haleyjd 20140420: This needs to use $key => $value syntax to get the proper style for the elements!
+				foreach( array( "page" => "userpage") as $key => $value ) {
+					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
+						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]|['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) ) . " ";
+				}
+  ?>
+|
+<?php 				// haleyjd 20140420: This needs to use $key => $value syntax to get the proper style for the elements!
+				foreach( array( "mytalk" => "mytalk") as $key => $value ) {
+					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
+						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]|['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) );
+				}
+  ?>
+
+      <br><br>
+   <?php } else { ?>
+		<a class="wikia-button" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
+      <br><br>Already a member? <a href="http://wiki.christoffen.com/index.php?title=Special:UserLogin&returnto=UI&type=login">Log in</a>                    
+       </div>
+ <?php } ?>
+	 <div id="rc" class="color2">
+	<b>Latest Activity:</b>
+	 <?php
+	echo wfMessage( 'latest' )->parseAsBlock()
+	?>
+                        </div>                                                                               
+                        </div>
+<?php } else { ?>
 			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
                           <div class="widget_title color1">
-                                    Powered By:
                            </div>
                           <div class="shadow widget_contents">
-				<center><a href="https://www.christoffen.com">
-                                             <img src="http://wiki.christoffen.com/skins/monaco/rsz_slide3.png">
-                                        </a></center>
-                           </div>
-                        </div>
-
-
-			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
-                          <div class="widget_title color1">
-                                      Welcome!
-                           </div>
-                          <div class="shadow widget_contents">
-                                We are currently writing documentation for Christoffen Corporation, creating a user-made, open, free API reference and also a function reference for the
-                                APIs created by Christoffen Corporation as well. Please standby, we're getting there! --MGage, 07/05/2016
-                           </div>
-                        </div>
-
+<?php echo wfMessage( 'forward' )->parseAsBlock() ?>
+<?php echo wfMessage( 'intro' )->parseAsBlock() ?>
+<?php echo wfMessage( 'step1' )->parseAsBlock() ?>
+<?php echo wfMessage( 'step2' )->parseAsBlock() ?>
+</div>
+<?php } ?>
 			<!-- /SEARCH/NAVIGATION -->
 <?php		$this->printExtraSidebar(); ?>
 <?php		wfRunHooks( 'MonacoSidebarEnd', array( $this ) ); ?>
@@ -1679,3 +1703,4 @@ wfProfileOut( __METHOD__ . '-body');
 	}
 
 }
+			

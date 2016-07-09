@@ -1,0 +1,97 @@
+{
+	"name": "Monaco",
+	"author": [
+		"Inez Korczynski",
+		"Christian Williams",
+		"[http://mediawiki.org/wiki/User:Dantman Daniel Friesen]",
+		"[http://doomwiki.org/wiki/User:Quasar James Haley]",
+		"[http://github.com/MGageMorgan Gage Morgan]"
+	],
+	"url": "https://github.com/haleyjd/monaco-port",
+	"descriptionmsg": "monaco-desc",
+	"license-name": "GPLv2+",
+	"type": "skin",
+	"ValidSkinNames": {
+		"monaco": "Monaco"
+	},
+	"MessagesDirs": {
+		"Monaco": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"SkinMonaco": "Monaco.skin.php",
+		"MonacoSidebar": "MonacoSidebar.class.php"
+	},
+	"ResourceModules": {
+		"skins.monaco": {
+			"position": "top",
+			"styles": {
+				"skins/monaco/style/css/monobook_modified.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/reset_modified.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/buttons.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/sprite.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/root.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/header.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/article.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/widgets.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/modal.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/footer.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/star_rating.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/ny.css": {
+					"media": "screen"
+				},
+				"skins/monaco/style/css/print.css": {
+					"media": "print"
+				}
+			},
+			"scripts": "skins/monaco/style/js/monaco.js"
+		},
+		"ext.monacoWidget": {
+			"position": "bottom",
+			"scripts": "skins/monaco/ext/ext.monacoWidget.js",
+			"styles": "skins/monaco/ext/ext.monacoWidget.css"
+		}
+	},
+	"Hooks": {
+		"MessageCacheReplace": [
+			"MonacoSidebar::invalidateCache"
+		]
+	},
+	"config": {
+		"SearchDefaultFulltext": false,
+		"SpecialPagesRequiredLogin": [],
+		"MastheadVisible": false,
+		"MonacoAllowUsetheme": true,
+		"MonacoTheme": "sapphire",
+		"MonacoDynamicCreateOverride": false,
+		"MonacoUseMoreButton": true,
+		"MonacoUseSitenoticeIsland": false,
+		"MonacoUseMasthead": true,
+		"MonacoCompactSpecialPages": false,
+		"UseCommunity": false
+	},
+	"manifest_version": 1
+}

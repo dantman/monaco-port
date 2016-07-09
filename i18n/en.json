@@ -2,10 +2,12 @@
 	"@metadata": {
 		"authors": [
 			"Daniel Friesen",
-			"James Haley"
-		]
+			"James Haley",
+                        "Gage Morgan"
+		],
+		"version": "2016-07-8r1"
 	},
-	"monaco-desc": "Unbranded Monaco skin for use with vanilla MediaWiki.",
+	"monaco-desc": "Unbranded Monaco skin for use with vanilla MediaWiki. Modded to work with version later than 1.16 by James Haley. Modified to have community box, News extension, and wfSkinLoader by MGageMorgan. Originally ported by Daniel Friesen.",
 	"dynamic-links": "You can add dynamic link ids to monaco using this message, add a new id on each line\n (you can use a * at the start like in sidebar and monaco-sidebar to make this a list)\n Lines starting with a space will be treated as a comment.\n After adding a new id to the list you can use the 'dynamic-links-<id>' message\n to customize the text of the link and 'dynamic-links-<id>-url' message with the name\n of a page title on the wiki for the dynamic link to link to.\n\n",
 	"dynamic-links-write-article": "Create a new article",
 	"dynamic-links-write-article-url": "-",
@@ -22,5 +24,10 @@
 	"skinname-monaco": "Monaco",
 	"monaco-tab-edit": "Edit this page",
 	"monaco-tab-addsection": "Leave message",
-	"latest": "<news limit="2"/>"
+	"number": "{{NUMBEROFARTICLES}} articles on this wiki",
+        "latest": " <news limit=\"2\"/>",
+	"forward": "Hi! This is a message to you from MGageMorgan. Thanks for choosing my Monaco fork! What makes this fork different from the others is its ShoutWiki-style community box built-in.\n\n",
+	"intro": "To get the Community widget to function, please do the following in order:\n\n",
+	"step1": "1. In LocalSettings.php, add 'require_once \"$IP/skins/monaco/extensions/\nNews/News.php\";' to the bottom.\n\n",
+	"step2": "2: In monaco.php, set the variable $UseCommunity equal to TRUE."
 }
