@@ -28,6 +28,6 @@ require_once("$IP/skins/monaco/monaco.php");
 ```
 ## Screenshots
 Zoomed-out images of the skin itself:
-![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-00-24.png?raw=true 1)
-![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-02-38.png?raw=true 3)
+![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/shot1.png?raw=true 1)
+![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/shot2.png?raw=true 3)
 
