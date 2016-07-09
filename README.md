@@ -1,5 +1,10 @@
 #  MGageMorgan's monaco-port
-The Monaco skin with Vector buttons and latest MediaWiki compatibility
+The Monaco skin modified to look like ShoutWiki literally using ShoutWiki's version as a reference implementation to base this one off of from scratch.
+
+## Sidebar Improvements!!!
+I've been nice and have gone from implementing my own version of SW's Community Widget to fixing the search bar to look like theirs as well as implementing code from their extension "NewsBox" right into the skin itself. Have a look!
+
+![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/sidebar-new.png?raw=true 2)
 
 ## Community Widget Re-Implementation
 I have implemented a ShoutWiki-style (close, but not exact) Community box. Install instructions are available when the skin is first added to MediaWiki. They will be in a sidebox widget with no title.
