@@ -1009,7 +1009,7 @@ if ($custom_article_footer !== '') {
 					) + $skin->tooltipAndAccesskeyAttribs('search') ); ?>
 					<?php global $wgSearchDefaultFulltext; ?>
 					<input type="hidden" name="<?php echo ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
-					<input type="image" alt="<?php echo htmlspecialchars(wfMessage('search')->escaped()) ?>" src="<?php $this->text('blankimg') ?>" id="search-button" class="sprite search" tabIndex=2 />
+					<input type="image" src="http://wiki.christoffen.com/images/9/95/Search.png" id="search-button" class="search" tabIndex=1 />
 				</form>
 			</div>
 <?php

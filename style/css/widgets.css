@@ -113,7 +113,7 @@ body.widgetsAddingBlocked .add {
     display: inline;
 }
 
-/*.widget form input {
+.widget form input {
     margin: 3px 0;
     width: 170px;
 }
@@ -121,7 +121,7 @@ body.widgetsAddingBlocked .add {
 .widget form select {
     margin: 3px 0;
     width: 180px;
-}*/
+}
 
 .widget form input.checkbox,
 .widget form input.editor_button {
@@ -140,21 +140,17 @@ body.widgetsAddingBlocked .add {
 }
 #searchform {
 	background-color: #FFF;
-      	background-image: -moz-linear-gradient(top, #BFBFBF 0%, #FFF 40%);
-      	background-image: -webkit-gradient(linear, 0% 0%, 0% 40%, from(#BFBFBF), to(#FFF));
 	border: 1px solid #039;
-	-moz-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
+	width: 167px;
+	height: 20px;
 }
 #searchInput {
 	background: transparent;
 	border: 0;
 	color: #000;
-	font-size: 9pt;
+	font-size: 7pt;
 	height: 22px;
-	line-height: 22px;
+	line-height: 20px;
 	margin: 0;
 	padding: 0 3px 0 3px;
 	width: 164px;
@@ -166,13 +162,12 @@ body.widgetsAddingBlocked .add {
 #searchInput::-webkit-input-placeholder { color: gray }
 #searchInput:-moz-placeholder { color: gray }
 #search-button {
-	border-left: 1px solid #CCC;
-	height: 16px;
+	height: 22px;
 	margin: 0;
 	position: absolute;
 	right: 8px;
-	top: 8px;
-	width: 16px;
+	top: 4px;
+	width: 20px;
 }
 
 .hover-navigation * {
