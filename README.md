@@ -5,7 +5,7 @@ The Monaco skin with Vector buttons and latest MediaWiki compatibility
 I have implemented a ShoutWiki-style (close, but not exact) Community box. Install instructions are available when the skin is first added to MediaWiki. They will be in a sidebox widget with no title.
 
 ### Community Widget Screenshots
-!(https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-03-05.png?raw=true)
+![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-03-05.png?raw=true 1)
 
 
 ## Installation
