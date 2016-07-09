@@ -1,11 +1,28 @@
 #  MGageMorgan's monaco-port
 The Monaco skin with Vector buttons and latest MediaWiki compatibility
 
-## SIDEBOXES!!!!
-I found the "Messages" source code and a snippet that they included just for ShoutWiki's implementation of Monaco, and I grabbed it for us,
-as you can see in this skin. I invite you to modify it for your own site.
+## Community Widget Re-Implementation
+I have implemented a ShoutWiki-style (close, but not exact) Community box. Install instructions are available when the skin is first added to MediaWiki. They will be in a sidebox widget with no title.
 
-Also, I have to thank the three people that came before me to mod the skin to work with more recent versions of MediaWiki, namely James
-Haley and Arcane. Both did great in bringing things up to speed and I thank them for keeping interest even though the rest of
-the world may not.
+### Community Widget Screenshots
+!(https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-03-05.png?raw=true)
+
+
+## Installation
+This section details how to install depending on what/which version of MediaWiki you plan to install Monaco to.
+
+### MediaWiki's wfLoadSkin (MediaWiki >= 1.25.0)
+I've brought Monaco up-to-speed on the latest with the new installation method. The new way to install Monaco is:
+
+```php
+wfLoadSkin( 'monaco' );
+```
+
+### For Older MediaWiki Installations (MediaWiki <= 1.24.0)
+If you are running Mediawiki >= 1.25.0, the above subsection applies to you. Everyone else (MediaWiki <= 1.24.0) can install the original way:
+
+```php
+require_once("$IP/skins/monaco/monaco.php");
+```
+
 
