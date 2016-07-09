@@ -1260,6 +1260,32 @@ if ($custom_article_footer !== '') {
 <?php echo wfMessage( 'step2' )->parseAsBlock() ?>
 </div>
 <?php } ?>
+</div>
+			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
+                          <div class="widget_title color1">
+					<?php echo wfMessage( 'newsbox-title' )->plain() ?>
+			</div>
+                          <div class="shadow widget_contents">
+				<ul>
+						<?php echo wfMessage( 'newsbox-homepage' )->plain() ?><br>
+					</a></li>
+						<?php echo wfMessage( 'newsbox-createwiki' )->plain() ?><br>
+					</a></li> 
+				</ul>
+				<hr />
+				<ul>
+					<li>
+						<p> 
+						<?php echo wfMessage( 'newsbox' )->plain() ?>
+						</p>
+					</li>
+				</ul>
+			</div>
+	</div><br>
+
+
+
+
 			<!-- /SEARCH/NAVIGATION -->
 <?php		$this->printExtraSidebar(); ?>
 <?php		wfRunHooks( 'MonacoSidebarEnd', array( $this ) ); ?>
