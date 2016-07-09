@@ -30,8 +30,8 @@
 	"intro": "To get the Community widget to function, please do the following in order:\n\n",
 	"step1": "1. In LocalSettings.php, add 'require_once \"$IP/skins/monaco/extensions/\nNews/News.php\";' to the bottom.\n\n",
 	"step2": "2: In monaco.php, set the variable $UseCommunity equal to TRUE.",
-	"newsbox-title": "Messages",
-	"newsbox-homepage": "Insert URL at MediaWiki:newsbox-homepage\n",
-	"newsbox-createwiki": "Insert URL at MediaWiki:newsbox-createwiki\n",
+	"newsbox-title": "{{SITENAME}} Messages",
+	"newsbox-homepage": "[[Main Page|{{SITENAME}} Home]]\n",
+	"newsbox-createwiki": "Insert URL at MediaWiki:newsbox-createwiki (could be anything you want)\n",
 	"newsbox": "Insert news text/link/whatever at MediaWiki:newsbox\n"
 }
