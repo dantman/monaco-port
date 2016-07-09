@@ -72,4 +72,4 @@ $wgMonacoUseMoreButton = true;          // Set to false to disable the more butt
 $wgMonacoUseSitenoticeIsland = false;   // Use an island above the content area for the sitenotice instead of embedding it above the page title
 $wgMonacoUseMasthead = true;            // Show the masthead on userpages
 $wgMonacoCompactSpecialPages = false;   // Compact the tab_bar on special pages
-$wgUseCommunity = true;
+$wgUseCommunity = false;
