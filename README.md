@@ -6,7 +6,9 @@ I have implemented a ShoutWiki-style (close, but not exact) Community box. Insta
 
 ### Community Widget Screenshots
 ![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-01-22.png?raw=true 2)
-![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-02-38.png?raw=true 3)
+![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-03-05.png?raw=true 4)`
+
+**Running in Chromium on Ubuntu 16.04 localhost
 
 ## Installation
 This section details how to install depending on what/which version of MediaWiki you plan to install Monaco to.
@@ -27,6 +29,5 @@ require_once("$IP/skins/monaco/monaco.php");
 ## Screenshots
 Zoomed-out images of the skin itself:
 ![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-00-24.png?raw=true 1)
-![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-03-05.png?raw=true 4)`
-
+![alt-text](https://github.com/MGageMorgan/monaco-port/blob/master/Screenshot%20from%202016-07-08%2021-02-38.png?raw=true 3)
 
