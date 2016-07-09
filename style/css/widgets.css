@@ -135,14 +135,14 @@ body.widgetsAddingBlocked .add {
 	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0.0, rgba(0,0,0,0.06)), color-stop(0.33, rgba(0,0,0,0)), color-stop(0.42, rgba(0,0,0,0)), color-stop(1.0, rgba(0,0,0,0.1)));
 	background-position: top left;
 	background-repeat: repeat-x;
-	padding: 4px;
+	padding: 6px;
 	position: relative;
 }
 #searchform {
 	background-color: #FFF;
 	border: 1px solid #039;
 	width: 167px;
-	height: 20px;
+	height: 19px;
 }
 #searchInput {
 	background: transparent;
@@ -165,8 +165,8 @@ body.widgetsAddingBlocked .add {
 	height: 22px;
 	margin: 0;
 	position: absolute;
-	right: 8px;
-	top: 4px;
+	right: 6.5px;
+	top: 5px;
 	width: 20px;
 }
 
