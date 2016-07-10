@@ -1239,9 +1239,16 @@ if ($custom_article_footer !== '') {
       <br><br>
    <?php } else { ?>
 		<a class="wikia-button" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
-      <br><br>Already a member? <a href="http://wiki.christoffen.com/index.php?title=Special:UserLogin&returnto=UI&type=login">Log in</a>                    
-       </div>
+      <br><br>Already a member? <a href="http://wiki.christoffen.com/index.php?title=Special:UserLogin&returnto=UI&type=login">Log in</a><br>                    
  <?php } ?>
+
+	<style>
+	#rc {
+	padding: 8px;	
+	margin: 8px;
+	}
+	</style>
+
 	 <div id="rc" class="color2">
 	<b>Latest Activity:</b>
 	 <?php
@@ -1259,17 +1266,22 @@ if ($custom_article_footer !== '') {
 <?php echo wfMessage( 'step1' )->parseAsBlock() ?>
 <?php echo wfMessage( 'step2' )->parseAsBlock() ?>
 </div></div>
-<?php } ?>
-
+<?php } echo "</div>" ?>
 			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
                           <div class="widget_title color1">
 					<?php echo wfMessage( 'newsbox-title' )->parse() ?>
 			</div>
-                          <div class="shadow widget_contents">
+                          <div class="shadow widget_contents" id="newsbox">
+				<style>
+				#newsbox { 
+				padding: 4px;
+				margin: 3px;
+				}
+				</style>
 				<ul>
-					<li>
+					</li>
 						<?php echo wfMessage( 'newsbox-homepage' )->parseAsBlock() ?>
-					</li><li>
+					</li>
 						<?php echo wfMessage( 'newsbox-createwiki' )->parseAsBlock() ?>
 					</li> 
 				</ul>
