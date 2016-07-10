@@ -1238,7 +1238,7 @@ if ($custom_article_footer !== '') {
 
       <br><br>
    <?php } else { ?>
-		<a class="wikia-button" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['register']['text']) ?></a>
+		<a class="wikia-button" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['register']) ?>Create Account</a>
       <br><br>Already a member? <a href="http://wiki.christoffen.com/index.php?title=Special:UserLogin&returnto=UI&type=login">Log in</a><br>                    
  <?php } ?>
 
@@ -1265,7 +1265,7 @@ if ($custom_article_footer !== '') {
 <?php echo wfMessage( 'intro' )->parseAsBlock() ?>
 <?php echo wfMessage( 'step1' )->parseAsBlock() ?>
 <?php echo wfMessage( 'step2' )->parseAsBlock() ?>
-</div></div>
+</div>
 <?php } echo "</div>" ?>
 			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
                           <div class="widget_title color1">
