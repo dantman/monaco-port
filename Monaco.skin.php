@@ -1238,14 +1238,14 @@ if ($custom_article_footer !== '') {
 
       <br><br>
    <?php } else { ?>
-		<a class="wikia-button" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>"><?php echo htmlspecialchars($this->data['userlinks']['register']) ?>Create Account</a>
-      <br><br>Already a member? <a href="http://wiki.christoffen.com/index.php?title=Special:UserLogin&returnto=UI&type=login">Log in</a><br>                    
+<a class="wikia-button" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>">Create Account</a>
+      <br><br>Already a member? <a href="<?php echo htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><b>Log in</b></a><br>                    
  <?php } ?>
 
 	<style>
 	#rc {
-	padding: 8px;	
-	margin: 8px;
+	padding: 4px;	
+	margin: 4px;
 	}
 	</style>
 
