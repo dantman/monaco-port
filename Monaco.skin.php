@@ -1196,40 +1196,41 @@ if ($custom_article_footer !== '') {
 ?>
 	</table>
 			</div>
-<?php include "monaco.php";
-	if ($wgUseCommunity == TRUE) { ?>
+			<?php // Start the mods ?>
+<?php include "monaco.php"; // In order to use $wgUseCommunity, that has to be there
+	if ($wgUseCommunity == TRUE) { // If $wgUseCommunity in monaco.php is set to true, we take it News can be found so display the widget! ?>
+			<!-- Start of widget -->
 			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
                           <div class="widget_title color1">
                                 Community
                            </div>
                           <div class="shadow widget_contents">
-                          <?php echo wfMessage( 'number' )->parse() ?>
+                          <?php echo wfMessage( 'number' )->parse() //Show number of edits?>
          <br><br>
-<?php if($wgUser->isLoggedIn()) {  ?>
+<?php if($wgUser->isLoggedIn()) {  //If the user is logged in, get rid of the login buttons etc.?>
     Welcome back, 			
-			<?php // Output the facebook connect links that were added with PersonalUrls.
-			// @author Sean Colombo
+			<?php //To display the pretty links you see when logged in; depends on this
 			foreach($this->data['userlinks'] as $linkName => $linkData){
 				//
 				if( !empty($linkData['html']) ){
 					echo $linkData['html'];
 				}
 			}
-				// haleyjd 20140420: This needs to use $key => $value syntax to get the proper style for the elements!
+				// Get link of userpage, but display title as the username
 				foreach( array( "username" => "userpage" ) as $key => $value ) {
 					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
 						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) ) . "!\n";
 				}
 
 			?><br>
-<?php 				// haleyjd 20140420: This needs to use $key => $value syntax to get the proper style for the elements!
+				<?php //Get/display link of user's page, but display their username instead
 				foreach( array( "page" => "userpage") as $key => $value ) {
 					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
 						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]|['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) ) . " ";
 				}
   ?>
 |
-<?php 				// haleyjd 20140420: This needs to use $key => $value syntax to get the proper style for the elements!
+<?php 				//Get link to talk page, and still say "My Talk"
 				foreach( array( "mytalk" => "mytalk") as $key => $value ) {
 					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
 						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]|['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) );
@@ -1237,41 +1238,46 @@ if ($custom_article_footer !== '') {
   ?>
 
       <br><br>
-   <?php } else { ?>
+   <?php } else { //If you're not logged in, you've seen this in picture (show login button): ?>
+<!-- Show register button -->
 <a class="wikia-button" id="register" href="<?php echo htmlspecialchars($this->data['userlinks']['register']['href']) ?>">Create Account</a>
+<!-- Show login as plain text (blue, bold link) -->
       <br><br>Already a member? <a href="<?php echo htmlspecialchars($this->data['userlinks']['login']['href']) ?>"><b>Log in</b></a><br>                    
  <?php } ?>
-
+<!-- This is my redneck way of styling. If too much happens, it'll get moved outta here -->
 	<style>
 	#rc {
 	padding: 4px;	
 	margin: 4px;
 	}
 	</style>
-
+	<!-- The "Latest Activity" block -->
 	 <div id="rc" class="color2">
 	<b>Latest Activity:</b>
 	 <?php
-	echo wfMessage( 'latest' )->parseAsBlock()
+	echo wfMessage( 'latest' )->parseAsBlock() //Defined message is in file i18n/en.json
 	?>
                         </div>                                                                               
                         </div>
-<?php } else { ?>
+<?php } else { //Well, $wgUseCommunity is false, we gotta do something, right? ?>
 			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
                           <div class="widget_title color1">
                            </div>
                           <div class="shadow widget_contents">
+<!-- These are displayed when you first install Monaco. I left a personal message at the tone -->
 <?php echo wfMessage( 'forward' )->parseAsBlock() ?>
 <?php echo wfMessage( 'intro' )->parseAsBlock() ?>
 <?php echo wfMessage( 'step1' )->parseAsBlock() ?>
 <?php echo wfMessage( 'step2' )->parseAsBlock() ?>
 </div>
 <?php } echo "</div>" ?>
+			<!-- I re-implemented the SW NewsBox extension into the skin itself -->
 			<div class="widget sidebox navigation_box" id="navigation_widget" role="navigation">
                           <div class="widget_title color1">
 					<?php echo wfMessage( 'newsbox-title' )->parse() ?>
 			</div>
                           <div class="shadow widget_contents" id="newsbox">
+				<!-- More of my redneck styling XD -->
 				<style>
 				#newsbox { 
 				padding: 4px;
@@ -1294,10 +1300,7 @@ if ($custom_article_footer !== '') {
 					</li>
 				</ul>
 			</div>
-	</div><br>
-
-
-
+	</div><br><!-- End of my mods, for the most part -->
 
 			<!-- /SEARCH/NAVIGATION -->
 <?php		$this->printExtraSidebar(); ?>
