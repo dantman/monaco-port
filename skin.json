@@ -91,7 +91,7 @@
 		"MonacoUseSitenoticeIsland": false,
 		"MonacoUseMasthead": true,
 		"MonacoCompactSpecialPages": false,
-		"UseCommunity": false
+		"UseCommunity": true
 	},
 	"manifest_version": 1
 }

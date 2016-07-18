@@ -437,17 +437,18 @@ class SkinMonaco extends SkinTemplate {
 		if ( isset($tpl->data['content_navigation']) ) {
 			// Use MediaWiki 1.18's better vector based content_navigation structure
 			// to organize our tabs better
-			foreach ( $tpl->data['content_navigation'] as $section => $nav ) {
+
+foreach ( $tpl->data['content_navigation'] as $section => $nav ) {
 				foreach ( $nav as $key => $val ) {
 					if ( isset($val["redundant"]) && $val["redundant"] ) {
 						continue;
 					}
 
-					$kk = ( isset($val["id"]) && substr($val["id"], 0, 3) == "ca-" ) ? substr($val["id"], 3) : $key;
+					$kk = ( isset($val['id']) && substr($val['id'], 0, 3) ) ? substr($val['id'], 3) : $key;
 
 					$msgKey = $kk;
 					if ( $kk == "edit" ) {
-						$title = $this->getRelevantTitle();
+						$title = $this->getSkin()->getTitle();
 						$msgKey = $title->exists() || ( $title->getNamespace() == NS_MEDIAWIKI && !wfEmptyMsg( $title->getText() ) )
 							? "edit" : "create";
 					}
@@ -478,7 +479,7 @@ class SkinMonaco extends SkinTemplate {
 			foreach($tpl->data['content_actions'] as $key => $val) {
 				$msgKey = $key;
 				if ( $key == "edit" ) {
-					$msgKey = $this->mTitle->exists() || ( $this->mTitle->getNamespace() == NS_MEDIAWIKI && wfMessage($this->mTitle->getText())->exists() )
+					$msgKey = $this->mTitle->exists() || ( $this->getNamespace() == NS_MEDIAWIKI && wfMessage($this->getText()) )
 						? "edit" : "create";
 				}
 				$tabText = wfMessage("monaco-tab-$msgKey")->text();
@@ -554,54 +555,48 @@ class SkinMonaco extends SkinTemplate {
 
 		} else {
 
-			$data['userpage'] = array(
-				'text' => $wgUser->getName(),
-				'href' => $tpl->data['personal_urls']['userpage']['href']
-				);
 
-			$data['mytalk'] = array(
-				'text' => $tpl->data['personal_urls']['mytalk']['text'],
-				'href' => $tpl->data['personal_urls']['mytalk']['href']
-				);
+
 
 			if (isset($tpl->data['personal_urls']['watchlist'])) {
-				$data['watchlist'] = array(
-					/*'text' => $tpl->data['personal_urls']['watchlist']['text'],*/
-					'text' => wfMessage('prefs-watchlist')->text(),
-					'href' => $tpl->data['personal_urls']['watchlist']['href']
-					);
+				
 			}
 
 			// In some cases, logout will be removed explicitly (such as when it is replaced by fblogout).
 			if(isset($tpl->data['personal_urls']['logout'])){
-				$data['logout'] = array(
-					'text' => $tpl->data['personal_urls']['logout']['text'],
-					'href' => $tpl->data['personal_urls']['logout']['href']
-				);
+
 			}
 
-
-			$data['more']['userpage'] = array(
-				'text' => wfMessage('mypage')->text(),
-				'href' => $tpl->data['personal_urls']['userpage']['href']
+			$data['more']['mypage'] = array(
+				'text' => $tpl->data['personal_urls']['mypage']['text'],
+				'href' => $tpl->data['personal_urls']['mypage']['href']
 				);
 
-			if(isset($tpl->data['personal_urls']['userprofile'])) {
-				$data['more']['userprofile'] = array(
-					'text' => $tpl->data['personal_urls']['userprofile']['text'],
-					'href' => $tpl->data['personal_urls']['userprofile']['href']
-					);
-			}
+			$data['more']['mytalk'] = array(
+				'text' => $tpl->data['personal_urls']['mytalk']['text'],
+				'href' => $tpl->data['personal_urls']['mytalk']['href']
+				);
 
 			$data['more']['mycontris'] = array(
 				'text' => wfMessage('mycontris')->text(),
 				'href' => $tpl->data['personal_urls']['mycontris']['href']
 				);
 
+			$data['more']['watchlist'] = array(
+				/*'text' => $tpl->data['personal_urls']['watchlist']['text'],*/
+				'text' => wfMessage('prefs-watchlist')->text(),
+				'href' => $tpl->data['personal_urls']['watchlist']['href']
+				);
+
 			$data['more']['preferences'] = array(
 				'text' => $tpl->data['personal_urls']['preferences']['text'],
 				'href' => $tpl->data['personal_urls']['preferences']['href']
 				);
+
+			$data['more']['logout'] = array(
+				'text' => $tpl->data['personal_urls']['logout']['text'],
+				'href' => $tpl->data['personal_urls']['logout']['href']
+			);
 		}
 
 		// This function ignores anything from PersonalUrls hook which it doesn't expect.  This
@@ -723,6 +718,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 		wfProfileIn( __METHOD__ . '-header'); ?>
 	<div id="wikia_header" class="color2">
 		<div class="monaco_shrinkwrap">
+
 <?php $this->printMonacoBranding(); ?>
 <?php $this->printUserData(); ?>
 		</div>
@@ -730,6 +726,7 @@ wfProfileIn( __METHOD__ . '-body'); ?>
 
 <?php if (wfRunHooks('AlternateNavLinks')): ?>
 		<div id="background_strip" class="reset">
+
 			<div class="monaco_shrinkwrap">
 
 			<div id="accent_graphic1"></div>
@@ -1001,12 +998,13 @@ if ($custom_article_footer !== '') {
 					<?php echo Html::input( 'search', '', 'search', array(
 						'id' => "searchInput",
 						'maxlength' => 200,
-						'aria-label' => $searchLabel,
+                                                'aria-label' => $searchLabel,
 						'placeholder' => $searchLabel,
 						'tabIndex' => 2,
 						'aria-required' => 'true',
 						'aria-flowto' => "search-button",
-					) + $skin->tooltipAndAccesskeyAttribs('search') ); ?>
+                                                'title' => $wgSitename
+					)); ?>
 					<?php global $wgSearchDefaultFulltext; ?>
 					<input type="hidden" name="<?php echo ( $wgSearchDefaultFulltext ) ? 'fulltext' : 'go'; ?>" value="1" />
 					<input type="image" src="http://wiki.christoffen.com/images/9/95/Search.png" id="search-button" class="search" tabIndex=1 />
@@ -1208,34 +1206,7 @@ if ($custom_article_footer !== '') {
                           <?php echo wfMessage( 'number' )->parse() //mgagemorgan: Show number of edits?>
          <br><br>
 <?php if($wgUser->isLoggedIn()) {  //mgagemorgan: If the user is logged in, get rid of the login buttons etc.?>
-    Welcome back, 			
-			<?php //mgagemorgan: To display the pretty links you see when logged in; depends on this
-			foreach($this->data['userlinks'] as $linkName => $linkData){
-				//
-				if( !empty($linkData['html']) ){
-					echo $linkData['html'];
-				}
-			}
-				// mgagemorgan: Get link of userpage, but display title as the username
-				foreach( array( "username" => "userpage" ) as $key => $value ) {
-					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
-						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) ) . "!\n";
-				}
-
-			?><br>
-				<?php //mgagemorgan: Get/display link of user's page, but display their username instead
-				foreach( array( "page" => "userpage") as $key => $value ) {
-					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
-						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]|['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) ) . " ";
-				}
-  ?>
-|
-<?php 				//mgagemorgan: Get link to talk page, and still say "My Talk"
-				foreach( array( "mytalk" => "mytalk") as $key => $value ) {
-					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
-						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]|['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) );
-				}
-  ?>
+    Welcome back, <b><?php echo $wgUser ?></b>
 
       <br><br>
    <?php } else { //mgagemorgan: If you're not logged in, you've seen this in picture (show login button): ?>
@@ -1479,39 +1450,62 @@ wfProfileOut( __METHOD__ . '-body');
 				// haleyjd 20140420: This needs to use $key => $value syntax to get the proper style for the elements!
 				foreach( array( "username" => "userpage", "mytalk" => "mytalk", "watchlist" => "watchlist" ) as $key => $value ) {
 					echo "				" . Html::rawElement( 'span', array( 'id' => "header_$key" ),
-						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]['href'] ) + $skin->tooltipAndAccesskeyAttribs("pt-$value"), $this->data['userlinks'][$value]['text'] ) ) . "\n";
+						Html::element( 'a', array( 'href' => $this->data['userlinks'][$value]['href'] ) . Xml::expandAttributes(Linker::tooltipAndAccesskeyAttribs("$value")), $this->data['userlinks'][$value]['text'] ) ) . "\n";
 				}
 
 			?>
 <?php
 				if ( $this->useUserMore() ) { ?>
 				<span class="more hovermenu">
-					<button id="headerButtonUser" class="header-button color1" tabIndex="-1"><?php echo trim(wfMessage('moredotdotdot')->escaped(), ' .') ?><img src="<?php $this->text('blankimg') ?>" /></button>
+					<button id="headerButtonUser" class="header-button color1" tabIndex="-1"><?php echo $wgUser ?>'s user menu<img src="<?php $this->text('blankimg') ?>" /></button>
 					<span class="invisibleBridge"></span>
+<style>
+.columns {
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    column-count: 2;
+    -webkit-column-gap: 40px; /* Chrome, Safari, Opera */
+    -moz-column-gap: 40px; /* Firefox */
+    column-gap: 40px;
+    -webkit-column-rule-style: solid; /* Chrome, Safari, Opera */
+    -moz-column-rule-style: solid; /* Firefox */
+    column-rule-style: solid;
+    -webkit-column-rule-width: 1px; /* Chrome, Safari, Opera */
+    -moz-column-rule-width: 1px; /* Firefox */
+    column-rule-width: 1px;
+}
+</style>
 					<div id="headerMenuUser" class="headerMenu color1 reset">
-						<ul>
+<center>Welcome, <?php echo $wgUser ?>!</center>				
+				<div class="columns">
+				<ul>
+
+<li><a href="http://wiki.christoffen.com/index.php/Special:MyPage"><?php echo $wgUser ?>'s Page</a></li>
+
 <?php
 				foreach ( $this->data['userlinks']['more'] as $key => $link ) {
-					if($key != 'userpage') { // haleyjd 20140420: Do not repeat user page here.
 						echo Html::rawElement( 'li', array( 'id' => "header_$key" ),
 							Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
 					}
-				} ?>
+				 ?>
 						</ul>
-					</div>
-				</span>
+					</div><center><br>
+				<p>Welcome! If you like what you see,</p> 
+				<p>please continue and contribute</p> 
+				<p>so the community as a whole can thrive.</p> 
+				<p>Brought to you by people like you.</p>
+				<br></div>		
+			</span>
 <?php
 				} else {
 					foreach ( $this->data['userlinks']['more'] as $key => $link ) {
-						if($key != 'userpage') { // haleyjd 20140420: Do not repeat user page here.
 							echo Html::rawElement( 'span', array( 'id' => "header_$key" ),
 								Html::element( 'a', array( 'href' => $link['href'] ), $link['text'] ) ) . "\n";
-						}
 					} ?>
 <?php
 				} ?>
 				<span>
-					<?php echo Html::element( 'a', array( 'href' => $this->data['userlinks']['logout']['href'] ) + $skin->tooltipAndAccesskeyAttribs('pt-logout'), $this->data['userlinks']['logout']['text'] ); ?>
+					<?php echo Html::element( 'a', array( 'href' => $this->data['userlinks']['logout']['href'] ) .  Xml::expandAttributes(Linker::tooltipAndAccesskeyAttribs("logout")),  $this->data['userlinks']['logout']['text'] ); ?>
 				</span>
 <?php
 			} else {
@@ -1697,9 +1691,9 @@ wfProfileOut( __METHOD__ . '-body');
 			$aAttrs = array(
 				"href" => $link["href"],
 			);
-			if ( isset($link["id"]) ) {
-				$aAttrs += $this->data['skin']->tooltipAndAccesskeyAttribs( $link["id"] );
-			}
+
+
+			
 			echo "$indent	";
 			echo Html::openElement( 'li', $liAttrs );
 			if ( isset($link["icon"]) ) {

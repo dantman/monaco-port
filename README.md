@@ -1,11 +1,6 @@
 #  MGageMorgan's monaco-port
 The Monaco skin modified to look like ShoutWiki literally using ShoutWiki's version as a reference implementation to base this one off of from scratch.
 
-## Notice on 'wfLoadSkin': Not Complete Yet
-I've been saying for awhile that this implementation supports that functionality. It doesn't fully, but I do plan on working on making it utilize the full JSON format by the end of the month (July 2016) or early next month (August 2016). At the time of writing, MediaWiki is still pretty early on in getting this going, but think of it like a package manager. Speaking of, I have a ton of extensions that I'd love to do, but unfortunately time isn't always on my side. I do, however, have roots in web development, and everything I do with it is going to hopefully be my best work. When I'm in college, I hope to make some cash by web development, or partnering with some new folks I meet. 
-
-Just know that I realize that support isn't done yet, but will be soon. Cheers! --MGageMorgan
-
 ## Sidebar Improvements!!!
 I've been nice and have gone from implementing my own version of SW's Community Widget to fixing the search bar to look like theirs as well as implementing code from their extension "NewsBox" right into the skin itself. Have a look!
 
